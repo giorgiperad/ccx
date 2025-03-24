@@ -2,7 +2,7 @@
 const cryptoIds = [
     'bitcoin', 'ethereum', 'cardano', 'solana', 'chainlink',
     'ripple', 'polkadot', 'stellar', 'decentraland', 'cosmos',
-    'dogecoin' // Added Dogecoin here
+    'dogecoin', 'litecoin', 'shiba-inu', 'rejuve-ai', 'sophiaverse'
 ];
 
 // Function to fetch prices
@@ -10,10 +10,16 @@ async function fetchCryptoPrices() {
     const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds.join(',')}&vs_currencies=usd`;
     try {
         const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data = await response.json();
+        console.log('API Response:', data); // Log the response for debugging
         displayPrices(data);
     } catch (error) {
         console.error('Error fetching prices:', error);
+        const container = document.getElementById('crypto-list');
+        container.innerHTML = '<p>Error loading prices. Please try again later.</p>';
     }
 }
 
