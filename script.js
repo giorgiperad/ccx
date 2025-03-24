@@ -1,4 +1,4 @@
-// List of cryptocurrencies to track (CoinGecko IDs) - 34 coins from your widget
+// List of cryptocurrencies to track (CoinGecko IDs) - 34 coins
 const cryptoIds = [
     'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar',
     'kava', 'decentraland', 'zksync', 'arbitrum', 'optimism',
