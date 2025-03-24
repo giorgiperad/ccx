@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Collective X Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <style>
         /* Reset default margins and padding */
         * {
@@ -15,25 +16,37 @@
         /* Body styles */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1a1a1a;
+            background-color: #0f1419;
             color: #ffffff;
             line-height: 1.6;
         }
 
         /* Header styles */
         header {
-            background: linear-gradient(90deg, #2c3e50, #3498db);
-            padding: 2rem;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
+            padding: 1.2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ecf0f1;
+            letter-spacing: 3px;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Style for the "X" */
+        .highlight-x {
+            color: #ff007a; /* Neon pink for standout effect */
+            font-size: 2.2rem; /* Slightly larger than the rest */
+            font-weight: 700;
+            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a; /* Glowing neon effect */
+            position: relative;
+            top: 2px; /* Slight lift for emphasis */
         }
 
         /* Widget container */
@@ -53,16 +66,16 @@
 </head>
 <body>
     <header>
-        <h1>Crypto Collective X Portfolio</h1>
+        <h1>Crypto Collective <span class="highlight-x">X</span> Portfolio</h1>
     </header>
     <div class="widget-container">
         <!-- CoinGecko Widget -->
         <script src="https://widgets.coingecko.com/gecko-coin-list-widget.js"></script>
-        <gecko-coin-list-widget 
+       <gecko-coin-list-widget 
             locale="en" 
             dark-mode="true" 
             outlined="true" 
-            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui" 
+            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum" 
             initial-currency="usd">
         </gecko-coin-list-widget>
     </div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Crypto Price Tracker</title>
+    <style>
+        /* Reset default margins and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #e0e0e0;
+        }
+
+        /* Crypto container */
+        .crypto-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+
+        /* Crypto item styling */
+        .crypto-item {
+            background: #2c2c2c;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .crypto-item:hover {
+            transform: scale(1.02);
+        }
+
+        .crypto-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .crypto-price {
+            font-size: 1.1rem;
+            color: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Crypto Price Tracker</h1>
+    </header>
+    <div id="crypto-list" class="crypto-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
