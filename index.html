@@ -3,174 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Collective X Trackera</title>
+    <title>Crypto Collective X Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <style>
+        /* Reset default margins and paddinga */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* Body styles */
         body {
-            font-family: 'Inter', 'Arial', sans-serif;
-            background: #0d1117;
-            color: #c9d1d9;
+            font-family: 'Arial', sans-serif;
+            background-color: #0f1419;
+            color: #ffffff;
             line-height: 1.6;
-            overflow-x: hidden;
         }
+
+        /* Header styles */
         header {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            padding: 2rem;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
+            padding: 1.2rem;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
+
+        /* Style for the "X" */
         .highlight-x {
-            color: #00e5ff;
-            font-size: 3rem;
-            font-weight: 800;
-            text-shadow: 0 0 20px #00e5ff, 0 0 30px #00e5ff;
-        }
-        .crypto-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .crypto-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(22, 27, 34, 0.9);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-        }
-        .crypto-table thead {
-            background: linear-gradient(90deg, #1f2529, #2a3238);
-        }
-        .crypto-table th {
-            padding: 15px 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.3s ease;
+            color: #ff007a; /* Neon pink for standout effect */
+            font-size: 2.2rem; /* Slightly larger than the rest */
+            font-weight: 700;
+            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a; /* Glowing neon effect */
             position: relative;
+            top: 2px; /* Slight lifa for emphasis */
         }
-        .crypto-table th:hover {
-            background: rgba(255, 255, 255, 0.1);
+
+        /* Widget container */
+        .widget-container {
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
         }
-        .crypto-table th.active {
-            background: #00e5ff;
-            color: #0d1117;
-            text-shadow: none;
-        }
-        .crypto-table td {
-            padding: 15px 20px;
-            font-size: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .crypto-table tr {
-            transition: all 0.3s ease;
-        }
-        .crypto-table tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: scale(1.01);
-        }
-        .crypto-name {
-            font-weight: 500;
-            text-transform: capitalize;
-        }
-        .crypto-price {
-            color: #00c853; /* Solid green, less neon */
-            font-weight: 600;
-        }
-        .crypto-change {
-            font-weight: 600;
-        }
-        .positive {
-            color: #00c853; /* Solid green for gains */
-        }
-        .negative {
-            color: #d81b60; /* Solid red for losses */
-        }
-        .error-message {
-            text-align: center;
-            color: #d81b60;
-            padding: 20px;
-            font-size: 1.2rem;
-        }
-        /* Mobile responsiveness */
-        @media (max-width: 900px) {
-            .crypto-table th, .crypto-table td {
-                font-size: 0.95rem;
-                padding: 12px 10px;
-            }
-            .crypto-container {
-                padding: 0 10px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .highlight-x {
-                font-size: 2.4rem;
-            }
-        }
-        @media (max-width: 600px) {
-            .crypto-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            .crypto-table th, .crypto-tablea td {
-                min-width: 100px; /* Adjusted for fewer columns */
-                font-size: 0.9rem;
-                padding: 10px 8px;
-            }
-            .crypto-table thead {
-                position: sticky;
-                top: 0;
-            }
-            header {
-                padding: 1.5rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .highlight-x {
-                font-size: 2rem;
-            }
+
+        /* Ensure the widget takes full width */
+        gecko-coin-list-widget {
+            display: block;
+            width: 100%;
+            border: none;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
+        <h1>Crypto Collective <span class="highlight-x">X</span> Portfolio</h1>
     </header>
-    <div class="crypto-container">
-        <table class="crypto-table">
-            <thead>
-                <tr>
-                    <th data-sort="name">Name</th>
-                    <th data-sort="price">Price</th>
-                    <th data-sort="change_24h">24h Change</th>
-                </tr>
-            </thead>
-            <tbody id="crypto-list"></tbody>
-        </table>
+    <div class="widget-container">
+        <!-- CoinGecko Widget -->
+        <script src="https://widgets.coingecko.com/gecko-coin-list-widget.js"></script>
+       <gecko-coin-list-widget 
+            locale="en" 
+            dark-mode="true" 
+            outlined="true" 
+            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum" 
+            initial-currency="usd">
+        </gecko-coin-list-widget>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
