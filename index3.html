@@ -12,34 +12,68 @@
         }
         body {
             font-family: 'Inter', 'Arial', sans-serif;
-            background: #0d1117;
-            color: #c9d1d9;
+            background: #0a0e14;
+            color: #d9e1e8;
             line-height: 1.6;
             overflow-x: hidden;
         }
         header {
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            padding: 2rem;
+            padding: 2.5rem;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7);
             position: sticky;
             top: 0;
             z-index: 10;
-            backdrop-filter: blur(10px);
+            border-bottom: 4px solid #00e5ff;
         }
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
         .highlight-x {
             color: #00e5ff;
-            font-size: 3rem;
-            font-weight: 800;
-            text-shadow: 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+            font-size: 3.4rem;
+            font-weight: 900;
+            text-shadow: 0 0 25px #00e5ff, 0 0 40px #00e5ff;
+        }
+        .fear-greed-container {
+            background: #1a2029;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            border-bottom: 2px solid #00e5ff;
+        }
+        .fear-greed-label {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+        .fear-greed-bar {
+            width: 80%;
+            max-width: 600px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 2px solid #ffffff;
+        }
+        .fear-greed-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d81b60, #ffd700, #00c853);
+            transition: width 0.5s ease;
+        }
+        .fear-greed-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 0.5rem;
         }
         .crypto-container {
             max-width: 1400px;
@@ -49,82 +83,86 @@
         .crypto-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(22, 27, 34, 0.9);
-            border-radius: 16px;
+            background: #161b22;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+            border: 3px solid #2a3238;
         }
         .crypto-table thead {
-            background: linear-gradient(90deg, #1f2529, #2a3238);
+            background: #2a3238;
+            border-bottom: 3px solid #00e5ff;
         }
         .crypto-table th {
-            padding: 15px 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
+            padding: 18px 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #ffffff;
             cursor: pointer;
             user-select: none;
             transition: all 0.3s ease;
-            position: relative;
         }
         .crypto-table th:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #3a4248;
         }
         .crypto-table th.active {
             background: #00e5ff;
-            color: #0d1117;
-            text-shadow: none;
+            color: #0a0e14;
         }
         .crypto-table td {
-            padding: 15px 20px;
-            font-size: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 25px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #2a3238;
         }
         .crypto-table tr {
             transition: all 0.3s ease;
         }
         .crypto-table tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: scale(1.01);
+            background: #1e252b;
+            transform: scale(1.005);
         }
         .crypto-name {
-            font-weight: 500;
+            font-weight: 600;
             text-transform: capitalize;
         }
         .crypto-price {
-            color: #00c853; /* Solid green, less neon */
-            font-weight: 600;
+            color: #00c853; /* Solid green */
+            font-weight: 700;
         }
         .crypto-change {
-            font-weight: 600;
+            font-weight: 700;
+        }
+        .crypto-fear-greed {
+            color: #ffd700; /* Solid gold */
+            font-weight: 700;
         }
         .positive {
-            color: #00c853; /* Solid green for gains */
+            color: #00c853; /* Solid green */
         }
         .negative {
-            color: #d81b60; /* Solid red for losses */
+            color: #d81b60; /* Solid red */
         }
         .error-message {
             text-align: center;
             color: #d81b60;
             padding: 20px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
         /* Mobile responsiveness */
         @media (max-width: 900px) {
             .crypto-table th, .crypto-table td {
-                font-size: 0.95rem;
-                padding: 12px 10px;
+                font-size: 1rem;
+                padding: 14px 12px;
             }
-            .crypto-container {
-                padding: 0 10px;
+            .fear-greed-bar {
+                width: 90%;
             }
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             .highlight-x {
-                font-size: 2.4rem;
+                font-size: 2.6rem;
             }
         }
         @media (max-width: 600px) {
@@ -133,32 +171,41 @@
                 overflow-x: auto;
                 white-space: nowrap;
             }
-            .crypto-table th, .crypto-tablea td {
-                min-width: 100px; /* Adjusted for fewer columns */
-                font-size: 0.9rem;
-                padding: 10px 8px;
-            }
-            .crypto-table thead {
-                position: sticky;
-                top: 0;
+            .crypto-table th, .crypto-table td {
+                min-width: 100px;
+                font-size: 0.95rem;
+                padding: 12px 10px;
             }
             header {
                 padding: 1.5rem;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.9rem;
             }
             .highlight-x {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            .fear-greed-label {
+                font-size: 1.2rem;
+            }
+            .fear-greed-value {
+                font-size: 1rem;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
     </header>
+    <div class="fear-greed-container">
+        <div class="fear-greed-label">Crypto Fear & Greed Index</div>
+        <div class="fear-greed-bar">
+            <div class="fear-greed-fill" id="fear-greed-fill"></div>
+        </div>
+        <div class="fear-greed-value" id="fear-greed-value">Loading...</div>
+    </div>
     <div class="crypto-container">
         <table class="crypto-table">
             <thead>
@@ -166,6 +213,7 @@
                     <th data-sort="name">Name</th>
                     <th data-sort="price">Price</th>
                     <th data-sort="change_24h">24h Change</th>
+                    <th data-sort="fear_greed">Fear & Greed</th>
                 </tr>
             </thead>
             <tbody id="crypto-list"></tbody>
