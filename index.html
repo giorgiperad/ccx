@@ -31,12 +31,22 @@
 
         header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem; /* Smaller title */
+            font-size: 1.8rem;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #e0e0e0;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Style for the "X" */
+        .highlight-x {
+            color: #ff007a; /* Neon pink for standout effect */
+            font-size: 2.2rem; /* Slightly larger than the rest */
+            font-weight: 700;
+            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a; /* Glowing neon effect */
+            position: relative;
+            top: 2px; /* Slight lift for emphasis */
         }
 
         /* Widget container */
@@ -56,7 +66,7 @@
 </head>
 <body>
     <header>
-        <h1>Crypto Collective X Portfolio</h1>
+        <h1>Crypto Collective <span class="highlight-x">X</span> Portfolio</h1>
     </header>
     <div class="widget-container">
         <!-- CoinGecko Widget -->
