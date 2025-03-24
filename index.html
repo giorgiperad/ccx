@@ -11,84 +11,110 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Orbitron', 'Arial', sans-serif;
-            background: #0f1419;
+            font-family: 'Inter', 'Arial', sans-serif;
+            background: #121212;
             color: #e0e0e0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
-            padding: 1.5rem;
+            background: linear-gradient(135deg, #1a237e, #3f51b5);
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            color: #ffffff;
         }
         .highlight-x {
-            color: #ff007a;
-            font-size: 2.4rem;
+            color: #ff4081;
+            font-size: 2.6rem;
             font-weight: 700;
-            text-shadow: 0 0 15px #ff007a;
+            text-shadow: 0 0 12px rgba(255, 64, 129, 0.5);
         }
         .crypto-container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
         }
         .crypto-card {
-            background: #1c2526;
+            background: #1e1e1e;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 16px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .crypto-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .crypto-name {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
             text-transform: capitalize;
-            margin-bottom: 10px;
         }
         .crypto-details {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         .crypto-price {
-            font-size: 1.2rem;
-            color: #00cc00;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #76ff03;
         }
         .crypto-market-cap {
-            font-size: 0.9rem;
-            color: #a0a0a0;
+            font-size: 1rem;
+            color: #b0bec5;
         }
         .crypto-change {
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
         }
         .positive {
-            color: #00cc00;
+            color: #76ff03;
         }
         .negative {
-            color: #ff5555;
+            color: #ff5252;
         }
         .error-message {
             text-align: center;
-            color: #ff5555;
+            color: #ff5252;
             padding: 20px;
+            font-size: 1.2rem;
             grid-column: 1 / -1;
         }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .crypto-container {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+            .crypto-card {
+                padding: 15px;
+            }
+            .crypto-name {
+                font-size: 1.2rem;
+            }
+            .crypto-price {
+                font-size: 1.1rem;
+            }
+        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
