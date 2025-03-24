@@ -93,24 +93,21 @@
             text-transform: capitalize;
         }
         .crypto-price {
-            color: #39ff14;
-            font-weight: 500;
-        }
-        .crypto-market-cap {
-            color: #8b949e;
+            color: #00c853; /* Solid green, less neon */
+            font-weight: 600;
         }
         .crypto-change {
-            font-weight: 500;
+            font-weight: 600;
         }
         .positive {
-            color: #39ff14;
+            color: #00c853; /* Solid green for gains */
         }
         .negative {
-            color: #ff4560;
+            color: #d81b60; /* Solid red for losses */
         }
         .error-message {
             text-align: center;
-            color: #ff4560;
+            color: #d81b60;
             padding: 20px;
             font-size: 1.2rem;
         }
@@ -137,7 +134,7 @@
                 white-space: nowrap;
             }
             .crypto-table th, .crypto-table td {
-                min-width: 120px;
+                min-width: 100px; /* Adjusted for fewer columns */
                 font-size: 0.9rem;
                 padding: 10px 8px;
             }
@@ -168,7 +165,6 @@
                 <tr>
                     <th data-sort="name">Name</th>
                     <th data-sort="price">Price</th>
-                    <th data-sort="market_cap">Market Cap</th>
                     <th data-sort="change_24h">24h Change</th>
                 </tr>
             </thead>

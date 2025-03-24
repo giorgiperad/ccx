@@ -11,7 +11,7 @@ const cryptoIds = [
 ];
 
 // Store the current sort state
-let sortColumn = 'market_cap';
+let sortColumn = 'price'; // Default to price instead of market_cap
 let sortDirection = -1; // -1 for descending, 1 for ascending
 let cryptoData = [];
 
@@ -32,7 +32,7 @@ async function fetchCryptoData() {
         displayCryptoData();
     } catch (error) {
         console.error('Error fetching data:', error);
-        container.innerHTML = '<tr><td colspan="4" class="error-message">Failed to load crypto data. Check console for details.</td></tr>';
+        container.innerHTML = '<tr><td colspan="3" class="error-message">Failed to load crypto data. Check console for details.</td></tr>';
     }
 }
 
@@ -53,10 +53,6 @@ function displayCryptoData() {
                 aValue = a.current_price || 0;
                 bValue = b.current_price || 0;
                 return sortDirection * (aValue - bValue);
-            case 'market_cap':
-                aValue = a.market_cap || 0;
-                bValue = b.market_cap || 0;
-                return sortDirection * (aValue - bValue);
             case 'change_24h':
                 aValue = a.price_change_percentage_24h || 0;
                 bValue = b.price_change_percentage_24h || 0;
@@ -68,7 +64,6 @@ function displayCryptoData() {
 
     sortedData.forEach(coin => {
         const price = coin.current_price ? `$${coin.current_price.toFixed(2)}` : 'N/A';
-        const marketCap = coin.market_cap ? `$${coin.market_cap.toLocaleString()}` : 'N/A';
         const change24h = coin.price_change_percentage_24h !== null ? coin.price_change_percentage_24h.toFixed(2) : 'N/A';
         const changeClass = change24h >= 0 ? 'positive' : 'negative';
 
@@ -76,7 +71,6 @@ function displayCryptoData() {
         row.innerHTML = `
             <td class="crypto-name">${coin.id}</td>
             <td class="crypto-price">${price}</td>
-            <td class="crypto-market-cap">${marketCap}</td>
             <td class="crypto-change ${changeClass}">${change24h}%</td>
         `;
         container.appendChild(row);
