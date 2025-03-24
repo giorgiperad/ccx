@@ -18,37 +18,71 @@
             overflow-x: hidden;
         }
         header {
-            background: linear-gradient(135deg, #1a0f29, #4b2b63, #3e2443); /* Purple tones */
-            padding: 3rem; /* Increased padding for solidity */
+            background: linear-gradient(135deg, #1a0f29, #4b2b63, #3e2443);
+            padding: 3rem;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8); /* Deeper shadow */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 6px solid #962bc0; /* Thicker purple border */
+            border-bottom: 6px solid #962bc0;
         }
         h1 {
-            font-size: 3rem; /* Larger base size */
-            font-weight: 900; /* Extra bold */
+            font-size: 3rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 5px; /* Wider spacing */
+            letter-spacing: 5px;
             color: #ffffff;
             text-shadow: 
                 0 0 10px rgba(255, 255, 255, 0.5),
-                0 0 20px rgba(150, 43, 192, 0.7); /* Purple glow */
+                0 0 20px rgba(150, 43, 192, 0.7);
         }
         .highlight-x {
-            color: #962bc0; /* Purple X */
-            font-size: 4rem; /* Even larger X */
-            font-weight: 950; /* Ultra bold (custom weight) */
+            color: #962bc0;
+            font-size: 4rem;
+            font-weight: 950;
             text-shadow: 
                 0 0 25px #962bc0, 
                 0 0 40px #962bc0, 
                 0 0 60px #962bc0, 
-                -2px -2px 0 #ffffff, /* White outline */
+                -2px -2px 0 #ffffff, 
                 2px -2px 0 #ffffff, 
                 -2px 2px 0 #ffffff, 
-                2px 2px 0 #ffffff; /* Solid outline effect */
+                2px 2px 0 #ffffff;
+        }
+        .fear-greed-container {
+            background: #1a2029;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            border-bottom: 2px solid #962bc0;
+        }
+        .fear-greed-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+        }
+        .fear-greed-bar {
+            width: 80%;
+            max-width: 600px;
+            height: 25px;
+            background: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 3px solid #ffffff;
+        }
+        .fear-greed-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d81b60, #ffd700, #00c853);
+            transition: width 0.5s ease;
+        }
+        .fear-greed-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 0.75rem;
         }
         .crypto-container {
             max-width: 1400px;
@@ -66,7 +100,7 @@
         }
         .crypto-table thead {
             background: #2a3238;
-            border-bottom: 3px solid #962bc0; /* Purple border */
+            border-bottom: 3px solid #962bc0;
         }
         .crypto-table th {
             padding: 18px 25px;
@@ -81,7 +115,7 @@
             background: #3a4248;
         }
         .crypto-table th.active {
-            background: #962bc0; /* Purple active header */
+            background: #962bc0;
             color: #ffffff;
         }
         .crypto-table td {
@@ -110,21 +144,8 @@
             vertical-align: middle;
         }
         .crypto-price {
-            color: #00c853; /* Solid green */
+            color: #00c853;
             font-weight: 700;
-        }
-        .crypto-volume {
-            color: #b0bec5; /* Gray for volume */
-            font-weight: 600;
-        }
-        .crypto-change {
-            font-weight: 700;
-        }
-        .positive {
-            color: #00c853; /* Solid green */
-        }
-        .negative {
-            color: #d81b60; /* Solid red */
         }
         .error-message {
             text-align: center;
@@ -145,6 +166,9 @@
             .highlight-x {
                 font-size: 3.2rem;
             }
+            .fear-greed-bar {
+                width: 90%;
+            }
         }
         @media (max-width: 600px) {
             .crypto-table {
@@ -153,7 +177,7 @@
                 white-space: nowrap;
             }
             .crypto-table th, .crypto-table td {
-                min-width: 100px;
+                min-width: 120px;
                 font-size: 0.95rem;
                 padding: 12px 10px;
             }
@@ -170,22 +194,33 @@
                 width: 20px;
                 height: 20px;
             }
+            .fear-greed-label {
+                font-size: 1.3rem;
+            }
+            .fear-greed-value {
+                font-size: 1.1rem;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Crypto Collective <span class="highlight-x">X</span> </h1>
+        <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
     </header>
+    <div class="fear-greed-container">
+        <div class="fear-greed-label">კრიპტო შიშისა და სიხარბის ინდექსი</div>
+        <div class="fear-greed-bar">
+            <div class="fear-greed-fill" id="fear-greed-fill"></div>
+        </div>
+        <div class="fear-greed-value" id="fear-greed-value">იტვირთება...</div>
+    </div>
     <div class="crypto-container">
         <table class="crypto-table">
             <thead>
                 <tr>
                     <th data-sort="name">Name</th>
                     <th data-sort="price">Price</th>
-                    <th data-sort="change_24h">24h Change</th>
-                    <th data-sort="volume">Volume (24h)</th>
                 </tr>
             </thead>
             <tbody id="crypto-list"></tbody>
