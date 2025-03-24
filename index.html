@@ -6,14 +6,12 @@
     <title>Crypto Collective X Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <style>
-        /* Reset default margins and paddinga */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Body styles */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #0f1419;
@@ -21,7 +19,6 @@
             line-height: 1.6;
         }
 
-        /* Header styles */
         header {
             background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
             padding: 1.2rem;
@@ -39,28 +36,55 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        /* Style for the "X" */
         .highlight-x {
-            color: #ff007a; /* Neon pink for standout effect */
-            font-size: 2.2rem; /* Slightly larger than the rest */
+            color: #ff007a;
+            font-size: 2.2rem;
             font-weight: 700;
-            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a; /* Glowing neon effect */
+            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a;
             position: relative;
-            top: 2px; /* Slight lifa for emphasis */
+            top: 2px;
         }
 
-        /* Widget container */
         .widget-container {
             width: 100%;
             padding: 0;
             overflow: hidden;
         }
 
-        /* Ensure the widget takes full width */
         gecko-coin-list-widget {
             display: block;
             width: 100%;
             border: none;
+        }
+
+        /* Fear and Greed Index styles */
+        .fear-greed-container {
+            padding: 20px;
+            text-align: center;
+            background-color: #1a2228;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .fear-greed-container h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+
+        .fear-greed-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff007a;
+        }
+
+        .fear-greed-classification {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #b0b0b0;
         }
     </style>
 </head>
@@ -68,10 +92,17 @@
     <header>
         <h1>Crypto Collective <span class="highlight-x">X</span> Portfolio</h1>
     </header>
+    
+    <!-- Fear and Greed Index Section -->
+    <div class="fear-greed-container">
+        <h2>კრიპტო შიშისა და სიხარბის ინდექსი</h2>
+        <div id="fear-greed-value" class="fear-greed-value">Loading...</div>
+        <div id="fear-greed-classification" class="fear-greed-classification"></div>
+    </div>
+
     <div class="widget-container">
-        <!-- CoinGecko Widget -->
         <script src="https://widgets.coingecko.com/gecko-coin-list-widget.js"></script>
-       <gecko-coin-list-widget 
+        <gecko-coin-list-widget 
             locale="en" 
             dark-mode="true" 
             outlined="true" 
@@ -79,5 +110,42 @@
             initial-currency="usd">
         </gecko-coin-list-widget>
     </div>
+
+    <!-- JavaScript to fetch and update Fear and Greed Index -->
+    <script>
+        async function fetchFearGreedIndex() {
+            try {
+                const response = await fetch('https://api.alternative.me/fng/?limit=1');
+                const data = await response.json();
+                const value = data.data[0].value;
+                const classification = data.data[0].value_classification;
+
+                // Update the DOM with the fetched data
+                document.getElementById('fear-greed-value').textContent = value;
+
+                // Translate classification to Georgian
+                const translations = {
+                    "Extreme Fear": "უკიდურესი შიში",
+                    "Fear": "შიში",
+                    "Neutral": "ნეიტრალური",
+                    "Greed": "სიხარბე",
+                    "Extreme Greed": "უკიდურესი სიხარბე"
+                };
+                document.getElementById('fear-greed-classification').textContent = 
+                    translations[classification] || classification;
+
+            } catch (error) {
+                console.error('Error fetching Fear and Greed Index:', error);
+                document.getElementById('fear-greed-value').textContent = 'N/A';
+                document.getElementById('fear-greed-classification').textContent = 'მონაცემების ჩატვირთვა ვერ მოხერხდა';
+            }
+        }
+
+        // Fetch data initially
+        fetchFearGreedIndex();
+
+        // Update every 5 minutes (300,000 milliseconds)
+        setInterval(fetchFearGreedIndex, 300000);
+    </script>
 </body>
 </html>
