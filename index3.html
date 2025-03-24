@@ -18,14 +18,14 @@
             overflow-x: hidden;
         }
         header {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #1a0f29, #4b2b63, #3e2443); /* Updated to purple tones */
             padding: 2.5rem;
             text-align: center;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7);
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 4px solid #00e5ff;
+            border-bottom: 4px solid #962bc0; /* Purple border */
         }
         h1 {
             font-size: 2.8rem;
@@ -36,44 +36,10 @@
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
         .highlight-x {
-            color: #00e5ff;
+            color: #962bc0; /* New purple X */
             font-size: 3.4rem;
             font-weight: 900;
-            text-shadow: 0 0 25px #00e5ff, 0 0 40px #00e5ff;
-        }
-        .fear-greed-container {
-            background: #1a2029;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            border-bottom: 2px solid #00e5ff;
-        }
-        .fear-greed-label {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ffd700;
-            margin-bottom: 0.5rem;
-        }
-        .fear-greed-bar {
-            width: 80%;
-            max-width: 600px;
-            height: 20px;
-            background: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 2px solid #ffffff;
-        }
-        .fear-greed-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d81b60, #ffd700, #00c853);
-            transition: width 0.5s ease;
-        }
-        .fear-greed-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-top: 0.5rem;
+            text-shadow: 0 0 25px #962bc0, 0 0 40px #962bc0;
         }
         .crypto-container {
             max-width: 1400px;
@@ -91,7 +57,7 @@
         }
         .crypto-table thead {
             background: #2a3238;
-            border-bottom: 3px solid #00e5ff;
+            border-bottom: 3px solid #962bc0; /* Purple border */
         }
         .crypto-table th {
             padding: 18px 25px;
@@ -106,8 +72,8 @@
             background: #3a4248;
         }
         .crypto-table th.active {
-            background: #00e5ff;
-            color: #0a0e14;
+            background: #962bc0; /* Purple active header */
+            color: #ffffff;
         }
         .crypto-table td {
             padding: 18px 25px;
@@ -124,16 +90,25 @@
         .crypto-name {
             font-weight: 600;
             text-transform: capitalize;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .crypto-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
         }
         .crypto-price {
             color: #00c853; /* Solid green */
             font-weight: 700;
         }
-        .crypto-change {
-            font-weight: 700;
+        .crypto-volume {
+            color: #b0bec5; /* Gray for volume */
+            font-weight: 600;
         }
-        .crypto-fear-greed {
-            color: #ffd700; /* Solid gold */
+        .crypto-change {
             font-weight: 700;
         }
         .positive {
@@ -154,9 +129,6 @@
             .crypto-table th, .crypto-table td {
                 font-size: 1rem;
                 padding: 14px 12px;
-            }
-            .fear-greed-bar {
-                width: 90%;
             }
             h1 {
                 font-size: 2.2rem;
@@ -185,11 +157,9 @@
             .highlight-x {
                 font-size: 2.2rem;
             }
-            .fear-greed-label {
-                font-size: 1.2rem;
-            }
-            .fear-greed-value {
-                font-size: 1rem;
+            .crypto-icon {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -199,13 +169,6 @@
     <header>
         <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
     </header>
-    <div class="fear-greed-container">
-        <div class="fear-greed-label">Crypto Fear & Greed Index</div>
-        <div class="fear-greed-bar">
-            <div class="fear-greed-fill" id="fear-greed-fill"></div>
-        </div>
-        <div class="fear-greed-value" id="fear-greed-value">Loading...</div>
-    </div>
     <div class="crypto-container">
         <table class="crypto-table">
             <thead>
@@ -213,7 +176,7 @@
                     <th data-sort="name">Name</th>
                     <th data-sort="price">Price</th>
                     <th data-sort="change_24h">24h Change</th>
-                    <th data-sort="fear_greed">Fear & Greed</th>
+                    <th data-sort="volume">Volume (24h)</th>
                 </tr>
             </thead>
             <tbody id="crypto-list"></tbody>
