@@ -1,4 +1,4 @@
-// List of cryptocurrencies to track (CoinGecko IDs) - 34 coins
+// List of cryptocurrencies to track (CoinGecko IDs) - 44 coins
 const cryptoIds = [
     'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar',
     'kava', 'decentraland', 'zksync', 'arbitrum', 'optimism',
@@ -7,13 +7,49 @@ const cryptoIds = [
     'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds',
     'chainge-finance', 'befi-labs', 'hello-labs', 'masa-finance',
     'cardano', 'ripple', 'celo', 'osmosis', 'cosmos', 'berachain-bera',
-    'sui'
+    'sui', 'beoble', 'dia-data', 'chainlink', 'agridex-governance-token',
+    'kolz', 'kitten-haimer', 'badger-dao', 'iota', 'worldcoin-wld',
+    'mintlayer', 'ethereum'
 ];
 
 // Store the current sort state
 let sortColumn = 'price';
 let sortDirection = -1; // -1 for descending, 1 for ascending
 let cryptoData = [];
+let fearGreedIndex = null;
+
+// Function to fetch Fear and Greed Index
+async function fetchFearGreedIndex() {
+    const url = 'https://api.alternative.me/fng/?limit=1';
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+        fearGreedIndex = parseInt(data.data[0].value);
+        updateFearGreedDisplay();
+    } catch (error) {
+        console.error('Error fetching Fear & Greed Index:', error);
+        document.getElementById('fear-greed-value').textContent = 'შეცდომა';
+    }
+}
+
+// Function to update Fear and Greed display in Georgian
+function updateFearGreedDisplay() {
+    const fillElement = document.getElementById('fear-greed-fill');
+    const valueElement = document.getElementById('fear-greed-value');
+    if (fearGreedIndex !== null) {
+        fillElement.style.width = `${fearGreedIndex}%`;
+        valueElement.textContent = `${fearGreedIndex} - ${getFearGreedClassification(fearGreedIndex)}`;
+    }
+}
+
+// Function to classify Fear and Greed value in Georgian
+function getFearGreedClassification(value) {
+    if (value <= 24) return 'უკიდურესი შიში';
+    if (value <= 49) return 'შიში';
+    if (value <= 74) return 'სიხარბე';
+    return 'უკიდურესი სიხარბე';
+}
 
 // Function to fetch crypto data
 async function fetchCryptoData() {
@@ -28,7 +64,7 @@ async function fetchCryptoData() {
         displayCryptoData();
     } catch (error) {
         console.error('Error fetching crypto data:', error);
-        container.innerHTML = '<tr><td colspan="4" class="error-message">Failed to load crypto data.</td></tr>';
+        container.innerHTML = '<tr><td colspan="2" class="error-message">ჩატვირთვა ვერ მოხერხდა.</td></tr>';
     }
 }
 
@@ -48,25 +84,13 @@ function displayCryptoData() {
                 aValue = a.current_price || 0;
                 bValue = b.current_price || 0;
                 return sortDirection * (aValue - bValue);
-            case 'change_24h':
-                aValue = a.price_change_percentage_24h || 0;
-                bValue = b.price_change_percentage_24h || 0;
-                return sortDirection * (aValue - bValue);
-            case 'volume':
-                aValue = a.total_volume || 0;
-                bValue = b.total_volume || 0;
-                return sortDirection * (aValue - bValue);
             default:
                 return 0;
         }
     });
 
     sortedData.forEach(coin => {
-        const price = coin.current_price ? `$${coin.current_price.toFixed(2)}` : 'N/A';
-        const change24h = coin.price_change_percentage_24h !== null ? coin.price_change_percentage_24h.toFixed(2) : 'N/A';
-        const volume = coin.total_volume ? `$${coin.total_volume.toLocaleString()}` : 'N/A';
-        const changeClass = change24h >= 0 ? 'positive' : 'negative';
-
+        const price = coin.current_price !== null ? `$${coin.current_price.toFixed(4)}` : 'N/A'; // 4 decimals
         const row = document.createElement('tr');
         row.innerHTML = `
             <td class="crypto-name">
@@ -74,8 +98,6 @@ function displayCryptoData() {
                 ${coin.id}
             </td>
             <td class="crypto-price">${price}</td>
-            <td class="crypto-change ${changeClass}">${change24h}%</td>
-            <td class="crypto-volume">${volume}</td>
         `;
         container.appendChild(row);
     });
@@ -102,6 +124,8 @@ function setupSorting() {
 }
 
 // Fetch data and set up
+fetchFearGreedIndex();
 fetchCryptoData();
 setupSorting();
-setInterval(fetchCryptoData, 60000); // Refresh every 60 seconds
+setInterval(fetchFearGreedIndex, 60000); // Refresh Fear & Greed every 60s
+setInterval(fetchCryptoData, 60000); // Refresh crypto data every 60s
