@@ -11,7 +11,7 @@ const cryptoIds = [
 ];
 
 // Store the current sort state
-let sortColumn = 'price'; // Default to price instead of market_cap
+let sortColumn = 'price'; // Default ta price instead of market_cap
 let sortDirection = -1; // -1 for descending, 1 for ascending
 let cryptoData = [];
 
