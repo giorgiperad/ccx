@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Collective X Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,32 +19,77 @@
             line-height: 1.6;
         }
 
+        /* Updated Header Styles */
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
-            padding: 1.2rem;
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 50%, #b24592 100%);
+            padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #ff007a;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.8rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #e0e0e0;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.3), 0 0 20px #ff007a;
         }
 
         .highlight-x {
             color: #ff007a;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            text-shadow: 0 0 15px #ff007a, 0 0 25px #ff007a;
+            text-shadow: 0 0 15px #ff007a, 0 0 30px #ff007a;
             position: relative;
-            top: 2px;
+            top: 3px;
         }
 
+        /* Updated Fear and Greed Index Styles */
+        .fear-greed-container {
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a2228, #2a343c);
+            margin: 20px auto;
+            max-width: 700px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid #ff007a;
+        }
+
+        .fear-greed-container h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .fear-greed-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff007a;
+            text-shadow: 0 0 15px #ff007a;
+            margin-bottom: 10px;
+        }
+
+        .fear-greed-classification {
+            font-size: 1.4rem;
+            color: #e0e0e0;
+            background-color: rgba(255, 0, 122, 0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Widget Container */
         .widget-container {
             width: 100%;
             padding: 0;
@@ -56,46 +101,16 @@
             width: 100%;
             border: none;
         }
-
-        /* Fear and Greed Index styles */
-        .fear-greed-container {
-            padding: 20px;
-            text-align: center;
-            background-color: #1a2228;
-            margin: 20px auto;
-            max-width: 600px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .fear-greed-container h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #e0e0e0;
-        }
-
-        .fear-greed-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ff007a;
-        }
-
-        .fear-greed-classification {
-            font-size: 1.2rem;
-            margin-top: 10px;
-            color: #b0b0b0;
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Crypto Collective <span class="highlight-x">X</span> Portfolio</h1>
+        <h1>Crypto Collective <span class="highlight-x">X</span> </h1>
     </header>
     
-    <!-- Fear and Greed Index Section -->
+    <!-- Updated Fear and Greed Index Section -->
     <div class="fear-greed-container">
-        <h2>კრიპტო შიშისა და სიხარბის ინდექსი</h2>
+        <h2> შიშისა და სიხარბის ინდექსი</h2>
         <div id="fear-greed-value" class="fear-greed-value">Loading...</div>
         <div id="fear-greed-classification" class="fear-greed-classification"></div>
     </div>
@@ -120,10 +135,8 @@
                 const value = data.data[0].value;
                 const classification = data.data[0].value_classification;
 
-                // Update the DOM with the fetched data
                 document.getElementById('fear-greed-value').textContent = value;
 
-                // Translate classification to Georgian
                 const translations = {
                     "Extreme Fear": "უკიდურესი შიში",
                     "Fear": "შიში",
@@ -141,10 +154,7 @@
             }
         }
 
-        // Fetch data initially
         fetchFearGreedIndex();
-
-        // Update every 5 minutes (300,000 milliseconds)
         setInterval(fetchFearGreedIndex, 300000);
     </script>
 </body>
