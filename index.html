@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Collective X Portfolio</title>
+    <style>
+        /* Reset default margins and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ecf0f1;
+        }
+
+        /* Widget container */
+        .widget-container {
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Ensure the widget takes full width */
+        gecko-coin-list-widget {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Crypto Collective X Portfolio</h1>
+    </header>
+    <div class="widget-container">
+        <!-- CoinGecko Widget -->
+        <script src="https://widgets.coingecko.com/gecko-coin-list-widget.js"></script>
+        <gecko-coin-list-widget 
+            locale="en" 
+            dark-mode="true" 
+            outlined="true" 
+            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui" 
+            initial-currency="usd">
+        </gecko-coin-list-widget>
+    </div>
+</body>
+</html>
