@@ -14,40 +14,6 @@ const cryptoIds = [
 let sortColumn = 'price';
 let sortDirection = -1; // -1 for descending, 1 for ascending
 let cryptoData = [];
-let fearGreedIndex = null;
-
-// Function to fetch Fear and Greed Index
-async function fetchFearGreedIndex() {
-    const url = 'https://api.alternative.me/fng/?limit=1';
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const data = await response.json();
-        fearGreedIndex = parseInt(data.data[0].value);
-        updateFearGreedDisplay();
-    } catch (error) {
-        console.error('Error fetching Fear & Greed Index:', error);
-        document.getElementById('fear-greed-value').textContent = 'Error';
-    }
-}
-
-// Function to update Fear and Greed display
-function updateFearGreedDisplay() {
-    const fillElement = document.getElementById('fear-greed-fill');
-    const valueElement = document.getElementById('fear-greed-value');
-    if (fearGreedIndex !== null) {
-        fillElement.style.width = `${fearGreedIndex}%`;
-        valueElement.textContent = `${fearGreedIndex} - ${getFearGreedClassification(fearGreedIndex)}`;
-    }
-}
-
-// Function to classify Fear and Greed value
-function getFearGreedClassification(value) {
-    if (value <= 24) return 'Extreme Fear';
-    if (value <= 49) return 'Fear';
-    if (value <= 74) return 'Greed';
-    return 'Extreme Greed';
-}
 
 // Function to fetch crypto data
 async function fetchCryptoData() {
@@ -86,10 +52,10 @@ function displayCryptoData() {
                 aValue = a.price_change_percentage_24h || 0;
                 bValue = b.price_change_percentage_24h || 0;
                 return sortDirection * (aValue - bValue);
-            case 'fear_greed':
-                aValue = fearGreedIndex || 0;
-                bValue = fearGreedIndex || 0;
-                return 0; // Static value, no variation
+            case 'volume':
+                aValue = a.total_volume || 0;
+                bValue = b.total_volume || 0;
+                return sortDirection * (aValue - bValue);
             default:
                 return 0;
         }
@@ -98,15 +64,18 @@ function displayCryptoData() {
     sortedData.forEach(coin => {
         const price = coin.current_price ? `$${coin.current_price.toFixed(2)}` : 'N/A';
         const change24h = coin.price_change_percentage_24h !== null ? coin.price_change_percentage_24h.toFixed(2) : 'N/A';
+        const volume = coin.total_volume ? `$${coin.total_volume.toLocaleString()}` : 'N/A';
         const changeClass = change24h >= 0 ? 'positive' : 'negative';
-        const fearGreed = fearGreedIndex !== null ? fearGreedIndex : 'N/A';
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td class="crypto-name">${coin.id}</td>
+            <td class="crypto-name">
+                <img src="${coin.image}" alt="${coin.id} icon" class="crypto-icon">
+                ${coin.id}
+            </td>
             <td class="crypto-price">${price}</td>
             <td class="crypto-change ${changeClass}">${change24h}%</td>
-            <td class="crypto-fear-greed">${fearGreed}</td>
+            <td class="crypto-volume">${volume}</td>
         `;
         container.appendChild(row);
     });
@@ -133,8 +102,6 @@ function setupSorting() {
 }
 
 // Fetch data and set up
-fetchFearGreedIndex();
 fetchCryptoData();
 setupSorting();
-setInterval(fetchFearGreedIndex, 60000); // Refresh Fear & Greed every 60s
-setInterval(fetchCryptoData, 60000); // Refresh crypto data every 60s
+setInterval(fetchCryptoData, 60000); // Refresh every 60 seconds
