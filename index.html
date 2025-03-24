@@ -15,7 +15,6 @@
             background: #121212;
             color: #e0e0e0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
         header {
             background: linear-gradient(135deg, #1a237e, #3f51b5);
@@ -43,45 +42,56 @@
             max-width: 1300px;
             margin: 30px auto;
             padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
         }
-        .crypto-card {
+        .crypto-table {
+            width: 100%;
+            border-collapse: collapse;
             background: #1e1e1e;
-            padding: 20px;
-            border-radius: 16px;
+            border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .crypto-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        .crypto-table thead {
+            background: #2a2a2a;
+            text-align: left;
         }
-        .crypto-name {
-            font-size: 1.4rem;
+        .crypto-table th {
+            padding: 15px 20px;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .crypto-table th:hover {
+            background: #3a3a3a;
+        }
+        .crypto-table th.active {
+            background: #ff4081;
+        }
+        .crypto-table td {
+            padding: 15px 20px;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .crypto-table tr {
+            transition: background 0.2s;
+        }
+        .crypto-table tr:hover {
+            background: #252525;
+        }
+        .crypto-name {
+            font-weight: 500;
             text-transform: capitalize;
         }
-        .crypto-details {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
         .crypto-price {
-            font-size: 1.25rem;
-            font-weight: 500;
             color: #76ff03;
         }
         .crypto-market-cap {
-            font-size: 1rem;
             color: #b0bec5;
         }
         .crypto-change {
-            font-size: 1rem;
             font-weight: 500;
         }
         .positive {
@@ -95,22 +105,15 @@
             color: #ff5252;
             padding: 20px;
             font-size: 1.2rem;
-            grid-column: 1 / -1;
         }
         /* Responsive adjustments */
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
+            .crypto-table th, .crypto-table td {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
             .crypto-container {
-                grid-template-columns: 1fr;
                 padding: 0 10px;
-            }
-            .crypto-card {
-                padding: 15px;
-            }
-            .crypto-name {
-                font-size: 1.2rem;
-            }
-            .crypto-price {
-                font-size: 1.1rem;
             }
         }
     </style>
@@ -120,7 +123,19 @@
     <header>
         <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
     </header>
-    <div id="crypto-list" class="crypto-container"></div>
+    <div class="crypto-container">
+        <table class="crypto-table">
+            <thead>
+                <tr>
+                    <th data-sort="name">Name</th>
+                    <th data-sort="price">Price</th>
+                    <th data-sort="market_cap">Market Cap</th>
+                    <th data-sort="change_24h">24h Change</th>
+                </tr>
+            </thead>
+            <tbody id="crypto-list"></tbody>
+        </table>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
