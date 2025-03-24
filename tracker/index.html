@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Collective X Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Orbitron', 'Arial', sans-serif;
+            background: #0f1419;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #b24592);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .highlight-x {
+            color: #ff007a;
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px #ff007a;
+        }
+        .crypto-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .crypto-card {
+            background: #1c2526;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .crypto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        }
+        .crypto-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin-bottom: 10px;
+        }
+        .crypto-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .crypto-price {
+            font-size: 1.2rem;
+            color: #00cc00;
+        }
+        .crypto-market-cap {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        .crypto-change {
+            font-size: 0.9rem;
+        }
+        .positive {
+            color: #00cc00;
+        }
+        .negative {
+            color: #ff5555;
+        }
+        .error-message {
+            text-align: center;
+            color: #ff5555;
+            padding: 20px;
+            grid-column: 1 / -1;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Crypto Collective <span class="highlight-x">X</span> Tracker</h1>
+    </header>
+    <div id="crypto-list" class="crypto-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
