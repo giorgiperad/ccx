@@ -14,14 +14,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #1a1f2e; /* Softer dark background */
-            color: #d0d4e0; /* Lighter, less harsh text */
+            background: #1a1f2e;
+            color: #d0d4e0;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
         header {
-            background: #252b42; /* Solid, muted header */
+            background: #252b42;
             padding: clamp(0.8rem, 1.5vw, 1.5rem);
             display: flex;
             justify-content: center;
@@ -34,7 +34,7 @@
         }
 
         header:hover {
-            background: #2e344d; /* Subtle hover shift */
+            background: #2e344d;
         }
 
         header h1 {
@@ -48,21 +48,21 @@
         }
 
         .highlight-x {
-            color: #ff6680; /* Softer pink */
+            color: #ff6680;
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
             transition: color 0.3s ease;
         }
 
         header:hover .highlight-x {
-            color: #ff8099; /* Lighter hover */
+            color: #ff8099;
         }
 
         .fear-greed-container {
             padding: clamp(15px, 2.5vw, 30px);
             margin: clamp(15px, 2vw, 30px) auto;
             max-width: 80%;
-            background: #252b42; /* Solid, muted background */
+            background: #252b42;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
@@ -77,7 +77,7 @@
             font-family: 'Sora', sans-serif;
             font-size: clamp(1.2rem, 2.5vw, 1.6rem);
             margin-bottom: clamp(10px, 1.5vw, 15px);
-            color: #e6e9f0; /* Softer white */
+            color: #e6e9f0;
             text-transform: uppercase;
             letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
         }
@@ -96,7 +96,7 @@
             flex-direction: column;
             align-items: center;
             width: clamp(100px, 20vw, 150px);
-            background: #2e344d; /* Solid, darker panel */
+            background: #2e344d;
             padding: clamp(8px, 1.2vw, 12px);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -111,7 +111,7 @@
             width: clamp(60px, 12vw, 100px);
             height: clamp(60px, 12vw, 100px);
             border-radius: 50%;
-            background: conic-gradient(#ff6680 0deg, #66b3ff 360deg); /* Muted colors */
+            background: conic-gradient(#ff6680 0deg, #66b3ff 360deg);
             position: relative;
             clip-path: circle(50%);
             transition: all 1s ease-out;
@@ -161,7 +161,7 @@
             padding: clamp(15px, 2.5vw, 30px);
             margin: clamp(15px, 2vw, 30px) auto;
             max-width: 80%;
-            background: #252b42; /* Solid, muted background */
+            background: #252b42;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
@@ -179,7 +179,7 @@
             color: #e6e9f0;
             text-transform: uppercase;
             letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
-            background: #2e344d; /* Solid header background */
+            background: #2e344d;
             padding: clamp(5px, 1vw, 10px);
             border-radius: 8px;
         }
@@ -192,7 +192,7 @@
         }
 
         .price-item {
-            background: #2e344d; /* Solid, darker panel */
+            background: #2e344d;
             padding: clamp(8px, 1vw, 12px);
             border-radius: 8px;
             text-align: left;
@@ -207,7 +207,7 @@
         .price-item span {
             display: block;
             font-size: clamp(0.8rem, 1.2vw, 1rem);
-            color: #b0b4c0; /* Softer text */
+            color: #b0b4c0;
         }
 
         .price-item .price {
@@ -215,11 +215,11 @@
         }
 
         .price-item .price.green {
-            color: #66cc66; /* Softer green */
+            color: #66cc66;
         }
 
         .price-item .price.red {
-            color: #ff6666; /* Softer red */
+            color: #ff6666;
         }
 
         @media (max-width: 768px) {
@@ -284,16 +284,35 @@
     </div>
 
     <script>
+        // Retry fetch with delay for rate limit handling
+        async function fetchWithRetry(url, retries = 3, delay = 2000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error(`Fetch failed: ${url}`, response.status, response.statusText, errorText);
+                        if (response.status === 429 && i < retries - 1) {
+                            console.log(`Rate limited, retrying in ${delay}ms...`);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            continue;
+                        }
+                        throw new Error(`Fetch failed: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
         async function fetchData() {
             try {
                 // Fetch Fear and Greed Index
                 console.log('Fetching Fear and Greed Index...');
-                const fngResponse = await fetch('https://api.alternative.me/fng/?limit=1');
-                if (!fngResponse.ok) {
-                    console.error('Fear and Greed API failed:', fngResponse.status, fngResponse.statusText);
-                    throw new Error('Fear and Greed API fetch failed');
-                }
-                const fngData = await fngResponse.json();
+                const fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
                 console.log('Fear and Greed Data:', fngData);
                 const todayValue = fngData.data[0].value;
                 const classification = fngData.data[0].value_classification;
@@ -319,12 +338,7 @@
 
                 // Fetch CoinGecko Global Data for BTC Dominance
                 console.log('Fetching CoinGecko Global Data...');
-                const geckoGlobalResponse = await fetch('https://api.coingecko.com/api/v3/global');
-                if (!geckoGlobalResponse.ok) {
-                    console.error('CoinGecko Global API failed:', geckoGlobalResponse.status, geckoGlobalResponse.statusText);
-                    throw new Error('CoinGecko Global API fetch failed');
-                }
-                const geckoGlobalData = await geckoGlobalResponse.json();
+                const geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
                 console.log('CoinGecko Global Data:', geckoGlobalData);
 
                 const btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
@@ -350,36 +364,40 @@
                 // Fetch Cryptocurrency Prices from CoinGecko
                 console.log('Fetching CoinGecko Price Data...');
                 const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network,songbird,vestate,coin98,hypercycle,alien-worlds,chainge,befi-labs,hello-labs,masa-network,cardano,ripple,celo,osmosis,cosmos-hub,berachain,sui,beoble,dia,chainlink,agridex,kolplay,kittenhaimer,badger,iota,worldcoin,mintlayer,ethereum';
-                const geckoPriceResponse = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
-                if (!geckoPriceResponse.ok) {
-                    console.error('CoinGecko Price API failed:', geckoPriceResponse.status, geckoPriceResponse.statusText);
-                    const errorText = await geckoPriceResponse.text();
-                    console.error('CoinGecko Price Error Details:', errorText);
-                    throw new Error('CoinGecko Price API fetch failed');
+                let geckoPriceData;
+                try {
+                    geckoPriceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+                    console.log('CoinGecko Price Data:', geckoPriceData);
+                } catch (error) {
+                    console.warn('Price fetch failed, but continuing with partial data:', error.message);
+                    geckoPriceData = []; // Fallback to empty array to avoid breaking
                 }
-                const geckoPriceData = await geckoPriceResponse.json();
-                console.log('CoinGecko Price Data:', geckoPriceData);
-
-                // Sort by 24h price change (descending)
-                geckoPriceData.sort((a, b) => (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0));
 
                 const priceList = document.getElementById('price-list');
                 priceList.innerHTML = '';
-                geckoPriceData.forEach(coin => {
-                    const price = coin.current_price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
-                    const change24h = coin.price_change_percentage_24h || 0;
-                    const priceColorClass = change24h >= 0 ? 'green' : 'red';
-                    const priceItem = document.createElement('div');
-                    priceItem.className = 'price-item';
-                    priceItem.innerHTML = `
-                        <span>${coin.name} (${coin.symbol.toUpperCase()})</span>
-                        <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
-                    `;
-                    priceList.appendChild(priceItem);
-                });
+
+                if (geckoPriceData.length > 0) {
+                    // Sort by 24h price change (descending)
+                    geckoPriceData.sort((a, b) => (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0));
+
+                    geckoPriceData.forEach(coin => {
+                        const price = coin.current_price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
+                        const change24h = coin.price_change_percentage_24h || 0;
+                        const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                        const priceItem = document.createElement('div');
+                        priceItem.className = 'price-item';
+                        priceItem.innerHTML = `
+                            <span>${coin.name} (${coin.symbol.toUpperCase()})</span>
+                            <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
+                        `;
+                        priceList.appendChild(priceItem);
+                    });
+                } else {
+                    priceList.innerHTML = '<p>ფასების ჩატვირთვა ვერ მოხერხდა (დროებითი შეფერხება)</p>';
+                }
 
             } catch (error) {
-                console.error('Error fetching data:', error.message);
+                console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = 'N/A';
                 document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#ff6680 0deg, #66b3ff 0deg, rgba(255, 255, 255, 0.1) 0deg, rgba(255, 255, 255, 0.1) 360deg)';
                 document.getElementById('btc-dominance-value').textContent = 'N/A';
@@ -392,7 +410,7 @@
         }
 
         fetchData();
-        setInterval(fetchData, 300000);
+        setInterval(fetchData, 300000); // Every 5 minutes
     </script>
 </body>
 </html>
