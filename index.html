@@ -21,7 +21,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* Changed #ff5277 to #0e4ea1 */
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* #f97316 → #0e4ea1 */
             padding: clamp(1.2rem, 2vw, 2rem);
             display: flex;
             justify-content: center;
@@ -96,7 +96,7 @@
             justify-content: center;
             align-items: center;
             gap: clamp(15px, 2vw, 30px);
-            flex-wrap: wrap; /* Changed to wrap for better responsiveness with new circle */
+            flex-wrap: wrap;
             margin-bottom: clamp(20px, 1.5vw, 25px);
         }
 
@@ -124,7 +124,7 @@
             position: relative;
             clip-path: circle(50%);
             transition: all 0.5s ease;
-            border: 3px solid #0e4ea1; /* Changed #ff5277 to #0e4ea1 */
+            /* Border set dynamically in JS */
         }
 
         .gauge-bg {
@@ -156,7 +156,7 @@
             background: #252b42;
             position: relative;
             overflow: hidden;
-            border: 3px solid #0e4ea1; /* Changed #ff5277 to #0e4ea1 */
+            border: 3px solid #0e4ea1; /* #f97316 → #0e4ea1 */
         }
 
         .top-gainer-circle img {
@@ -177,7 +177,7 @@
             font-size: clamp(0.8rem, 1.2vw, 1rem);
             color: #ffffff;
             margin-top: clamp(8px, 1vw, 12px);
-            background: #0e4ea1; /* Changed ##a10e0e to #0e4ea1 */
+            background: #0e4ea1; /* #f97316 → #0e4ea1 */
             padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px);
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -220,7 +220,7 @@
         }
 
         #price-table thead {
-            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* Changed #ff5277 to #0e4ea1 */
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* #f97316 → #0e4ea1 */
             color: #ffffff;
             text-transform: uppercase;
             font-family: 'Sora', sans-serif;
@@ -237,7 +237,7 @@
         }
 
         #price-table th:hover {
-            background: rgba(249, 115, 22, 0.2); /* Hover tint with #0e4ea1 */
+            background: rgba(14, 78, 161, 0.2); /* RGBA for #0e4ea1 */
         }
 
         #price-table th::after {
@@ -301,6 +301,14 @@
             .gauge-column { width: clamp(100px, 18vw, 130px); }
             #price-table th, #price-table td { padding: clamp(8px, 1vw, 12px); font-size: clamp(0.75rem, 1vw, 0.9rem); }
             #price-table .coin-icon { width: 28px; height: 28px; }
+            .gauge-row {
+                justify-content: space-between;
+                gap: clamp(10px, 1.5vw, 15px);
+            }
+            .gauge-column {
+                width: 48%;
+                margin-bottom: clamp(10px, 1.5vw, 15px);
+            }
         }
 
         @media (max-width: 480px) {
@@ -310,8 +318,8 @@
             .gauge-circle, .top-gainer-circle { width: clamp(50px, 8vw, 80px); height: clamp(50px, 8vw, 80px); }
             .gauge-value { font-size: clamp(1rem, 1.8vw, 1.4rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.6rem, 0.9vw, 0.8rem); }
-            .gauge-row { gap: clamp(10px, 1vw, 15px); }
-            .gauge-column { width: clamp(80px, 15vw, 110px); }
+            .gauge-row { gap: clamp(8px, 1vw, 12px); }
+            .gauge-column { width: 48%; margin-bottom: clamp(8px, 1vw, 12px); }
             #price-table { font-size: clamp(0.7rem, 0.9vw, 0.85rem); }
             #price-table th, #price-table td { padding: clamp(6px, 0.8vw, 10px); }
             #price-table .coin-icon { width: 24px; height: 24px; }
@@ -357,7 +365,7 @@
     </div>
 
     <div class="prices-container">
-        <h2>კრიპტოვალუტის ფასები</h2>
+        <h2>კრიპტო კოლექტივის პროექტები</h2>
         <table id="price-table">
             <thead>
                 <tr>
@@ -442,12 +450,19 @@
                 const classification = fngData.data[0].value_classification;
                 document.getElementById('fear-greed-value').textContent = todayValue;
                 const todayAngle = (todayValue / 100) * 360;
-                document.getElementById('fear-greed-circle').style.background = `conic-gradient(
-                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
+                const fearGreedCircle = document.getElementById('fear-greed-circle');
+
+                // Set color based on value
+                let sentimentColor = todayValue < 50 ? '#f44336' : '#0e4ea1'; // Red < 50, Blue ≥ 50
+
+                fearGreedCircle.style.background = `conic-gradient(
+                    ${sentimentColor} 0deg,
                     #4c78ff ${todayAngle}deg,
                     #252b42 ${todayAngle}deg,
                     #252b42 360deg
                 )`;
+                fearGreedCircle.style.borderColor = sentimentColor;
+
                 const translations = {
                     "Extreme Fear": "უკიდურესი შიში",
                     "Fear": "შიში",
@@ -464,25 +479,26 @@
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(
-                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
+                    #0e4ea1 0deg, /* #f97316 → #0e4ea1 */
                     #4c78ff ${btcAngle}deg,
                     #252b42 ${btcAngle}deg,
                     #252b42 360deg
                 )`;
+                document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1'; /* Added border */
 
                 const altSeasonIndex = (100 - btcDominance).toFixed(1);
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 const altAngle = (altSeasonIndex / 100) * 360;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(
-                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
+                    #0e4ea1 0deg, /* #f97316 → #0e4ea1 */
                     #4c78ff ${altAngle}deg,
                     #252b42 ${altAngle}deg,
                     #252b42 360deg
                 )`;
+                document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1'; /* Added border */
 
                 // CoinGecko Price Data
-                const coinIds = '            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum" 
-';
+                const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
                 try {
                     coinData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
                     
@@ -509,10 +525,13 @@
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = 'N/A';
                 document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+                document.getElementById('fear-greed-circle').style.borderColor = '#0e4ea1';
                 document.getElementById('btc-dominance-value').textContent = 'N/A';
                 document.getElementById('btc-dominance-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+                document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1';
                 document.getElementById('alt-season-value').textContent = 'N/A';
                 document.getElementById('alt-season-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+                document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
                 document.getElementById('fear-greed-classification').textContent = 'მონაცემები მიუწვდომელია';
                 document.getElementById('top-gainer-label').textContent = 'მონაცემები მიუწვდომელია';
                 document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
