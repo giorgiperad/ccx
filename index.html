@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>კრიპტო კოლექტივი X</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sora:wght@700&display=swap" rel="stylesheet">
-    <!-- Your existing CSS remains unchanged -->
+    <style>
+        /* Your existing CSS remains unchanged - I'm omitting it here for brevity */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #141722;
+            color: #e0e4eb;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        /* ... rest of your CSS ... */
+    </style>
 </head>
 <body>
     <header>
@@ -16,7 +31,7 @@
         <h2>ბაზრის განწყობა</h2>
         <div class="gauge-row">
             <div class="gauge-column">
-                <div class="gauge-circle" id="fear_commands-circle">
+                <div class="gauge-circle" id="fear-greed-circle">
                     <div class="gauge-bg"></div>
                     <span id="fear-greed-value" class="gauge-value">ჩატვირთვა...</span>
                 </div>
@@ -45,10 +60,10 @@
     </div>
 
     <script>
-        async function fetchWithRetry(url, retries = 3, delay = 2000) {
+        async function fetchWithRetry(url, retries = 3, delay = 2000, options = {}) {
             for (let i = 0; i < retries; i++) {
                 try {
-                    const response = await fetch(url);
+                    const response = await fetch(url, options);
                     if (!response.ok) {
                         const errorText = await response.text();
                         console.error(`Fetch failed: ${url}`, response.status, errorText);
@@ -92,18 +107,49 @@
                 document.getElementById('fear-greed-classification').textContent = 
                     translations[classification] || classification;
 
-                // CoinMarketCap API Key (replace with your own free API key)
-                const apiKey = 'ca1e4d8c-9947-4a35-80ff-a8cbf0454913';
+                // CoinMarketCap API Key (replace with your own)
+                const apiKey = 'ca1e4d8c-9947-4a35-80ff-a8cbf0454913'; // Replace this!
                 const headers = { 'X-CMC_PRO_API_KEY': apiKey };
 
-                // Fetch global metrics for BTC dominance
-                const globalData = await fetchWithRetry(
-                    'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest',
-                    3,
-                    2000,
-                    { headers }
-                );
-                const btcDominance = globalData.data.btc_dominance.toFixed(1);
+                let btcDominance, altSeasonIndex;
+
+                if (apiKey === 'YOUR_COINMARKETCAP_API_KEY_HERE') {
+                    // Fallback to CoinGecko if no API key is provided
+                    console.warn('No CoinMarketCap API key provided, falling back to CoinGecko');
+                    const geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
+                    btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
+                    altSeasonIndex = (100 - btcDominance).toFixed(1);
+                } else {
+                    // Fetch from CoinMarketCap
+                    const globalData = await fetchWithRetry(
+                        'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest',
+                        3,
+                        2000,
+                        { headers }
+                    );
+                    btcDominance = globalData.data.btc_dominance.toFixed(1);
+
+                    // Approximate Alt Season Index using top 100 coins
+                    const topCoinsData = await fetchWithRetry(
+                        'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100',
+                        3,
+                        2000,
+                        { headers }
+                    );
+                    const coins = topCoinsData.data;
+                    const btcData = coins.find(coin => coin.symbol === 'BTC');
+                    const btcChange24h = btcData.quote.USD.percent_change_24h;
+
+                    const altcoins = coins.filter(coin => 
+                        !['USDT', 'USDC', 'DAI', 'WBTC', 'STETH'].includes(coin.symbol) && coin.symbol !== 'BTC'
+                    );
+                    const outperformingAltcoins = altcoins.filter(
+                        coin => coin.quote.USD.percent_change_24h > btcChange24h
+                    ).length;
+                    altSeasonIndex = Math.round((outperformingAltcoins / altcoins.length) * 100);
+                }
+
+                // Update BTC Dominance
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(
@@ -113,25 +159,7 @@
                     #2c334d 360deg
                 )`;
 
-                // Fetch top 100 coins to approximate Alt Season Index
-                const topCoinsData = await fetchWithRetry(
-                    'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100',
-                    3,
-                    2000,
-                    { headers }
-                );
-                const coins = topCoinsData.data;
-                const btcData = coins.find(coin => coin.symbol === 'BTC');
-                const btcChange24h = btcData.quote.USD.percent_change_24h;
-
-                // Filter out stablecoins and wrapped tokens (basic approximation)
-                const altcoins = coins.filter(coin => 
-                    !['USDT', 'USDC', 'DAI', 'WBTC', 'STETH'].includes(coin.symbol) && coin.symbol !== 'BTC'
-                );
-                const outperformingAltcoins = altcoins.filter(
-                    coin => coin.quote.USD.percent_change_24h > btcChange24h
-                ).length;
-                const altSeasonIndex = Math.round((outperformingAltcoins / altcoins.length) * 100);
+                // Update Alt Season Index
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 const altAngle = (altSeasonIndex / 100) * 360;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(
@@ -141,24 +169,52 @@
                     #2c334d 360deg
                 )`;
 
-                // Fetch price data for display
+                // Fetch price data (using CoinMarketCap if API key is provided, otherwise CoinGecko)
                 const priceList = document.getElementById('price-list');
                 priceList.innerHTML = '';
-                coins.slice(0, 50).forEach(coin => {
-                    const price = coin.quote.USD.price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
-                    const change24h = coin.quote.USD.percent_change_24h || 0;
-                    const priceColorClass = change24h >= 0 ? 'green' : 'red';
-                    const priceItem = document.createElement('div');
-                    priceItem.className = 'price-item';
-                    priceItem.innerHTML = `
-                        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png" alt="${coin.name} icon" loading="lazy">
-                        <div class="coin-info">
-                            <span>${coin.name} (${coin.symbol})</span>
-                            <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
-                        </div>
-                    `;
-                    priceList.appendChild(priceItem);
-                });
+                if (apiKey !== 'YOUR_COINMARKETCAP_API_KEY_HERE') {
+                    const topCoinsData = await fetchWithRetry(
+                        'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=50',
+                        3,
+                        2000,
+                        { headers }
+                    );
+                    topCoinsData.data.forEach(coin => {
+                        const price = coin.quote.USD.price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
+                        const change24h = coin.quote.USD.percent_change_24h || 0;
+                        const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                        const priceItem = document.createElement('div');
+                        priceItem.className = 'price-item';
+                        priceItem.innerHTML = `
+                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png" alt="${coin.name} icon" loading="lazy">
+                            <div class="coin-info">
+                                <span>${coin.name} (${coin.symbol})</span>
+                                <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
+                            </div>
+                        `;
+                        priceList.appendChild(priceItem);
+                    });
+                } else {
+                    const coinIds = 'bitcoin,ethereum,ripple,cardano,solana,polkadot,stellar';
+                    const geckoPriceData = await fetchWithRetry(
+                        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`
+                    );
+                    geckoPriceData.forEach(coin => {
+                        const price = coin.current_price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
+                        const change24h = coin.price_change Resort_percentage_24h || 0;
+                        const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                        const priceItem = document.createElement('div');
+                        priceItem.className = 'price-item';
+                        priceItem.innerHTML = `
+                            <img src="${coin.image}" alt="${coin.name} icon" loading="lazy">
+                            <div class="coin-info">
+                                <span>${coin.name} (${coin.symbol.toUpperCase()})</span>
+                                <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
+                            </div>
+                        `;
+                        priceList.appendChild(priceItem);
+                    });
+                }
 
             } catch (error) {
                 console.error('Error in fetchData:', error.message);
