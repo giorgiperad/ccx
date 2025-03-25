@@ -6,7 +6,6 @@
     <title>კრიპტო კოლექტივი X</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sora:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Your existing CSS remains unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -379,7 +378,7 @@
     </div>
 
     <script>
-        // Quotes pool (unchanged)
+        // Quotes pool
         const quotesPool = [
             "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
             "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
@@ -390,157 +389,50 @@
             "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს.",
             "ფული მუშაობს, როცა შენ მას მართავ.",
             "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.",
-            "ყოველი წარუმატებლობა ახალი დასაწყისია.",
-            "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება.",
-            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
-            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
-            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
-            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება。",
-            "წარმატება დროისა და შრომის შედეგია。",
-            "ნუ ელოდები შანსს, შექმენი ის。",
-            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
-            "შეცდომები გზაა სიბრძნისკენ。",
-            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში。",
-            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
-            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
-            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
-            "წარმატება მოთმინების ჯილდოა。",
-            "რაც არ გცოდნია, ის გაკონტროლებს。",
-            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
-            "თუ არ გარისკავ, ვერ გაიზრდები。",
-            "ყოველი დღე ახალი შანსია ზრდისთვის。",
-            "ფულის ღირებულება მის გამოყენებაშია。",
-            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
-            "წარსული გაკვეთილია, მომავალი — შენი ხელშია。",
-            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
-            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
-            "ფული მოდის მათთან, ვინც მას ეძებს。",
-            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
-            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
-            "წარმატება არის შრომისა და რწმენის ნაზავი。",
-            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
-            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი。",
-            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
-            "თუ გჯერა, ყველაფერი შესაძლებელია。",
-            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
-            "ფული არის იარაღი, გამოიყენე გონივრულად。",
-            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
-            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
-            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
-            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
-            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
-            "წარმატება არის გზა, რომელსაც თავად აგებ。",
-            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
-            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
-            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
-            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
-            "არაა მნიშვნელოვანი, ხართ თუ არა მართალი, მნიშვნელოვანია, რამდენს გამოიმუშავებ, როცა მართალი ხარ. — ჯორჯ სოროსი",
-            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
-            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
-            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
-            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
-            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
-            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
-            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნება. — ჯესი ლივერმორი",
-            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
-            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
-            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
-            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
-            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
-            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
-            "ბაზრები ყოველთვის არასწორია, მაგრამ შენი ამოცანაა გაარკვიო, როგორ. — ჯორჯ სოროსი",
-            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — ვალდებულებებს. — რობერტ კიოსაკი",
-            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
-            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
-            "რეპუტაციის აშენებას 20 წელი სჭირდება, მის განადგურებას კი 5 წუთი. — უორენ ბაფეტი",
-            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
-            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
-            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
-            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
+            "ყოველი წარუმატებლობა ახალი დასაწყისია."
         ];
 
-        // Function to display a random quote
-        function displayRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotesPool.length);
-            document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
-        }
-
-        // Fallback data with all coins (minimal data for demonstration)
+        // Fallback data (only used if all API attempts fail)
         const fallbackData = {
             fearGreed: { value: 50, classification: "Neutral" },
             btcDominance: 55.0,
             coins: [
                 { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
-                { name: "Rejuve AI", symbol: "rjv", current_price: 0.02, price_change_percentage_24h: 1.0, image: "https://assets.coingecko.com/coins/images/13862/small/rejuve-ai.png" },
-                { name: "Sophiaverse", symbol: "sophia", current_price: 0.05, price_change_percentage_24h: -0.5, image: "https://assets.coingecko.com/coins/images/12345/small/sophiaverse.png" },
-                { name: "Chia", symbol: "xch", current_price: 30, price_change_percentage_24h: 0.8, image: "https://assets.coingecko.com/coins/images/15124/small/chia.png" },
-                { name: "Stellar", symbol: "xlm", current_price: 0.10, price_change_percentage_24h: 1.2, image: "https://assets.coingecko.com/coins/images/100/small/Stellar_symbol_black_RGB.png" },
-                { name: "Kava", symbol: "kava", current_price: 0.80, price_change_percentage_24h: -1.0, image: "https://assets.coingecko.com/coins/images/975/small/kava.png" },
-                { name: "Decentraland", symbol: "mana", current_price: 0.40, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/878/small/decentraland-mana.png" },
-                { name: "zkSync", symbol: "zks", current_price: 0.15, price_change_percentage_24h: 3.0, image: "https://assets.coingecko.com/coins/images/14432/small/zksync.png" },
-                { name: "Arbitrum", symbol: "arb", current_price: 1.50, price_change_percentage_24h: 1.5, image: "https://assets.coingecko.com/coins/images/16547/small/arbitrum.png" },
-                { name: "Optimism", symbol: "op", current_price: 2.00, price_change_percentage_24h: -0.8, image: "https://assets.coingecko.com/coins/images/25244/small/optimism.png" },
-                { name: "dForce Token", symbol: "df", current_price: 0.03, price_change_percentage_24h: 0.5, image: "https://assets.coingecko.com/coins/images/12147/small/dforce.png" },
-                { name: "Band Protocol", symbol: "band", current_price: 1.20, price_change_percentage_24h: 1.8, image: "https://assets.coingecko.com/coins/images/9545/small/band.png" },
-                { name: "Notcoin", symbol: "not", current_price: 0.01, price_change_percentage_24h: 2.2, image: "https://assets.coingecko.com/coins/images/14534/small/notcoin.png" },
-                { name: "Polkadot", symbol: "dot", current_price: 5.00, price_change_percentage_24h: 0.9, image: "https://assets.coingecko.com/coins/images/12171/small/polkadot.png" },
-                { name: "Solana", symbol: "sol", current_price: 150, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/4128/small/solana.png" },
-                { name: "Singularity Finance", symbol: "sf", current_price: 0.07, price_change_percentage_24h: -1.5, image: "https://assets.coingecko.com/coins/images/12346/small/singularity.png" },
-                { name: "Flare Networks", symbol: "flr", current_price: 0.02, price_change_percentage_24h: 1.0, image: "https://assets.coingecko.com/coins/images/17363/small/flare.png" },
-                { name: "Redbelly Network Token", symbol: "rbn", current_price: 0.05, price_change_percentage_24h: 0.7, image: "https://assets.coingecko.com/coins/images/12347/small/redbelly.png" },
-                { name: "Songbird", symbol: "sgb", current_price: 0.01, price_change_percentage_24h: 1.3, image: "https://assets.coingecko.com/coins/images/18663/small/songbird.png" },
-                { name: "Vestate", symbol: "vest", current_price: 0.03, price_change_percentage_24h: -0.9, image: "https://assets.coingecko.com/coins/images/12348/small/vestate.png" },
-                { name: "Coin98", symbol: "c98", current_price: 0.20, price_change_percentage_24h: 1.6, image: "https://assets.coingecko.com/coins/images/17117/small/coin98.png" },
-                { name: "Hypercycle", symbol: "hype", current_price: 0.15, price_change_percentage_24h: 2.4, image: "https://assets.coingecko.com/coins/images/12349/small/hypercycle.png" },
-                { name: "Alien Worlds", symbol: "tlm", current_price: 0.01, price_change_percentage_24h: 0.6, image: "https://assets.coingecko.com/coins/images/14676/small/alien-worlds.png" },
-                { name: "Chainge Finance", symbol: "chg", current_price: 0.08, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/12350/small/chainge.png" },
-                { name: "Befi Labs", symbol: "befi", current_price: 0.04, price_change_percentage_24h: 1.1, image: "https://assets.coingecko.com/coins/images/12351/small/befi.png" },
-                { name: "Hello Labs", symbol: "hello", current_price: 0.02, price_change_percentage_24h: 0.8, image: "https://assets.coingecko.com/coins/images/12352/small/hello.png" },
-                { name: "Masa Finance", symbol: "masa", current_price:,
-                current_price: 0.05, price_change_percentage_24h: -0.7, image: "https://assets.coingecko.com/coins/images/12353/small/masa.png" },
-                { name: "Cardano", symbol: "ada", current_price: 0.40, price_change_percentage_24h: 1.5, image: "https://assets.coingecko.com/coins/images/975/small/cardano.png" },
-                { name: "Ripple", symbol: "xrp", current_price: 0.50, price_change_percentage_24h: 0.9, image: "https://assets.coingecko.com/coins/images/44/small/xrp.png" },
-                { name: "Celo", symbol: "celo", current_price: 0.70, price_change_percentage_24h: 1.3, image: "https://assets.coingecko.com/coins/images/11090/small/celo.png" },
-                { name: "Osmosis", symbol: "osmo", current_price: 0.90, price_change_percentage_24h: -1.0, image: "https://assets.coingecko.com/coins/images/16724/small/osmo.png" },
-                { name: "Cosmos", symbol: "atom", current_price: 6.00, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/1481/small/cosmos.png" },
-                { name: "Berachain Bera", symbol: "bera", current_price: 0.03, price_change_percentage_24h: 1.8, image: "https://assets.coingecko.com/coins/images/12354/small/berachain.png" },
-                { name: "Sui", symbol: "sui", current_price: 1.20, price_change_percentage_24h: 0.5, image: "https://assets.coingecko.com/coins/images/26375/small/sui.png" },
-                { name: "Beoble", symbol: "bbl", current_price: 0.02, price_change_percentage_24h: -0.6, image: "https://assets.coingecko.com/coins/images/12355/small/beoble.png" },
-                { name: "DIA Data", symbol: "dia", current_price: 0.35, price_change_percentage_24h: 1.4, image: "https://assets.coingecko.com/coins/images/11924/small/dia.png" },
-                { name: "Chainlink", symbol: "link", current_price: 12.00, price_change_percentage_24h: 2.3, image: "https://assets.coingecko.com/coins/images/877/small/chainlink.png" },
-                { name: "Agridex Governance Token", symbol: "agdx", current_price: 0.01, price_change_percentage_24h: 0.7, image: "https://assets.coingecko.com/coins/images/12356/small/agridex.png" },
-                { name: "Kolz", symbol: "kolz", current_price: 0.04, price_change_percentage_24h: -1.1, image: "https://assets.coingecko.com/coins/images/12357/small/kolz.png" },
-                { name: "Kitten Haimer", symbol: "kitten", current_price: 0.06, price_change_percentage_24h: 1.9, image: "https://assets.coingecko.com/coins/images/12358/small/kittenhaimer.png" },
-                { name: "Badger DAO", symbol: "badger", current_price: 2.50, price_change_percentage_24h: 0.4, image: "https://assets.coingecko.com/coins/images/13287/small/badger_dao.png" },
-                { name: "IOTA", symbol: "iota", current_price: 0.15, price_change_percentage_24h: 1.6, image: "https://assets.coingecko.com/coins/images/692/small/IOTA_Swarm.png" },
-                { name: "Worldcoin", symbol: "wld", current_price: 2.00, price_change_percentage_24h: -0.8, image: "https://assets.coingecko.com/coins/images/25650/small/worldcoin.png" },
-                { name: "Mintlayer", symbol: "ml", current_price: 0.10, price_change_percentage_24h: 1.2, image: "https://assets.coingecko.com/coins/images/12359/small/mintlayer.png" },
                 { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
             ]
         };
 
-        // Enhanced fetch with retry
+        // Display random quote
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotesPool.length);
+            document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
+        }
+
+        // Fetch with retry logic
         async function fetchWithRetry(url, retries = 3, delay = 2000) {
             for (let i = 0; i < retries; i++) {
                 try {
+                    console.log(`Fetching: ${url} (Attempt ${i + 1})`);
                     const response = await fetch(url);
                     if (!response.ok) {
                         const errorText = await response.text();
-                        console.error(`Fetch failed: ${url}`, response.status, errorText);
+                        console.error(`Fetch failed: ${url} - Status: ${response.status} - ${errorText}`);
                         if (response.status === 429 && i < retries - 1) {
                             console.log(`Rate limited, retrying in ${delay}ms...`);
                             await new Promise(resolve => setTimeout(resolve, delay));
                             continue;
                         }
-                        throw new Error(`Fetch failed: ${response.status}`);
+                        throw new Error(`HTTP error: ${response.status}`);
                     }
-                    return await response.json();
+                    const data = await response.json();
+                    console.log(`Successfully fetched: ${url}`, data);
+                    return data;
                 } catch (error) {
+                    console.error(`Error fetching ${url}: ${error.message}`);
                     if (i === retries - 1) {
-                        console.error(`All retries failed for ${url}:`, error.message);
+                        console.error(`All retries failed for ${url}`);
                         return null;
                     }
-                    console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
                 }
             }
@@ -549,6 +441,7 @@
         let coinData = [];
         let sortDirection = {};
 
+        // Render table
         function renderTable(data) {
             const priceTableBody = document.getElementById('price-table-body');
             priceTableBody.innerHTML = '';
@@ -566,6 +459,7 @@
             });
         }
 
+        // Sort table
         function sortTable(field) {
             const direction = sortDirection[field] = !sortDirection[field] ? 'asc' : sortDirection[field] === 'asc' ? 'desc' : 'asc';
             const multiplier = direction === 'asc' ? 1 : -1;
@@ -578,19 +472,22 @@
 
             document.querySelectorAll('#price-table th').forEach(th => {
                 th.classList.remove('asc', 'desc');
-                if (th.getAttribute('data-sort') === field) {
-                    th.classList.add(direction);
-                }
+                if (th.getAttribute('data-sort') === field) th.classList.add(direction);
             });
 
             renderTable(coinData);
         }
 
+        // Fetch dynamic data
         async function fetchData() {
             try {
                 // Fear and Greed Index
+                console.log("Fetching Fear and Greed Index...");
                 let fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
-                if (!fngData) fngData = { data: [fallbackData.fearGreed] };
+                if (!fngData) {
+                    console.warn("F&G API failed, using fallback.");
+                    fngData = { data: [fallbackData.fearGreed] };
+                }
                 const todayValue = fngData.data[0].value;
                 const classification = fngData.data[0].value_classification;
                 document.getElementById('fear-greed-value').textContent = todayValue;
@@ -615,8 +512,12 @@
                 document.getElementById('fear-greed-classification').textContent = translations[classification] || classification;
 
                 // CoinGecko Global Data
+                console.log("Fetching CoinGecko global data...");
                 let geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
-                if (!geckoGlobalData) geckoGlobalData = { data: { market_cap_percentage: { btc: fallbackData.btcDominance } } };
+                if (!geckoGlobalData) {
+                    console.warn("Global API failed, using fallback.");
+                    geckoGlobalData = { data: { market_cap_percentage: { btc: fallbackData.btcDominance } } };
+                }
                 const btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
@@ -641,9 +542,10 @@
 
                 // CoinGecko Price Data
                 const coinIds = "bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum";
+                console.log("Fetching CoinGecko price data...");
                 let priceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
                 if (!priceData || priceData.length === 0) {
-                    console.warn("API returned no data, using fallback.");
+                    console.warn("Price API failed or returned empty, using fallback.");
                     priceData = fallbackData.coins;
                 }
 
@@ -661,20 +563,17 @@
 
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
-                // Use fallback data on complete failure
+                // Fallback to static data
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
                 document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 180deg, #252b42 180deg, #252b42 360deg)';
-                document.getElementById('fear-greed-circle').style.borderColor = '#0e4ea1';
-                document.getElementById('fear-greed-classification').textContent = translations[fallbackData.fearGreed.classification] || fallbackData.fearGreed.classification;
+                document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
 
                 document.getElementById('btc-dominance-value').textContent = `${fallbackData.btcDominance}%`;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(#0e4ea1 0deg, #4c78ff ${(fallbackData.btcDominance / 100) * 360}deg, #252b42 ${(fallbackData.btcDominance / 100) * 360}deg, #252b42 360deg)`;
-                document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1';
 
                 const altSeasonIndex = (100 - fallbackData.btcDominance).toFixed(1);
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(#0e4ea1 0deg, #4c78ff ${(altSeasonIndex / 100) * 360}deg, #252b42 ${(altSeasonIndex / 100) * 360}deg, #252b42 360deg)`;
-                document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
 
                 document.getElementById('top-gainer-logo').src = fallbackData.coins[0].image;
                 document.getElementById('top-gainer-label').textContent = `${fallbackData.coins[0].name} (${fallbackData.coins[0].price_change_percentage_24h.toFixed(2)}%)`;
@@ -685,6 +584,7 @@
         }
 
         // Initial load
+        console.log("Starting initial load...");
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000); // Refresh every 5 minutes
