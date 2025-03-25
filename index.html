@@ -393,11 +393,11 @@
             "ყოველი წარუმატებლობა ახალი დასაწყისია.",
             "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება.",
             "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
-            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
-            "ყველაზე დიდი რისკი არის არაფრის გარისკვა.",
-            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
-            "წარმატება დროისა და შრომის შედეგია.",
-            "ნუ ელოდები შანსს, შექმენი ის.",
+            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
+            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება。",
+            "წარმატება დროისა და შრომის შედეგია。",
+            "ნუ ელოდები შანსს, შექმენი ის。",
             "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
             "შეცდომები გზაა სიბრძნისკენ。",
             "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში。",
@@ -429,7 +429,7 @@
             "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
             "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
             "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
-            "წარმატება არის გზა, რომელსაც თავად აგებ.",
+            "წარმატება არის გზა, რომელსაც თავად აგებ。",
             "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
             "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
             "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
@@ -465,17 +465,61 @@
             document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
         }
 
-        // Fallback data in case APIs fail
+        // Fallback data with all coins (minimal data for demonstration)
         const fallbackData = {
             fearGreed: { value: 50, classification: "Neutral" },
             btcDominance: 55.0,
             coins: [
                 { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
+                { name: "Rejuve AI", symbol: "rjv", current_price: 0.02, price_change_percentage_24h: 1.0, image: "https://assets.coingecko.com/coins/images/13862/small/rejuve-ai.png" },
+                { name: "Sophiaverse", symbol: "sophia", current_price: 0.05, price_change_percentage_24h: -0.5, image: "https://assets.coingecko.com/coins/images/12345/small/sophiaverse.png" },
+                { name: "Chia", symbol: "xch", current_price: 30, price_change_percentage_24h: 0.8, image: "https://assets.coingecko.com/coins/images/15124/small/chia.png" },
+                { name: "Stellar", symbol: "xlm", current_price: 0.10, price_change_percentage_24h: 1.2, image: "https://assets.coingecko.com/coins/images/100/small/Stellar_symbol_black_RGB.png" },
+                { name: "Kava", symbol: "kava", current_price: 0.80, price_change_percentage_24h: -1.0, image: "https://assets.coingecko.com/coins/images/975/small/kava.png" },
+                { name: "Decentraland", symbol: "mana", current_price: 0.40, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/878/small/decentraland-mana.png" },
+                { name: "zkSync", symbol: "zks", current_price: 0.15, price_change_percentage_24h: 3.0, image: "https://assets.coingecko.com/coins/images/14432/small/zksync.png" },
+                { name: "Arbitrum", symbol: "arb", current_price: 1.50, price_change_percentage_24h: 1.5, image: "https://assets.coingecko.com/coins/images/16547/small/arbitrum.png" },
+                { name: "Optimism", symbol: "op", current_price: 2.00, price_change_percentage_24h: -0.8, image: "https://assets.coingecko.com/coins/images/25244/small/optimism.png" },
+                { name: "dForce Token", symbol: "df", current_price: 0.03, price_change_percentage_24h: 0.5, image: "https://assets.coingecko.com/coins/images/12147/small/dforce.png" },
+                { name: "Band Protocol", symbol: "band", current_price: 1.20, price_change_percentage_24h: 1.8, image: "https://assets.coingecko.com/coins/images/9545/small/band.png" },
+                { name: "Notcoin", symbol: "not", current_price: 0.01, price_change_percentage_24h: 2.2, image: "https://assets.coingecko.com/coins/images/14534/small/notcoin.png" },
+                { name: "Polkadot", symbol: "dot", current_price: 5.00, price_change_percentage_24h: 0.9, image: "https://assets.coingecko.com/coins/images/12171/small/polkadot.png" },
+                { name: "Solana", symbol: "sol", current_price: 150, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/4128/small/solana.png" },
+                { name: "Singularity Finance", symbol: "sf", current_price: 0.07, price_change_percentage_24h: -1.5, image: "https://assets.coingecko.com/coins/images/12346/small/singularity.png" },
+                { name: "Flare Networks", symbol: "flr", current_price: 0.02, price_change_percentage_24h: 1.0, image: "https://assets.coingecko.com/coins/images/17363/small/flare.png" },
+                { name: "Redbelly Network Token", symbol: "rbn", current_price: 0.05, price_change_percentage_24h: 0.7, image: "https://assets.coingecko.com/coins/images/12347/small/redbelly.png" },
+                { name: "Songbird", symbol: "sgb", current_price: 0.01, price_change_percentage_24h: 1.3, image: "https://assets.coingecko.com/coins/images/18663/small/songbird.png" },
+                { name: "Vestate", symbol: "vest", current_price: 0.03, price_change_percentage_24h: -0.9, image: "https://assets.coingecko.com/coins/images/12348/small/vestate.png" },
+                { name: "Coin98", symbol: "c98", current_price: 0.20, price_change_percentage_24h: 1.6, image: "https://assets.coingecko.com/coins/images/17117/small/coin98.png" },
+                { name: "Hypercycle", symbol: "hype", current_price: 0.15, price_change_percentage_24h: 2.4, image: "https://assets.coingecko.com/coins/images/12349/small/hypercycle.png" },
+                { name: "Alien Worlds", symbol: "tlm", current_price: 0.01, price_change_percentage_24h: 0.6, image: "https://assets.coingecko.com/coins/images/14676/small/alien-worlds.png" },
+                { name: "Chainge Finance", symbol: "chg", current_price: 0.08, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/12350/small/chainge.png" },
+                { name: "Befi Labs", symbol: "befi", current_price: 0.04, price_change_percentage_24h: 1.1, image: "https://assets.coingecko.com/coins/images/12351/small/befi.png" },
+                { name: "Hello Labs", symbol: "hello", current_price: 0.02, price_change_percentage_24h: 0.8, image: "https://assets.coingecko.com/coins/images/12352/small/hello.png" },
+                { name: "Masa Finance", symbol: "masa", current_price:,
+                current_price: 0.05, price_change_percentage_24h: -0.7, image: "https://assets.coingecko.com/coins/images/12353/small/masa.png" },
+                { name: "Cardano", symbol: "ada", current_price: 0.40, price_change_percentage_24h: 1.5, image: "https://assets.coingecko.com/coins/images/975/small/cardano.png" },
+                { name: "Ripple", symbol: "xrp", current_price: 0.50, price_change_percentage_24h: 0.9, image: "https://assets.coingecko.com/coins/images/44/small/xrp.png" },
+                { name: "Celo", symbol: "celo", current_price: 0.70, price_change_percentage_24h: 1.3, image: "https://assets.coingecko.com/coins/images/11090/small/celo.png" },
+                { name: "Osmosis", symbol: "osmo", current_price: 0.90, price_change_percentage_24h: -1.0, image: "https://assets.coingecko.com/coins/images/16724/small/osmo.png" },
+                { name: "Cosmos", symbol: "atom", current_price: 6.00, price_change_percentage_24h: 2.0, image: "https://assets.coingecko.com/coins/images/1481/small/cosmos.png" },
+                { name: "Berachain Bera", symbol: "bera", current_price: 0.03, price_change_percentage_24h: 1.8, image: "https://assets.coingecko.com/coins/images/12354/small/berachain.png" },
+                { name: "Sui", symbol: "sui", current_price: 1.20, price_change_percentage_24h: 0.5, image: "https://assets.coingecko.com/coins/images/26375/small/sui.png" },
+                { name: "Beoble", symbol: "bbl", current_price: 0.02, price_change_percentage_24h: -0.6, image: "https://assets.coingecko.com/coins/images/12355/small/beoble.png" },
+                { name: "DIA Data", symbol: "dia", current_price: 0.35, price_change_percentage_24h: 1.4, image: "https://assets.coingecko.com/coins/images/11924/small/dia.png" },
+                { name: "Chainlink", symbol: "link", current_price: 12.00, price_change_percentage_24h: 2.3, image: "https://assets.coingecko.com/coins/images/877/small/chainlink.png" },
+                { name: "Agridex Governance Token", symbol: "agdx", current_price: 0.01, price_change_percentage_24h: 0.7, image: "https://assets.coingecko.com/coins/images/12356/small/agridex.png" },
+                { name: "Kolz", symbol: "kolz", current_price: 0.04, price_change_percentage_24h: -1.1, image: "https://assets.coingecko.com/coins/images/12357/small/kolz.png" },
+                { name: "Kitten Haimer", symbol: "kitten", current_price: 0.06, price_change_percentage_24h: 1.9, image: "https://assets.coingecko.com/coins/images/12358/small/kittenhaimer.png" },
+                { name: "Badger DAO", symbol: "badger", current_price: 2.50, price_change_percentage_24h: 0.4, image: "https://assets.coingecko.com/coins/images/13287/small/badger_dao.png" },
+                { name: "IOTA", symbol: "iota", current_price: 0.15, price_change_percentage_24h: 1.6, image: "https://assets.coingecko.com/coins/images/692/small/IOTA_Swarm.png" },
+                { name: "Worldcoin", symbol: "wld", current_price: 2.00, price_change_percentage_24h: -0.8, image: "https://assets.coingecko.com/coins/images/25650/small/worldcoin.png" },
+                { name: "Mintlayer", symbol: "ml", current_price: 0.10, price_change_percentage_24h: 1.2, image: "https://assets.coingecko.com/coins/images/12359/small/mintlayer.png" },
                 { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
             ]
         };
 
-        // Enhanced fetch with retry and fallback
+        // Enhanced fetch with retry
         async function fetchWithRetry(url, retries = 3, delay = 2000) {
             for (let i = 0; i < retries; i++) {
                 try {
@@ -494,7 +538,7 @@
                 } catch (error) {
                     if (i === retries - 1) {
                         console.error(`All retries failed for ${url}:`, error.message);
-                        return null; // Return null to trigger fallback
+                        return null;
                     }
                     console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
@@ -596,9 +640,12 @@
                 document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
 
                 // CoinGecko Price Data
-                const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
+                const coinIds = "bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum";
                 let priceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
-                if (!priceData) priceData = fallbackData.coins;
+                if (!priceData || priceData.length === 0) {
+                    console.warn("API returned no data, using fallback.");
+                    priceData = fallbackData.coins;
+                }
 
                 coinData = priceData;
                 const topGainer = coinData.reduce((max, coin) => 
