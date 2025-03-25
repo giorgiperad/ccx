@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Collective X</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sora:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,116 +14,149 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0e17;
-            color: #ffffff;
+            background: #0c101b;
+            color: #e0e0e0;
             line-height: 1.6;
             overflow-x: hidden;
-            background-image: linear-gradient(45deg, rgba(255, 0, 122, 0.03), transparent);
+            background-image: linear-gradient(135deg, rgba(255, 0, 122, 0.05), rgba(0, 204, 255, 0.05), transparent);
         }
 
         /* Header */
         header {
-            background: linear-gradient(90deg, #1a1f2e 0%, #2a3444 100%);
-            padding: clamp(1rem, 2vw, 2rem);
+            background: #141a2f;
+            padding: clamp(1.2rem, 2.5vw, 2.5rem);
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: background 0.3s ease;
+            border-bottom: 1px solid rgba(255, 0, 122, 0.3);
+            transition: all 0.4s ease;
         }
 
         header:hover {
-            background: linear-gradient(90deg, #1a1f2e, #ff007a 50%, #2a3444);
+            background: linear-gradient(90deg, #141a2f, #ff007a 50%, #00ccff 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2rem, 4.5vw, 3rem);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: clamp(2px, 0.5vw, 4px);
+            letter-spacing: clamp(1.5px, 0.4vw, 3px);
             color: #ffffff;
-            text-shadow: 0 2px 10px rgba(255, 0, 122, 0.3);
         }
 
         .highlight-x {
             color: #ff007a;
-            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-size: clamp(2.5rem, 5.5vw, 3.5rem);
             font-weight: 700;
-            transition: transform 0.3s ease;
+            background: linear-gradient(45deg, #ff007a, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
 
-        header h1:hover .highlight-x {
-            transform: scale(1.1);
+        header:hover .highlight-x {
+            transform: rotate(-2deg) scale(1.05);
+            filter: drop-shadow(0 0 15px rgba(255, 0, 122, 0.7));
         }
 
         /* Fear and Greed */
         .fear-greed-container {
-            padding: clamp(20px, 3vw, 40px);
-            margin: clamp(20px, 3vw, 40px) auto;
-            max-width: 90%;
-            background: rgba(20, 25, 40, 0.9);
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 122, 0.1);
+            padding: clamp(25px, 3.5vw, 50px);
+            margin: clamp(25px, 3vw, 50px) auto;
+            max-width: 85%;
+            background: linear-gradient(145deg, #1c2338, #141a2f);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .fear-greed-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 0, 122, 0.1), rgba(0, 204, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .fear-greed-container:hover::before {
+            opacity: 1;
         }
 
         .fear-greed-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 0, 122, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 0, 122, 0.3);
         }
 
         .fear-greed-container h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            margin-bottom: clamp(15px, 2vw, 20px);
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+            margin-bottom: clamp(15px, 2vw, 25px);
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: clamp(1px, 0.3vw, 2px);
+            position: relative;
+            z-index: 1;
         }
 
         .fear-greed-value {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 700;
-            color: #ff007a;
-            text-shadow: 0 2px 15px rgba(255, 0, 122, 0.5);
-            transition: color 0.3s ease;
+            color: #ffffff;
+            background: linear-gradient(90deg, #ff007a, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 20px rgba(255, 0, 122, 0.4);
+            transition: filter 0.4s ease;
         }
 
         .fear-greed-container:hover .fear-greed-value {
-            color: #ffffff;
+            filter: brightness(1.2) drop-shadow(0 0 15px rgba(0, 204, 255, 0.5));
         }
 
         .fear-greed-classification {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            color: #d0d0d0;
-            background: linear-gradient(90deg, rgba(255, 0, 122, 0.2), rgba(20, 25, 40, 0.2));
-            padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2.5vw, 20px);
-            border-radius: 30px;
+            font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+            color: #e0e0e0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: clamp(10px, 1.8vw, 15px) clamp(20px, 3vw, 25px);
+            border-radius: 40px;
             display: inline-block;
-            transition: background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.4s ease, transform 0.4s ease;
         }
 
         .fear-greed-container:hover .fear-greed-classification {
-            background: linear-gradient(90deg, rgba(255, 0, 122, 0.4), rgba(20, 25, 40, 0.4));
+            background: rgba(255, 0, 122, 0.15);
+            transform: scale(1.05);
         }
 
         /* Widget Container */
         .widget-container {
-            width: 90%;
-            padding: clamp(15px, 2vw, 30px);
-            background: rgba(20, 25, 40, 0.85);
-            border-radius: 16px;
-            margin: 0 auto clamp(20px, 3vw, 40px) auto;
-            max-width: 1200px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease;
+            width: 85%;
+            padding: clamp(20px, 2.5vw, 40px);
+            background: #1c2338;
+            border-radius: 20px;
+            margin: 0 auto clamp(25px, 3vw, 50px) auto;
+            max-width: 1400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
         }
 
         .widget-container:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 204, 255, 0.2);
         }
 
         gecko-coin-list-widget {
@@ -134,17 +167,18 @@
 
         /* Media Queries */
         @media (max-width: 768px) {
-            header { padding: clamp(0.8rem, 1.5vw, 1.5rem); }
-            .fear-greed-container { padding: 20px; margin: 20px auto; }
-            .widget-container { padding: 15px; }
+            header { padding: clamp(1rem, 2vw, 1.8rem); }
+            .fear-greed-container { padding: 20px; margin: 20px auto; max-width: 90%; }
+            .widget-container { padding: 15px; width: 90%; }
         }
 
         @media (max-width: 480px) {
-            header h1 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
-            .highlight-x { font-size: clamp(1.8rem, 4vw, 2.5rem); }
-            .fear-greed-container h2 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
-            .fear-greed-value { font-size: clamp(1.8rem, 4vw, 2.5rem); }
-            .fear-greed-classification { font-size: clamp(0.9rem, 2vw, 1.2rem); padding: 6px 12px; }
+            header h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+            .highlight-x { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+            .fear-greed-container h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+            .fear-greed-value { font-size: clamp(2rem, 5vw, 3rem); }
+            .fear-greed-classification { font-size: clamp(1rem, 2.5vw, 1.5rem); padding: 8px 15px; }
+            .widget-container { padding: 12px; }
         }
     </style>
 </head>
@@ -154,7 +188,7 @@
     </header>
     
     <div class="fear-greed-container">
-        <h2>შიშისა და სიხარბის ინდექსი</h2>
+        <h2>კრიპტო შიშისა და სიხარბის ინდექსი</h2>
         <div id="fear-greed-value" class="fear-greed-value">Loading...</div>
         <div id="fear-greed-classification" class="fear-greed-classification"></div>
     </div>
