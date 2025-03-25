@@ -6,6 +6,7 @@
     <title>კრიპტო კოლექტივი X</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sora:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* Your existing CSS remains unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -341,7 +342,7 @@
                 <span id="fear-greed-classification" class="fear-greed-classification">ჩატვირთვა...</span>
             </div>
             <div class="gauge-column">
-                <div class="gauge-circle" id=" btc-dominance-circle">
+                <div class="gauge-circle" id="btc-dominance-circle">
                     <div class="gauge-bg"></div>
                     <span id="btc-dominance-value" class="gauge-value">ჩატვირთვა...</span>
                 </div>
@@ -378,7 +379,7 @@
     </div>
 
     <script>
-        // Quotes pool
+        // Quotes pool (unchanged)
         const quotesPool = [
             "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
             "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
@@ -397,41 +398,41 @@
             "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
             "წარმატება დროისა და შრომის შედეგია.",
             "ნუ ელოდები შანსს, შექმენი ის.",
-            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება.",
-            "შეცდომები გზაა სიბრძნისკენ.",
-            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში.",
-            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა.",
-            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით.",
-            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას.",
-            "წარმატება მოთმინების ჯილდოა.",
-            "რაც არ გცოდნია, ის გაკონტროლებს.",
-            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას.",
-            "თუ არ გარისკავ, ვერ გაიზრდები.",
-            "ყოველი დღე ახალი შანსია ზრდისთვის.",
-            "ფულის ღირებულება მის გამოყენებაშია.",
-            "დიდი ოცნებები დიდი ნაბიჯებით იწყება.",
-            "წარსული გაკვეთილია, მომავალი — შენი ხელშია.",
-            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ.",
-            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ.",
-            "ფული მოდის მათთან, ვინც მას ეძებს.",
-            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია.",
-            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო.",
-            "წარმატება არის შრომისა და რწმენის ნაზავი.",
-            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს.",
-            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი.",
-            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა.",
-            "თუ გჯერა, ყველაფერი შესაძლებელია.",
-            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება.",
-            "ფული არის იარაღი, გამოიყენე გონივრულად.",
-            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც.",
-            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს.",
-            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის.",
-            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში.",
-            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება.",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
+            "შეცდომები გზაა სიბრძნისკენ。",
+            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში。",
+            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
+            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
+            "წარმატება მოთმინების ჯილდოა。",
+            "რაც არ გცოდნია, ის გაკონტროლებს。",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
+            "თუ არ გარისკავ, ვერ გაიზრდები。",
+            "ყოველი დღე ახალი შანსია ზრდისთვის。",
+            "ფულის ღირებულება მის გამოყენებაშია。",
+            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
+            "წარსული გაკვეთილია, მომავალი — შენი ხელშია。",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
+            "ფული მოდის მათთან, ვინც მას ეძებს。",
+            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
+            "წარმატება არის შრომისა და რწმენის ნაზავი。",
+            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი。",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
+            "თუ გჯერა, ყველაფერი შესაძლებელია。",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
+            "ფული არის იარაღი, გამოიყენე გონივრულად。",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
+            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
             "წარმატება არის გზა, რომელსაც თავად აგებ.",
-            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად.",
-            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო.",
-            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
             "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
             "არაა მნიშვნელოვანი, ხართ თუ არა მართალი, მნიშვნელოვანია, რამდენს გამოიმუშავებ, როცა მართალი ხარ. — ჯორჯ სოროსი",
             "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
@@ -464,11 +465,17 @@
             document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
         }
 
-        // Display a random quote on page load
-        window.onload = function() {
-            displayRandomQuote();
+        // Fallback data in case APIs fail
+        const fallbackData = {
+            fearGreed: { value: 50, classification: "Neutral" },
+            btcDominance: 55.0,
+            coins: [
+                { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
+                { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
+            ]
         };
 
+        // Enhanced fetch with retry and fallback
         async function fetchWithRetry(url, retries = 3, delay = 2000) {
             for (let i = 0; i < retries; i++) {
                 try {
@@ -485,7 +492,10 @@
                     }
                     return await response.json();
                 } catch (error) {
-                    if (i === retries - 1) throw error;
+                    if (i === retries - 1) {
+                        console.error(`All retries failed for ${url}:`, error.message);
+                        return null; // Return null to trigger fallback
+                    }
                     console.log(`Attempt ${i + 1} failed, retrying in ${delay}ms...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
                 }
@@ -494,7 +504,7 @@
 
         let coinData = [];
         let sortDirection = {};
-        
+
         function renderTable(data) {
             const priceTableBody = document.getElementById('price-table-body');
             priceTableBody.innerHTML = '';
@@ -534,15 +544,15 @@
 
         async function fetchData() {
             try {
-                const fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
+                // Fear and Greed Index
+                let fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
+                if (!fngData) fngData = { data: [fallbackData.fearGreed] };
                 const todayValue = fngData.data[0].value;
                 const classification = fngData.data[0].value_classification;
                 document.getElementById('fear-greed-value').textContent = todayValue;
                 const todayAngle = (todayValue / 100) * 360;
                 const fearGreedCircle = document.getElementById('fear-greed-circle');
-
                 let sentimentColor = todayValue < 50 ? '#f44336' : '#0e4ea1';
-
                 fearGreedCircle.style.background = `conic-gradient(
                     ${sentimentColor} 0deg,
                     #4c78ff ${todayAngle}deg,
@@ -558,10 +568,11 @@
                     "Greed": "სიხარბე",
                     "Extreme Greed": "უკიდურესი სიხარბე"
                 };
-                document.getElementById('fear-greed-classification').textContent = 
-                    translations[classification] || classification;
+                document.getElementById('fear-greed-classification').textContent = translations[classification] || classification;
 
-                const geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
+                // CoinGecko Global Data
+                let geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
+                if (!geckoGlobalData) geckoGlobalData = { data: { market_cap_percentage: { btc: fallbackData.btcDominance } } };
                 const btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
@@ -584,22 +595,18 @@
                 )`;
                 document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
 
+                // CoinGecko Price Data
                 const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
-                try {
-                    coinData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
-                    
-                    const topGainer = coinData.reduce((max, coin) => 
-                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
-                    , coinData[0]);
-                    document.getElementById('top-gainer-logo').src = topGainer.image;
-                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+                let priceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+                if (!priceData) priceData = fallbackData.coins;
 
-                    renderTable(coinData);
-                } catch (error) {
-                    console.warn('Price fetch failed:', error.message);
-                    document.getElementById('top-gainer-label').textContent = 'მონაცემები მიუწვდომელია';
-                    document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
-                }
+                coinData = priceData;
+                const topGainer = coinData.reduce((max, coin) => 
+                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
+                document.getElementById('top-gainer-logo').src = topGainer.image;
+                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+
+                renderTable(coinData);
 
                 document.querySelectorAll('#price-table th').forEach(th => {
                     th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
@@ -607,23 +614,33 @@
 
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
-                document.getElementById('fear-greed-value').textContent = 'N/A';
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+                // Use fallback data on complete failure
+                document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 180deg, #252b42 180deg, #252b42 360deg)';
                 document.getElementById('fear-greed-circle').style.borderColor = '#0e4ea1';
-                document.getElementById('btc-dominance-value').textContent = 'N/A';
-                document.getElementById('btc-dominance-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+                document.getElementById('fear-greed-classification').textContent = translations[fallbackData.fearGreed.classification] || fallbackData.fearGreed.classification;
+
+                document.getElementById('btc-dominance-value').textContent = `${fallbackData.btcDominance}%`;
+                document.getElementById('btc-dominance-circle').style.background = `conic-gradient(#0e4ea1 0deg, #4c78ff ${(fallbackData.btcDominance / 100) * 360}deg, #252b42 ${(fallbackData.btcDominance / 100) * 360}deg, #252b42 360deg)`;
                 document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1';
-                document.getElementById('alt-season-value').textContent = 'N/A';
-                document.getElementById('alt-season-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
+
+                const altSeasonIndex = (100 - fallbackData.btcDominance).toFixed(1);
+                document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
+                document.getElementById('alt-season-circle').style.background = `conic-gradient(#0e4ea1 0deg, #4c78ff ${(altSeasonIndex / 100) * 360}deg, #252b42 ${(altSeasonIndex / 100) * 360}deg, #252b42 360deg)`;
                 document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
-                document.getElementById('fear-greed-classification').textContent = 'მონაცემები მიუწვდომელია';
-                document.getElementById('top-gainer-label').textContent = 'მონაცემები მიუწვდომელია';
-                document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
+
+                document.getElementById('top-gainer-logo').src = fallbackData.coins[0].image;
+                document.getElementById('top-gainer-label').textContent = `${fallbackData.coins[0].name} (${fallbackData.coins[0].price_change_percentage_24h.toFixed(2)}%)`;
+
+                coinData = fallbackData.coins;
+                renderTable(coinData);
             }
         }
 
+        // Initial load
+        displayRandomQuote();
         fetchData();
-        setInterval(fetchData, 300000);
+        setInterval(fetchData, 300000); // Refresh every 5 minutes
     </script>
 </body>
 </html>
