@@ -15,13 +15,13 @@
         body {
             font-family: 'Inter', sans-serif;
             background: #141722;
-            color: #e0e4eb;
+            color: #d1d5db;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
         header {
-            background: linear-gradient(135deg, #1e2436 40%, #ff5277 100%);
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* Changed #ff5277 to #0e4ea1 */
             padding: clamp(1.2rem, 2vw, 2rem);
             display: flex;
             justify-content: center;
@@ -64,16 +64,6 @@
             color: #66b3ff;
         }
 
-        .highlight-x::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: #ff5277;
-            opacity: 0.9;
-        }
-
         .fear-greed-container {
             padding: clamp(20px, 2.5vw, 40px);
             margin: clamp(20px, 2vw, 40px) auto;
@@ -96,7 +86,7 @@
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: clamp(1px, 0.2vw, 2px);
-            background: #2c334d;
+            background: #252b42;
             padding: clamp(5px, 1vw, 10px);
             border-radius: 8px;
         }
@@ -106,7 +96,7 @@
             justify-content: center;
             align-items: center;
             gap: clamp(15px, 2vw, 30px);
-            flex-wrap: nowrap;
+            flex-wrap: wrap; /* Changed to wrap for better responsiveness with new circle */
             margin-bottom: clamp(20px, 1.5vw, 25px);
         }
 
@@ -115,7 +105,7 @@
             flex-direction: column;
             align-items: center;
             width: clamp(120px, 20vw, 160px);
-            background: #2c334d;
+            background: #252b42;
             padding: clamp(10px, 1.5vw, 15px);
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -130,11 +120,11 @@
             width: clamp(80px, 12vw, 120px);
             height: clamp(80px, 12vw, 120px);
             border-radius: 50%;
-            background: #2c334d;
+            background: #252b42;
             position: relative;
             clip-path: circle(50%);
             transition: all 0.5s ease;
-            border: 3px solid #ff5277;
+            border: 3px solid #0e4ea1; /* Changed #ff5277 to #0e4ea1 */
         }
 
         .gauge-bg {
@@ -159,9 +149,26 @@
             transform: translate(-50%, -50%);
         }
 
+        .top-gainer-circle {
+            width: clamp(80px, 12vw, 120px);
+            height: clamp(80px, 12vw, 120px);
+            border-radius: 50%;
+            background: #252b42;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #0e4ea1; /* Changed #ff5277 to #0e4ea1 */
+        }
+
+        .top-gainer-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
         .gauge-label {
             font-size: clamp(0.8rem, 1.2vw, 1rem);
-            color: #b8bfd3;
+            color: #9ca3af;
             margin-top: clamp(8px, 1vw, 12px);
             text-align: center;
         }
@@ -170,7 +177,7 @@
             font-size: clamp(0.8rem, 1.2vw, 1rem);
             color: #ffffff;
             margin-top: clamp(8px, 1vw, 12px);
-            background: #ff5277;
+            background: #0e4ea1; /* Changed ##a10e0e to #0e4ea1 */
             padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px);
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -198,7 +205,7 @@
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: clamp(1px, 0.2vw, 2px);
-            background: #2c334d;
+            background: #252b42;
             padding: clamp(5px, 1vw, 10px);
             border-radius: 8px;
         }
@@ -206,13 +213,14 @@
         #price-table {
             width: 100%;
             border-collapse: collapse;
-            background: #2c334d;
+            background: #252b42;
             border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         #price-table thead {
-            background: linear-gradient(135deg, #2c334d 40%, #ff5277 100%);
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* Changed #ff5277 to #0e4ea1 */
             color: #ffffff;
             text-transform: uppercase;
             font-family: 'Sora', sans-serif;
@@ -220,16 +228,16 @@
         }
 
         #price-table th {
-            padding: clamp(10px, 1.5vw, 15px);
+            padding: clamp(12px, 1.5vw, 16px);
             text-align: left;
-            border-bottom: 1px solid #3a425e;
+            border-bottom: 2px solid #3a425e;
             font-weight: 700;
             cursor: pointer;
             position: relative;
         }
 
         #price-table th:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(249, 115, 22, 0.2); /* Hover tint with #0e4ea1 */
         }
 
         #price-table th::after {
@@ -250,15 +258,15 @@
         }
 
         #price-table td {
-            padding: clamp(10px, 1.5vw, 15px);
+            padding: clamp(12px, 1.5vw, 16px);
             text-align: left;
-            border-bottom: 1px solid #3a425e;
+            border-bottom: 2px solid #3a425e;
             font-size: clamp(0.85rem, 1.1vw, 1rem);
-            color: #e0e4eb;
+            color: #d1d5db;
         }
 
         #price-table tr:nth-child(even) {
-            background: #252b42;
+            background: #1e2436;
         }
 
         #price-table tr:hover {
@@ -287,7 +295,7 @@
         @media (max-width: 768px) {
             header { padding: clamp(0.8rem, 1.2vw, 1.2rem); }
             .fear-greed-container, .prices-container { padding: 20px; margin: 20px auto; max-width: 90%; }
-            .gauge-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
+            .gauge-circle, .top-gainer-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
             .gauge-value { font-size: clamp(1.2rem, 2vw, 1.6rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.7rem, 1vw, 0.9rem); }
             .gauge-column { width: clamp(100px, 18vw, 130px); }
@@ -299,7 +307,7 @@
             header h1 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
             .highlight-x { font-size: clamp(1.8rem, 3.5vw, 2.2rem); }
             .fear-greed-container h2, .prices-container h2 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
-            .gauge-circle { width: clamp(50px, 8vw, 80px); height: clamp(50px, 8vw, 80px); }
+            .gauge-circle, .top-gainer-circle { width: clamp(50px, 8vw, 80px); height: clamp(50px, 8vw, 80px); }
             .gauge-value { font-size: clamp(1rem, 1.8vw, 1.4rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.6rem, 0.9vw, 0.8rem); }
             .gauge-row { gap: clamp(10px, 1vw, 15px); }
@@ -339,11 +347,17 @@
                 </div>
                 <span class="gauge-label">ალტ სეზონის ინდექსი</span>
             </div>
+            <div class="gauge-column">
+                <div class="top-gainer-circle" id="top-gainer-circle">
+                    <img id="top-gainer-logo" src="" alt="Top Gainer Logo">
+                </div>
+                <span id="top-gainer-label" class="gauge-label">ჩატვირთვა...</span>
+            </div>
         </div>
     </div>
 
     <div class="prices-container">
-        
+        <h2>კრიპტოვალუტის ფასები</h2>
         <table id="price-table">
             <thead>
                 <tr>
@@ -429,10 +443,10 @@
                 document.getElementById('fear-greed-value').textContent = todayValue;
                 const todayAngle = (todayValue / 100) * 360;
                 document.getElementById('fear-greed-circle').style.background = `conic-gradient(
-                    #ff5277 0deg,
+                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
                     #4c78ff ${todayAngle}deg,
-                    #2c334d ${todayAngle}deg,
-                    #2c334d 360deg
+                    #252b42 ${todayAngle}deg,
+                    #252b42 360deg
                 )`;
                 const translations = {
                     "Extreme Fear": "უკიდურესი შიში",
@@ -450,29 +464,39 @@
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(
-                    #ff5277 0deg,
+                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
                     #4c78ff ${btcAngle}deg,
-                    #2c334d ${btcAngle}deg,
-                    #2c334d 360deg
+                    #252b42 ${btcAngle}deg,
+                    #252b42 360deg
                 )`;
 
                 const altSeasonIndex = (100 - btcDominance).toFixed(1);
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 const altAngle = (altSeasonIndex / 100) * 360;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(
-                    #ff5277 0deg,
+                    #0e4ea1 0deg, /* Changed #ff5277 to #0e4ea1 */
                     #4c78ff ${altAngle}deg,
-                    #2c334d ${altAngle}deg,
-                    #2c334d 360deg
+                    #252b42 ${altAngle}deg,
+                    #252b42 360deg
                 )`;
 
                 // CoinGecko Price Data
-                const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
+                const coinIds = '            coin-ids="bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum" 
+';
                 try {
                     coinData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+                    
+                    // Find top gainer
+                    const topGainer = coinData.reduce((max, coin) => 
+                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
+                    , coinData[0]);
+                    document.getElementById('top-gainer-logo').src = topGainer.image;
+                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+
                     renderTable(coinData);
                 } catch (error) {
                     console.warn('Price fetch failed:', error.message);
+                    document.getElementById('top-gainer-label').textContent = 'მონაცემები მიუწვდომელია';
                     document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
                 }
 
@@ -484,12 +508,13 @@
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = 'N/A';
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
                 document.getElementById('btc-dominance-value').textContent = 'N/A';
-                document.getElementById('btc-dominance-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
+                document.getElementById('btc-dominance-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
                 document.getElementById('alt-season-value').textContent = 'N/A';
-                document.getElementById('alt-season-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
+                document.getElementById('alt-season-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 0deg, #252b42 0deg, #252b42 360deg)';
                 document.getElementById('fear-greed-classification').textContent = 'მონაცემები მიუწვდომელია';
+                document.getElementById('top-gainer-label').textContent = 'მონაცემები მიუწვდომელია';
                 document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
             }
         }
