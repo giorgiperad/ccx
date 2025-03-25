@@ -21,7 +21,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* #f97316 → #0e4ea1 */
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%);
             padding: clamp(1.2rem, 2vw, 2rem);
             display: flex;
             justify-content: center;
@@ -124,7 +124,6 @@
             position: relative;
             clip-path: circle(50%);
             transition: all 0.5s ease;
-            /* Border set dynamically in JS */
         }
 
         .gauge-bg {
@@ -156,7 +155,7 @@
             background: #252b42;
             position: relative;
             overflow: hidden;
-            border: 3px solid #0e4ea1; /* #f97316 → #0e4ea1 */
+            border: 3px solid #0e4ea1;
         }
 
         .top-gainer-circle img {
@@ -177,7 +176,7 @@
             font-size: clamp(0.8rem, 1.2vw, 1rem);
             color: #ffffff;
             margin-top: clamp(8px, 1vw, 12px);
-            background: #0e4ea1; /* #f97316 → #0e4ea1 */
+            background: #0e4ea1;
             padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px);
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -220,7 +219,7 @@
         }
 
         #price-table thead {
-            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%); /* #f97316 → #0e4ea1 */
+            background: linear-gradient(135deg, #1e2436 40%, #0e4ea1 100%);
             color: #ffffff;
             text-transform: uppercase;
             font-family: 'Sora', sans-serif;
@@ -237,7 +236,7 @@
         }
 
         #price-table th:hover {
-            background: rgba(14, 78, 161, 0.2); /* RGBA for #0e4ea1 */
+            background: rgba(14, 78, 161, 0.2);
         }
 
         #price-table th::after {
@@ -332,7 +331,7 @@
     </header>
     
     <div class="fear-greed-container">
-        <h2>ბაზრის განწყობა</h2>
+        <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
         <div class="gauge-row">
             <div class="gauge-column">
                 <div class="gauge-circle" id="fear-greed-circle">
@@ -342,7 +341,7 @@
                 <span id="fear-greed-classification" class="fear-greed-classification">ჩატვირთვა...</span>
             </div>
             <div class="gauge-column">
-                <div class="gauge-circle" id="btc-dominance-circle">
+                <div class="gauge-circle" id=" btc-dominance-circle">
                     <div class="gauge-bg"></div>
                     <span id="btc-dominance-value" class="gauge-value">ჩატვირთვა...</span>
                 </div>
@@ -379,6 +378,97 @@
     </div>
 
     <script>
+        // Quotes pool
+        const quotesPool = [
+            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
+            "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
+            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
+            "ფული არ ქმნის იდეებს, იდეები ქმნიან ფულს.",
+            "მოითმინე დღეს, რომ ხვალ მოიმკა.",
+            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს.",
+            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს.",
+            "ფული მუშაობს, როცა შენ მას მართავ.",
+            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.",
+            "ყოველი წარუმატებლობა ახალი დასაწყისია.",
+            "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება.",
+            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
+            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა.",
+            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
+            "წარმატება დროისა და შრომის შედეგია.",
+            "ნუ ელოდები შანსს, შექმენი ის.",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება.",
+            "შეცდომები გზაა სიბრძნისკენ.",
+            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში.",
+            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა.",
+            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით.",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას.",
+            "წარმატება მოთმინების ჯილდოა.",
+            "რაც არ გცოდნია, ის გაკონტროლებს.",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას.",
+            "თუ არ გარისკავ, ვერ გაიზრდები.",
+            "ყოველი დღე ახალი შანსია ზრდისთვის.",
+            "ფულის ღირებულება მის გამოყენებაშია.",
+            "დიდი ოცნებები დიდი ნაბიჯებით იწყება.",
+            "წარსული გაკვეთილია, მომავალი — შენი ხელშია.",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ.",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ.",
+            "ფული მოდის მათთან, ვინც მას ეძებს.",
+            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია.",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო.",
+            "წარმატება არის შრომისა და რწმენის ნაზავი.",
+            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს.",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი.",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა.",
+            "თუ გჯერა, ყველაფერი შესაძლებელია.",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება.",
+            "ფული არის იარაღი, გამოიყენე გონივრულად.",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც.",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს.",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის.",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში.",
+            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება.",
+            "წარმატება არის გზა, რომელსაც თავად აგებ.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად.",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო.",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს.",
+            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
+            "არაა მნიშვნელოვანი, ხართ თუ არა მართალი, მნიშვნელოვანია, რამდენს გამოიმუშავებ, როცა მართალი ხარ. — ჯორჯ სოროსი",
+            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
+            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
+            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
+            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
+            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
+            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
+            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნება. — ჯესი ლივერმორი",
+            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
+            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
+            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
+            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
+            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
+            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
+            "ბაზრები ყოველთვის არასწორია, მაგრამ შენი ამოცანაა გაარკვიო, როგორ. — ჯორჯ სოროსი",
+            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — ვალდებულებებს. — რობერტ კიოსაკი",
+            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
+            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
+            "რეპუტაციის აშენებას 20 წელი სჭირდება, მის განადგურებას კი 5 წუთი. — უორენ ბაფეტი",
+            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
+            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
+            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
+            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
+        ];
+
+        // Function to display a random quote
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotesPool.length);
+            document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
+        }
+
+        // Display a random quote on page load
+        window.onload = function() {
+            displayRandomQuote();
+        };
+
         async function fetchWithRetry(url, retries = 3, delay = 2000) {
             for (let i = 0; i < retries; i++) {
                 try {
@@ -444,7 +534,6 @@
 
         async function fetchData() {
             try {
-                // Fear and Greed Index
                 const fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
                 const todayValue = fngData.data[0].value;
                 const classification = fngData.data[0].value_classification;
@@ -452,8 +541,7 @@
                 const todayAngle = (todayValue / 100) * 360;
                 const fearGreedCircle = document.getElementById('fear-greed-circle');
 
-                // Set color based on value
-                let sentimentColor = todayValue < 50 ? '#f44336' : '#0e4ea1'; // Red < 50, Blue ≥ 50
+                let sentimentColor = todayValue < 50 ? '#f44336' : '#0e4ea1';
 
                 fearGreedCircle.style.background = `conic-gradient(
                     ${sentimentColor} 0deg,
@@ -473,36 +561,33 @@
                 document.getElementById('fear-greed-classification').textContent = 
                     translations[classification] || classification;
 
-                // CoinGecko Global Data
                 const geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
                 const btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(
-                    #0e4ea1 0deg, /* #f97316 → #0e4ea1 */
+                    #0e4ea1 0deg,
                     #4c78ff ${btcAngle}deg,
                     #252b42 ${btcAngle}deg,
                     #252b42 360deg
                 )`;
-                document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1'; /* Added border */
+                document.getElementById('btc-dominance-circle').style.borderColor = '#0e4ea1';
 
                 const altSeasonIndex = (100 - btcDominance).toFixed(1);
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 const altAngle = (altSeasonIndex / 100) * 360;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(
-                    #0e4ea1 0deg, /* #f97316 → #0e4ea1 */
+                    #0e4ea1 0deg,
                     #4c78ff ${altAngle}deg,
                     #252b42 ${altAngle}deg,
                     #252b42 360deg
                 )`;
-                document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1'; /* Added border */
+                document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
 
-                // CoinGecko Price Data
                 const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
                 try {
                     coinData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
                     
-                    // Find top gainer
                     const topGainer = coinData.reduce((max, coin) => 
                         (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
                     , coinData[0]);
@@ -516,7 +601,6 @@
                     document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
                 }
 
-                // Add sorting event listeners
                 document.querySelectorAll('#price-table th').forEach(th => {
                     th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
                 });
@@ -539,7 +623,7 @@
         }
 
         fetchData();
-        setInterval(fetchData, 300000); // Every 5 minutes
+        setInterval(fetchData, 300000);
     </script>
 </body>
 </html>
