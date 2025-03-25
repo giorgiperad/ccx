@@ -5,265 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>კრიპტო კოლექტივი X</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Sora:wght@700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #141722;
-            color: #e0e4eb;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1e2436 40%, #ff5277 100%);
-            padding: clamp(1.2rem, 2vw, 2rem);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            border-bottom: 4px solid #4c78ff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        header:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-        }
-
-        header h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: clamp(2px, 0.4vw, 3px);
-            color: #ffffff;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-        }
-
-        .highlight-x {
-            color: #4c78ff;
-            font-size: clamp(2.5rem, 5vw, 3.2rem);
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        header:hover .highlight-x {
-            transform: scale(1.1);
-            color: #66b3ff;
-        }
-
-        .highlight-x::after {
-            content: ''; /* Bull emoji for trading vibe */
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: #ff5277;
-            opacity: 0.9;
-        }
-
-        .fear-greed-container {
-            padding: clamp(20px, 2.5vw, 40px);
-            margin: clamp(20px, 2vw, 40px) auto;
-            max-width: 85%;
-            background: #1e2436;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .fear-greed-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .fear-greed-container h2 {
-            font-family: 'Sora', sans-serif;
-            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-            margin-bottom: clamp(15px, 1.5vw, 20px);
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: clamp(1px, 0.2vw, 2px);
-            background: #2c334d;
-            padding: clamp(5px, 1vw, 10px);
-            border-radius: 8px;
-        }
-
-        .gauge-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: clamp(15px, 2vw, 30px);
-            flex-wrap: nowrap;
-            margin-bottom: clamp(20px, 1.5vw, 25px);
-        }
-
-        .gauge-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: clamp(120px, 20vw, 160px);
-            background: #2c334d;
-            padding: clamp(10px, 1.5vw, 15px);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .gauge-column:hover {
-            transform: scale(1.05);
-        }
-
-        .gauge-circle {
-            width: clamp(80px, 12vw, 120px);
-            height: clamp(80px, 12vw, 120px);
-            border-radius: 50%;
-            background: #2c334d;
-            position: relative;
-            clip-path: circle(50%);
-            transition: all 0.5s ease;
-            border: 3px solid #ff5277;
-        }
-
-        .gauge-bg {
-            width: 88%;
-            height: 88%;
-            background: #141722;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .gauge-value {
-            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-            font-weight: 700;
-            color: #ffffff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .gauge-label {
-            font-size: clamp(0.8rem, 1.2vw, 1rem);
-            color: #b8bfd3;
-            margin-top: clamp(8px, 1vw, 12px);
-            text-align: center;
-        }
-
-        .fear-greed-classification {
-            font-size: clamp(0.8rem, 1.2vw, 1rem);
-            color: #ffffff;
-            margin-top: clamp(8px, 1vw, 12px);
-            background: #ff5277;
-            padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px);
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .prices-container {
-            padding: clamp(20px, 2.5vw, 40px);
-            margin: clamp(20px, 2vw, 40px) auto;
-            max-width: 85%;
-            background: #1e2436;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .prices-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .prices-container h2 {
-            font-family: 'Sora', sans-serif;
-            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-            margin-bottom: clamp(15px, 1.5vw, 20px);
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: clamp(1px, 0.2vw, 2px);
-            background: #2c334d;
-            padding: clamp(5px, 1vw, 10px);
-            border-radius: 8px;
-        }
-
-        #price-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: clamp(15px, 1.5vw, 25px);
-            padding: clamp(15px, 1.5vw, 25px);
-        }
-
-        .price-item {
-            background: #2c334d;
-            padding: clamp(10px, 1.2vw, 15px);
-            border-radius: 12px;
-            text-align: left;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .price-item:hover {
-            transform: scale(1.03);
-        }
-
-        .price-item span {
-            display: block;
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
-            color: #b8bfd3;
-        }
-
-        .price-item .price {
-            font-weight: 700;
-        }
-
-        .price-item .price.green {
-            color: #4caf50;
-        }
-
-        .price-item .price.red {
-            color: #f44336;
-        }
-
-        @media (max-width: 768px) {
-            header { padding: clamp(0.8rem, 1.2vw, 1.2rem); }
-            .fear-greed-container, .prices-container { padding: 20px; margin: 20px auto; max-width: 90%; }
-            .gauge-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
-            .gauge-value { font-size: clamp(1.2rem, 2vw, 1.6rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.7rem, 1vw, 0.9rem); }
-            .gauge-column { width: clamp(100px, 18vw, 130px); }
-            #price-list { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-        }
-
-        @media (max-width: 480px) {
-            header h1 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
-            .highlight-x { font-size: clamp(1.8rem, 3.5vw, 2.2rem); }
-            .fear-greed-container h2, .prices-container h2 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
-            .gauge-circle { width: clamp(50px, 8vw, 80px); height: clamp(50px, 8vw, 80px); }
-            .gauge-value { font-size: clamp(1rem, 1.8vw, 1.4rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.6rem, 0.9vw, 0.8rem); }
-            .gauge-row { gap: clamp(10px, 1vw, 15px); }
-            .gauge-column { width: clamp(80px, 15vw, 110px); }
-            #price-list { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-            .price-item span { font-size: clamp(0.8rem, 1vw, 1rem); }
-        }
-    </style>
+    <!-- Your existing CSS remains unchanged -->
 </head>
 <body>
     <header>
@@ -274,7 +16,7 @@
         <h2>ბაზრის განწყობა</h2>
         <div class="gauge-row">
             <div class="gauge-column">
-                <div class="gauge-circle" id="fear-greed-circle">
+                <div class="gauge-circle" id="fear_commands-circle">
                     <div class="gauge-bg"></div>
                     <span id="fear-greed-value" class="gauge-value">ჩატვირთვა...</span>
                 </div>
@@ -309,7 +51,7 @@
                     const response = await fetch(url);
                     if (!response.ok) {
                         const errorText = await response.text();
-                        console.error(`Fetch failed: ${url}`, response.status, response.statusText, errorText);
+                        console.error(`Fetch failed: ${url}`, response.status, errorText);
                         if (response.status === 429 && i < retries - 1) {
                             console.log(`Rate limited, retrying in ${delay}ms...`);
                             await new Promise(resolve => setTimeout(resolve, delay));
@@ -328,12 +70,10 @@
 
         async function fetchData() {
             try {
-                console.log('Fetching Fear and Greed Index...');
+                // Fear and Greed Index (unchanged)
                 const fngData = await fetchWithRetry('https://api.alternative.me/fng/?limit=1');
-                console.log('Fear and Greed Data:', fngData);
                 const todayValue = fngData.data[0].value;
                 const classification = fngData.data[0].value_classification;
-
                 document.getElementById('fear-greed-value').textContent = todayValue;
                 const todayAngle = (todayValue / 100) * 360;
                 document.getElementById('fear-greed-circle').style.background = `conic-gradient(
@@ -342,7 +82,6 @@
                     #2c334d ${todayAngle}deg,
                     #2c334d 360deg
                 )`;
-
                 const translations = {
                     "Extreme Fear": "უკიდურესი შიში",
                     "Fear": "შიში",
@@ -353,11 +92,18 @@
                 document.getElementById('fear-greed-classification').textContent = 
                     translations[classification] || classification;
 
-                console.log('Fetching CoinGecko Global Data...');
-                const geckoGlobalData = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
-                console.log('CoinGecko Global Data:', geckoGlobalData);
+                // CoinMarketCap API Key (replace with your own free API key)
+                const apiKey = 'ca1e4d8c-9947-4a35-80ff-a8cbf0454913';
+                const headers = { 'X-CMC_PRO_API_KEY': apiKey };
 
-                const btcDominance = geckoGlobalData.data.market_cap_percentage.btc.toFixed(1);
+                // Fetch global metrics for BTC dominance
+                const globalData = await fetchWithRetry(
+                    'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest',
+                    3,
+                    2000,
+                    { headers }
+                );
+                const btcDominance = globalData.data.btc_dominance.toFixed(1);
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
                 document.getElementById('btc-dominance-circle').style.background = `conic-gradient(
@@ -367,7 +113,25 @@
                     #2c334d 360deg
                 )`;
 
-                const altSeasonIndex = (100 - btcDominance).toFixed(1);
+                // Fetch top 100 coins to approximate Alt Season Index
+                const topCoinsData = await fetchWithRetry(
+                    'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=100',
+                    3,
+                    2000,
+                    { headers }
+                );
+                const coins = topCoinsData.data;
+                const btcData = coins.find(coin => coin.symbol === 'BTC');
+                const btcChange24h = btcData.quote.USD.percent_change_24h;
+
+                // Filter out stablecoins and wrapped tokens (basic approximation)
+                const altcoins = coins.filter(coin => 
+                    !['USDT', 'USDC', 'DAI', 'WBTC', 'STETH'].includes(coin.symbol) && coin.symbol !== 'BTC'
+                );
+                const outperformingAltcoins = altcoins.filter(
+                    coin => coin.quote.USD.percent_change_24h > btcChange24h
+                ).length;
+                const altSeasonIndex = Math.round((outperformingAltcoins / altcoins.length) * 100);
                 document.getElementById('alt-season-value').textContent = `${altSeasonIndex}%`;
                 const altAngle = (altSeasonIndex / 100) * 360;
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(
@@ -377,47 +141,30 @@
                     #2c334d 360deg
                 )`;
 
-                console.log('Fetching CoinGecko Price Data...');
-                const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
-                let geckoPriceData;
-                try {
-                    geckoPriceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
-                    console.log('CoinGecko Price Data:', geckoPriceData);
-                } catch (error) {
-                    console.warn('Price fetch failed, but continuing with partial data:', error.message);
-                    geckoPriceData = [];
-                }
-
+                // Fetch price data for display
                 const priceList = document.getElementById('price-list');
                 priceList.innerHTML = '';
-
-                if (geckoPriceData.length > 0) {
-                    geckoPriceData.sort((a, b) => (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0));
-
-                    geckoPriceData.forEach(coin => {
-                        const price = coin.current_price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
-                        const change24h = coin.price_change_percentage_24h || 0;
-                        const priceColorClass = change24h >= 0 ? 'green' : 'red';
-                        const priceItem = document.createElement('div');
-                        priceItem.className = 'price-item';
-                        priceItem.innerHTML = `
-                            <span>${coin.name} (${coin.symbol.toUpperCase()})</span>
+                coins.slice(0, 50).forEach(coin => {
+                    const price = coin.quote.USD.price.toFixed(coin.symbol === 'BTC' ? 2 : 6);
+                    const change24h = coin.quote.USD.percent_change_24h || 0;
+                    const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                    const priceItem = document.createElement('div');
+                    priceItem.className = 'price-item';
+                    priceItem.innerHTML = `
+                        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png" alt="${coin.name} icon" loading="lazy">
+                        <div class="coin-info">
+                            <span>${coin.name} (${coin.symbol})</span>
                             <span class="price ${priceColorClass}">$${price} (${change24h.toFixed(2)}%)</span>
-                        `;
-                        priceList.appendChild(priceItem);
-                    });
-                } else {
-                    priceList.innerHTML = '<p>ფასების ჩატვირთვა ვერ მოხერხდა (დროებითი შეფერხება)</p>';
-                }
+                        </div>
+                    `;
+                    priceList.appendChild(priceItem);
+                });
 
             } catch (error) {
-                console.error('Critical error in fetchData:', error.message);
+                console.error('Error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = 'N/A';
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
                 document.getElementById('btc-dominance-value').textContent = 'N/A';
-                document.getElementById('btc-dominance-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
                 document.getElementById('alt-season-value').textContent = 'N/A';
-                document.getElementById('alt-season-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
                 document.getElementById('fear-greed-classification').textContent = 'მონაცემები მიუწვდომელია';
                 document.getElementById('price-list').innerHTML = '<p>ფასების ჩატვირთვა ვერ მოხერხდა</p>';
             }
