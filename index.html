@@ -212,24 +212,47 @@
         }
 
         #price-table thead {
-            background: #4c78ff;
+            background: linear-gradient(135deg, #2c334d 40%, #ff5277 100%);
             color: #ffffff;
             text-transform: uppercase;
             font-family: 'Sora', sans-serif;
             font-size: clamp(0.9rem, 1.2vw, 1.1rem);
         }
 
-        #price-table th, #price-table td {
+        #price-table th {
             padding: clamp(10px, 1.5vw, 15px);
             text-align: left;
             border-bottom: 1px solid #3a425e;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
         }
 
-        #price-table th {
-            font-weight: 700;
+        #price-table th:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #price-table th::after {
+            content: '↕';
+            margin-left: 5px;
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        #price-table th.asc::after {
+            content: '↑';
+            opacity: 1;
+        }
+
+        #price-table th.desc::after {
+            content: '↓';
+            opacity: 1;
         }
 
         #price-table td {
+            padding: clamp(10px, 1.5vw, 15px);
+            text-align: left;
+            border-bottom: 1px solid #3a425e;
             font-size: clamp(0.85rem, 1.1vw, 1rem);
             color: #e0e4eb;
         }
@@ -259,10 +282,6 @@
         #price-table .price.red {
             color: #f44336;
             font-weight: 700;
-        }
-
-        #price-table .market-cap {
-            color: #b8bfd3;
         }
 
         @media (max-width: 768px) {
@@ -324,14 +343,13 @@
     </div>
 
     <div class="prices-container">
-       
+        
         <table id="price-table">
             <thead>
                 <tr>
-                    <th>კოინი</th>
-                    <th>ფასი</th>
-                    <th>24ს ცვლილება</th>
-                    <th>ბაზრის კაპი</th>
+                    <th data-sort="name">კოინი</th>
+                    <th data-sort="price">ფასი</th>
+                    <th data-sort="change">24ს ცვლილება</th>
                 </tr>
             </thead>
             <tbody id="price-table-body"></tbody>
@@ -362,11 +380,44 @@
             }
         }
 
-        function formatMarketCap(marketCap) {
-            if (marketCap >= 1e12) return `$${(marketCap / 1e12).toFixed(2)}T`;
-            if (marketCap >= 1e9) return `$${(marketCap / 1e9).toFixed(2)}B`;
-            if (marketCap >= 1e6) return `$${(marketCap / 1e6).toFixed(2)}M`;
-            return `$${marketCap.toFixed(2)}`;
+        let coinData = [];
+        let sortDirection = {};
+        
+        function renderTable(data) {
+            const priceTableBody = document.getElementById('price-table-body');
+            priceTableBody.innerHTML = '';
+            data.forEach(coin => {
+                const price = coin.current_price.toFixed(coin.symbol === 'btc' ? 2 : 6);
+                const change24h = coin.price_change_percentage_24h || 0;
+                const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
+                    <td class="price ${priceColorClass}">$${price}</td>
+                    <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
+                `;
+                priceTableBody.appendChild(row);
+            });
+        }
+
+        function sortTable(field) {
+            const direction = sortDirection[field] = !sortDirection[field] ? 'asc' : sortDirection[field] === 'asc' ? 'desc' : 'asc';
+            const multiplier = direction === 'asc' ? 1 : -1;
+
+            coinData.sort((a, b) => {
+                if (field === 'name') return multiplier * a.name.localeCompare(b.name);
+                if (field === 'price') return multiplier * (a.current_price - b.current_price);
+                if (field === 'change') return multiplier * ((a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
+            });
+
+            document.querySelectorAll('#price-table th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+                if (th.getAttribute('data-sort') === field) {
+                    th.classList.add(direction);
+                }
+            });
+
+            renderTable(coinData);
         }
 
         async function fetchData() {
@@ -417,35 +468,18 @@
 
                 // CoinGecko Price Data
                 const coinIds = 'bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum';
-                let geckoPriceData;
                 try {
-                    geckoPriceData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+                    coinData = await fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+                    renderTable(coinData);
                 } catch (error) {
                     console.warn('Price fetch failed:', error.message);
-                    geckoPriceData = [];
+                    document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
                 }
 
-                const priceTableBody = document.getElementById('price-table-body');
-                priceTableBody.innerHTML = '';
-                if (geckoPriceData.length > 0) {
-                    geckoPriceData.sort((a, b) => (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0));
-                    geckoPriceData.forEach(coin => {
-                        const price = coin.current_price.toFixed(coin.symbol === 'btc' ? 2 : 6);
-                        const change24h = coin.price_change_percentage_24h || 0;
-                        const priceColorClass = change24h >= 0 ? 'green' : 'red';
-                        const marketCap = formatMarketCap(coin.market_cap);
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
-                            <td class="price ${priceColorClass}">$${price}</td>
-                            <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
-                            <td class="market-cap">${marketCap}</td>
-                        `;
-                        priceTableBody.appendChild(row);
-                    });
-                } else {
-                    priceTableBody.innerHTML = '<tr><td colspan="4">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
-                }
+                // Add sorting event listeners
+                document.querySelectorAll('#price-table th').forEach(th => {
+                    th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
+                });
 
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
@@ -456,7 +490,7 @@
                 document.getElementById('alt-season-value').textContent = 'N/A';
                 document.getElementById('alt-season-circle').style.background = 'conic-gradient(#ff5277 0deg, #4c78ff 0deg, #2c334d 0deg, #2c334d 360deg)';
                 document.getElementById('fear-greed-classification').textContent = 'მონაცემები მიუწვდომელია';
-                document.getElementById('price-table-body').innerHTML = '<tr><td colspan="4">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
+                document.getElementById('price-table-body').innerHTML = '<tr><td colspan="3">ფასების ჩატვირთვა ვერ მოხერხდა</td></tr>';
             }
         }
 
