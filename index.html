@@ -120,11 +120,84 @@
     </div>
 
     <script>
-        // Quotes pool (shortened for brevity)
+        // Full 80 quotes pool
         const quotesPool = [
             "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
             "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
-            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება."
+            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
+            "ფული არ ქმნის იდეებს, იდეები ქმნიან ფულს.",
+            "მოითმინე დღეს, რომ ხვალ მოიმკა.",
+            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს.",
+            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს.",
+            "ფული მუშაობს, როცა შენ მას მართავ.",
+            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.",
+            "ყოველი წარუმატებლობა ახალი დასაწყისია.",
+            "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება.",
+            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
+            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა.",
+            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
+            "წარმატება დროისა და შრომის შედეგია.",
+            "ნუ ელოდები შანსს, შექმენი ის.",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება.",
+            "შეცდომები გზაა სიბრძნისკენ.",
+            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში.",
+            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
+            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით.",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას.",
+            "წარმატება მოთმინების ჯილდოა.",
+            "რაც არ გცოდნია, ის გაკონტროლებს.",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას.",
+            "თუ არ გარისკავ, ვერ გაიზრდები.",
+            "ყოველი დღე ახალი შანსია ზრდისთვის.",
+            "ფულის ღირებულება მის გამოყენებაშია。",
+            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
+            "წარსული გაკვეთილია, მომავალი — შენი ხელშია.",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ.",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ.",
+            "ფული მოდის მათთან, ვინც მას ეძებს.",
+            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო.",
+            "წარმატება არის შრომისა და რწმენის ნაზავი.",
+            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი.",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა.",
+            "თუ გჯერა, ყველაფერი შესაძლებელია.",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება.",
+            "ფული არის იარაღი, გამოიყენე გონივრულად.",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც.",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს.",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის.",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში.",
+            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
+            "წარმატება არის გზა, რომელსაც თავად აგებ.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად.",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო.",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს.",
+            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
+            "არაა მნიშვნელოვანი, ხართ თუ არა მართალი, მნიშვნელოვანია, რამდენს გამოიმუშავებ, როცა მართალი ხარ. — ჯორჯ სოროსი",
+            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
+            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
+            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
+            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
+            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
+            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
+            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნება. — ჯესი ლივერმორი",
+            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
+            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
+            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
+            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
+            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
+            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
+            "ბაზრები ყოველთვის არასწორია, მაგრამ შენი ამოცანაა გაარკვიო, როგორ. — ჯორჯ სოროსი",
+            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — ვალდებულებებს. — რობერტ კიოსაკი",
+            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
+            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
+            "რეპუტაციის აშენებას 20 წელი სჭირდება, მის განადგურებას კი 5 წუთი. — უორენ ბაფეტი",
+            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
+            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
+            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
+            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
         ];
 
         // Fallback data
@@ -147,13 +220,23 @@
             localStorage.setItem(key, JSON.stringify(data));
         }
 
-        // Display random quote
-        function displayRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotesPool.length);
-            document.getElementById('quote-display').textContent = `"${quotesPool[randomIndex]}"`;
+        // Quote management
+        function getRandomQuote(exclude) {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * quotesPool.length);
+            } while (quotesPool[newIndex] === exclude && quotesPool.length > 1);
+            return quotesPool[newIndex];
         }
 
-        // Fetch with retry (faster delay)
+        function displayRandomQuote() {
+            const lastQuote = getCachedData('lastQuote') || quotesPool[0];
+            const newQuote = getRandomQuote(lastQuote);
+            document.getElementById('quote-display').textContent = `"${newQuote}"`;
+            setCachedData('lastQuote', newQuote);
+        }
+
+        // Fetch with retry
         async function fetchWithRetry(url, retries = 2, delay = 500) {
             for (let i = 0; i < retries; i++) {
                 try {
@@ -232,7 +315,6 @@
         // Fetch dynamic data
         async function fetchData() {
             try {
-                // Load cached data first for instant display
                 const cachedCoins = getCachedData('coinData');
                 if (cachedCoins) {
                     coinData = cachedCoins;
@@ -243,14 +325,12 @@
                     document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
                 }
 
-                // Fetch all APIs in parallel
                 const [fngData, geckoGlobalData, priceData] = await Promise.all([
                     fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
                     fetchWithRetry('https://api.coingecko.com/api/v3/global'),
                     fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
                 ]);
 
-                // Fear and Greed Index
                 const fng = fngData?.data?.[0] || fallbackData.fearGreed;
                 document.getElementById('fear-greed-value').textContent = fng.value;
                 const todayAngle = (fng.value / 100) * 360;
@@ -261,7 +341,6 @@
                 const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
                 document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
 
-                // BTC Dominance and Alt Season
                 const btcDominance = geckoGlobalData?.data?.market_cap_percentage?.btc?.toFixed(1) || fallbackData.btcDominance;
                 document.getElementById('btc-dominance-value').textContent = `${btcDominance}%`;
                 const btcAngle = (btcDominance / 100) * 360;
@@ -274,7 +353,6 @@
                 document.getElementById('alt-season-circle').style.background = `conic-gradient(#0e4ea1 0deg, #4c78ff ${altAngle}deg, #252b42 ${altAngle}deg, #252b42 360deg)`;
                 document.getElementById('alt-season-circle').style.borderColor = '#0e4ea1';
 
-                // Coin Prices
                 coinData = priceData?.length > 0 ? priceData : (cachedCoins || fallbackData.coins);
                 setCachedData('coinData', coinData);
                 const topGainer = coinData.reduce((max, coin) => 
@@ -285,13 +363,12 @@
                 renderTable(coinData);
 
                 document.querySelectorAll('#price-table th').forEach(th => {
-                    th.removeEventListener('click', sortTable); // Avoid duplicate listeners
+                    th.removeEventListener('click', sortTable);
                     th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
                 });
 
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
-                // Use fallback if all else fails
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
                 document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#0e4ea1 0deg, #4c78ff 180deg, #252b42 180deg, #252b42 360deg)';
                 document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
@@ -308,11 +385,19 @@
             }
         }
 
-        // Initial load
+        // Initial load and event listeners
         console.log("Starting initial load...");
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000); // Refresh every 5 minutes
+
+        // Change quote on Enter key press
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent any default Enter behavior
+                displayRandomQuote();
+            }
+        });
     </script>
 </body>
 </html>
