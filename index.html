@@ -120,7 +120,7 @@
     </div>
 
     <script>
-        // Full 80 quotes pool
+        // Full 80 quotes pool (shortened here for brevity, full list assumed from previous message)
         const quotesPool = [
             "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
             "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
@@ -135,45 +135,45 @@
             "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება.",
             "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
             "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
-            "ყველაზე დიდი რისკი არის არაფრის გარისკვა.",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
             "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
             "წარმატება დროისა და შრომის შედეგია.",
-            "ნუ ელოდები შანსს, შექმენი ის.",
-            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება.",
+            "ნუ ელოდები შანსს, შექმენი ის。",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
             "შეცდომები გზაა სიბრძნისკენ.",
             "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში.",
             "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
-            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით.",
-            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას.",
-            "წარმატება მოთმინების ჯილდოა.",
-            "რაც არ გცოდნია, ის გაკონტროლებს.",
-            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას.",
-            "თუ არ გარისკავ, ვერ გაიზრდები.",
-            "ყოველი დღე ახალი შანსია ზრდისთვის.",
+            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
+            "წარმატება მოთმინების ჯილდოა。",
+            "რაც არ გცოდნია, ის გაკონტროლებს。",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
+            "თუ არ გარისკავ, ვერ გაიზრდები。",
+            "ყოველი დღე ახალი შანსია ზრდისთვის。",
             "ფულის ღირებულება მის გამოყენებაშია。",
             "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
             "წარსული გაკვეთილია, მომავალი — შენი ხელშია.",
-            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ.",
-            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ.",
-            "ფული მოდის მათთან, ვინც მას ეძებს.",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
+            "ფული მოდის მათთან, ვინც მას ეძებს。",
             "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
-            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო.",
-            "წარმატება არის შრომისა და რწმენის ნაზავი.",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
+            "წარმატება არის შრომისა და რწმენის ნაზავი。",
             "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
-            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი.",
-            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა.",
-            "თუ გჯერა, ყველაფერი შესაძლებელია.",
-            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება.",
-            "ფული არის იარაღი, გამოიყენე გონივრულად.",
-            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც.",
-            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს.",
-            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის.",
-            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში.",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი。",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
+            "თუ გჯერა, ყველაფერი შესაძლებელია。",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
+            "ფული არის იარაღი, გამოიყენე გონივრულად。",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
             "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
             "წარმატება არის გზა, რომელსაც თავად აგებ.",
-            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად.",
-            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო.",
-            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
             "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
             "არაა მნიშვნელოვანი, ხართ თუ არა მართალი, მნიშვნელოვანია, რამდენს გამოიმუშავებ, როცა მართალი ხარ. — ჯორჯ სოროსი",
             "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
@@ -198,6 +198,7 @@
             "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
             "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
             "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
+            // Full 80 quotes assumed here
         ];
 
         // Fallback data
@@ -264,49 +265,48 @@
         }
 
         let coinData = [];
-        let sortDirection = {};
+        const sortDirection = {};
 
-        // Render table incrementally
+        // Render table (full redraw for simplicity and reliability)
         function renderTable(data) {
             const priceTableBody = document.getElementById('price-table-body');
+            priceTableBody.innerHTML = ''; // Clear and redraw to ensure sort reflects
             data.forEach(coin => {
-                const existingRow = priceTableBody.querySelector(`tr[data-coin="${coin.symbol}"]`);
                 const price = coin.current_price.toFixed(coin.symbol === 'btc' ? 2 : 6);
                 const change24h = coin.price_change_percentage_24h || 0;
                 const priceColorClass = change24h >= 0 ? 'green' : 'red';
-
-                if (existingRow) {
-                    existingRow.children[1].textContent = `$${price}`;
-                    existingRow.children[1].className = `price ${priceColorClass}`;
-                    existingRow.children[2].textContent = `${change24h.toFixed(2)}%`;
-                    existingRow.children[2].className = `price ${priceColorClass}`;
-                } else {
-                    const row = document.createElement('tr');
-                    row.dataset.coin = coin.symbol;
-                    row.innerHTML = `
-                        <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
-                        <td class="price ${priceColorClass}">$${price}</td>
-                        <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
-                    `;
-                    priceTableBody.appendChild(row);
-                }
+                const row = document.createElement('tr');
+                row.dataset.coin = coin.symbol;
+                row.innerHTML = `
+                    <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
+                    <td class="price ${priceColorClass}">$${price}</td>
+                    <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
+                `;
+                priceTableBody.appendChild(row);
             });
         }
 
         // Sort table
         function sortTable(field) {
-            const direction = sortDirection[field] = !sortDirection[field] ? 'asc' : sortDirection[field] === 'asc' ? 'desc' : 'asc';
+            if (!coinData.length) return; // Exit if no data to sort
+
+            const direction = sortDirection[field] === 'asc' ? 'desc' : 'asc';
+            sortDirection[field] = direction;
             const multiplier = direction === 'asc' ? 1 : -1;
 
             coinData.sort((a, b) => {
-                if (field === 'name') return multiplier * a.name.localeCompare(b.name);
-                if (field === 'price') return multiplier * (a.current_price - b.current_price);
+                if (field === 'name') return multiplier * (a.name || '').localeCompare(b.name || '');
+                if (field === 'price') return multiplier * ((a.current_price || 0) - (b.current_price || 0));
                 if (field === 'change') return multiplier * ((a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
+                return 0;
             });
 
+            // Update sort indicators
             document.querySelectorAll('#price-table th').forEach(th => {
                 th.classList.remove('asc', 'desc');
-                if (th.getAttribute('data-sort') === field) th.classList.add(direction);
+                if (th.getAttribute('data-sort') === field) {
+                    th.classList.add(direction);
+                }
             });
 
             renderTable(coinData);
@@ -362,11 +362,6 @@
 
                 renderTable(coinData);
 
-                document.querySelectorAll('#price-table th').forEach(th => {
-                    th.removeEventListener('click', sortTable);
-                    th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
-                });
-
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
@@ -391,10 +386,18 @@
         fetchData();
         setInterval(fetchData, 300000); // Refresh every 5 minutes
 
+        // Set up sorting event listeners once
+        document.querySelectorAll('#price-table th').forEach(th => {
+            th.addEventListener('click', () => {
+                const field = th.getAttribute('data-sort');
+                if (field) sortTable(field);
+            });
+        });
+
         // Change quote on Enter key press
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent any default Enter behavior
+                event.preventDefault();
                 displayRandomQuote();
             }
         });
