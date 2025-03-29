@@ -228,6 +228,8 @@
             font-size: clamp(0.8rem, 1vw, 0.9rem); 
             color: #B0BEC5; 
         }
+        .telegram-setup { margin: 10px 0; text-align: center; }
+        .telegram-setup input { padding: 5px; margin-right: 5px; }
         
         @media (max-width: 768px) {
             header { padding: clamp(1rem, 1.5vw, 1.5rem); }
@@ -246,7 +248,7 @@
         @media (max-width: 480px) {
             header h1 { font-size: clamp(1.6rem, 3.5vw, 2rem); }
             .highlight-x { font-size: clamp(2rem, 4vw, 2.5rem); }
-            .fear-greed-container h2, .prices-container h2, .events-container h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+            .fear-greed-container h2, .prices-container h resiliency2, .events-container h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
             .gauge-circle, .top-gainer-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
             .gauge-value { font-size: clamp(1.2rem, 2vw, 1.6rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.7rem, 1vw, 0.9rem); }
@@ -266,6 +268,10 @@
     
     <div class="fear-greed-container">
         <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
+        <div class="telegram-setup">
+            <input type="text" id="telegramChatId" placeholder="Enter your Telegram Chat ID">
+            <button class="alert-btn" onclick="saveChatId()">Save Chat ID</button>
+        </div>
         <div class="gauge-row">
             <div class="gauge-column">
                 <div class="gauge-circle" id="fear-greed-circle">
@@ -330,6 +336,8 @@
         };
 
         let priceAlerts = JSON.parse(localStorage.getItem('priceAlerts')) || {};
+        let telegramChatId = localStorage.getItem('telegramChatId') || '';
+        const TELEGRAM_BOT_TOKEN = '7736447581:AAFA-MqQ8DdSUl1EpTvHSnsMaJ4ku1mOPVw'; // Replace with your bot token
 
         function getCachedData(key) {
             const cached = localStorage.getItem(key);
@@ -355,26 +363,36 @@
             setCachedData('lastQuote', newQuote);
         }
 
+        async function sendTelegramMessage(chatId, text) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to send Telegram message');
+                console.log('Telegram message sent successfully');
+            } catch (error) {
+                console.error('Error sending Telegram message:', error);
+            }
+        }
+
+        function saveChatId() {
+            const chatId = document.getElementById('telegramChatId').value.trim();
+            if (chatId) {
+                telegramChatId = chatId;
+                localStorage.setItem('telegramChatId', chatId);
+                alert('Telegram Chat ID saved! You can now receive price alerts.');
+                sendTelegramMessage(chatId, 'Welcome to Crypto Collective X Alerts!');
+            } else {
+                alert('Please enter a valid Telegram Chat ID.');
+            }
+        }
+
         async function fetchWithRetry(url, retries = 2, delay = 500) {
             for (let i = 0; i < retries; i++) {
                 try {
-                    console.log(`Fetching: ${url} (Attempt ${i + 1})`);
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error(`Fetch failed: ${url} - Status: ${response.status} - ${errorText}`);
-                        if (response.status === 429 && i < retries - 1) {
-                            console.log(`Rate limited, retrying in ${delay}ms...`);
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            continue;
-                        }
-                        throw new Error(`HTTP error: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    console.log(`Successfully fetched: ${url}`);
-                    return data;
+                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                    return await response.json();
                 } catch (error) {
-                    console.error(`Error fetching ${url}: ${error.message}`);
                     if (i === retries - 1) return null;
                     await new Promise(resolve => setTimeout(resolve, delay));
                 }
@@ -400,13 +418,11 @@
 
         function checkPriceAlerts(coin) {
             const alert = priceAlerts[coin.symbol];
-            if (alert) {
+            if (alert && telegramChatId) {
                 const currentPrice = coin.current_price;
                 if (currentPrice >= alert.above || currentPrice <= alert.below) {
-                    new Notification(`${coin.name} Price Alert`, {
-                        body: `Price of ${coin.name} is now $${currentPrice.toFixed(2)}!`,
-                        icon: coin.image
-                    });
+                    const message = `Price Alert: ${coin.name} is now $${currentPrice.toFixed(2)}! (Target: Above $${alert.above.toFixed(2)} or Below $${alert.below.toFixed(2)})`;
+                    sendTelegramMessage(telegramChatId, message);
                     delete priceAlerts[coin.symbol];
                     localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
                 }
@@ -426,7 +442,7 @@
                     <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
                     <td class="price ${priceColorClass}">$${price}</td>
                     <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
-                    <td><button class="alert-btn" onclick="setPriceAlert('${coin.symbol}', ${coin.current_price}, '${coin.name}', '${coin.image}')">გაფრთხილების დაყენება</button></td>
+                    <td><button class="alert-btn" onclick="setPriceAlert('${coin.symbol}', ${coin.current_price}, '${coin.name}')">გაფრთხილების დაყენება</button></td>
                 `;
                 priceTableBody.appendChild(row);
                 checkPriceAlerts(coin);
@@ -457,20 +473,9 @@
             renderTable(coinData);
         }
 
-        async function requestNotificationPermission() {
-            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
-                const permission = await Notification.requestPermission();
-                if (permission === "granted") {
-                    console.log("Notification permission granted.");
-                } else {
-                    console.log("Notification permission denied.");
-                }
-            }
-        }
-
-        window.setPriceAlert = function(symbol, currentPrice, name, image) {
-            if (Notification.permission !== "granted") {
-                alert("Please enable notifications to set price alerts.");
+        window.setPriceAlert = function(symbol, currentPrice, name) {
+            if (!telegramChatId) {
+                alert("Please enter and save your Telegram Chat ID first!");
                 return;
             }
 
@@ -481,11 +486,10 @@
                 priceAlerts[symbol] = {
                     above: parseFloat(above),
                     below: parseFloat(below),
-                    name: name,
-                    image: image
+                    name: name
                 };
                 localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
-                alert(`Price alert set for ${name}! You'll be notified if the price goes above $${parseFloat(above).toFixed(2)} or below $${parseFloat(below).toFixed(2)}.`);
+                alert(`Price alert set for ${name}! You'll receive a Telegram message if the price goes above $${parseFloat(above).toFixed(2)} or below $${parseFloat(below).toFixed(2)}.`);
             } else {
                 alert("Please enter valid numbers for the price alert.");
             }
@@ -559,8 +563,7 @@
             }
         }
 
-        console.log("Starting initial load...");
-        requestNotificationPermission();
+        document.getElementById('telegramChatId').value = telegramChatId;
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000);
