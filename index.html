@@ -7,152 +7,231 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; background: #0a0e1a; color: #e0e7ff; line-height: 1.6; overflow-x: hidden; }
-        header { background: linear-gradient(135deg, #1a237e 40%, #3f51b5 100%); padding: clamp(1.5rem, 2.5vw, 2.5rem); display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); position: sticky; top: 0; z-index: 10; border-bottom: 3px solid #536dfe; transition: all 0.3s ease; }
-        header:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
-        header h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 700; text-transform: uppercase; letter-spacing: clamp(1.5px, 0.3vw, 2.5px); color: #fff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); }
-        .highlight-x { color: #536dfe; font-size: clamp(2.8rem, 5.5vw, 3.8rem); transition: all 0.3s ease; }
-        header:hover .highlight-x { transform: scale(1.05); color: #7986cb; }
+        body { font-family: 'Roboto', sans-serif; background: #1C2526; color: #E8ECEF; line-height: 1.6; overflow-x: hidden; }
+        header { 
+            background: linear-gradient(135deg, #2A4D69 40%, #4DA8DA 100%); 
+            padding: clamp(1.5rem, 2.5vw, 2.5rem); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
+            border-bottom: 3px solid #4DA8DA; 
+            transition: all 0.3s ease; 
+        }
+        header:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
+        header h1 { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: clamp(2rem, 4.5vw, 3rem); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: clamp(1.5px, 0.3vw, 2.5px); 
+            color: #E8ECEF; 
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
+        }
+        .highlight-x { 
+            color: #4DA8DA; 
+            font-size: clamp(2.8rem, 5.5vw, 3.8rem); 
+            transition: all 0.3s ease; 
+        }
+        header:hover .highlight-x { transform: scale(1.05); color: #E8ECEF; }
         
-        .fear-greed-container, .prices-container { 
+        .fear-greed-container, .prices-container, .events-container { 
             padding: clamp(25px, 3vw, 50px); 
             margin: clamp(25px, 2.5vw, 50px) auto; 
             max-width: 90%; 
-            background: #1e1e2f; 
+            background: #2E3B3E; 
             border-radius: 20px; 
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); 
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
             text-align: center; 
             transition: all 0.3s ease; 
-            border: 1px solid rgba(83, 109, 254, 0.1);
+            border: 1px solid #2A4D69; 
         }
-        .fear-greed-container:hover, .prices-container:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25); }
-        .fear-greed-container h2, .prices-container h2 { 
+        .fear-greed-container:hover, .prices-container:hover, .events-container:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 40px rgba(42, 77, 105, 0.3); 
+        }
+        .fear-greed-container h2, .prices-container h2, .events-container h2 { 
             font-family: 'Montserrat', sans-serif; 
             font-size: clamp(1.6rem, 2.8vw, 2rem); 
             margin-bottom: clamp(20px, 2vw, 25px); 
-            color: #fff; 
+            color: #E8ECEF; 
             text-transform: uppercase; 
             letter-spacing: clamp(1.5px, 0.3vw, 2px); 
-            background: linear-gradient(90deg, #283593, #3949ab); 
+            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
             padding: clamp(8px, 1.2vw, 12px); 
             border-radius: 10px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
         }
-        .gauge-row { display: flex; justify-content: center; align-items: center; gap: clamp(20px, 2.5vw, 40px); flex-wrap: wrap; margin-bottom: clamp(25px, 2vw, 30px); }
+        .gauge-row { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: clamp(20px, 2.5vw, 40px); 
+            flex-wrap: wrap; 
+            margin-bottom: clamp(25px, 2vw, 30px); 
+        }
         .gauge-column { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             width: clamp(140px, 22vw, 180px); 
-            background: #252540; 
+            background: #1C2526; 
             padding: clamp(15px, 2vw, 20px); 
             border-radius: 15px; 
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
             transition: all 0.3s ease; 
-            border: 1px solid rgba(83, 109, 254, 0.2);
+            border: 1px solid #4DA8DA; 
         }
-        .gauge-column:hover { transform: scale(1.08); box-shadow: 0 8px 25px rgba(83, 109, 254, 0.3); }
+        .gauge-column:hover { 
+            transform: scale(1.08); 
+            box-shadow: 0 8px 25px rgba(77, 168, 218, 0.4); 
+        }
         .gauge-circle { 
             width: clamp(100px, 14vw, 140px); 
             height: clamp(100px, 14vw, 140px); 
             border-radius: 50%; 
-            background: #252540; 
+            background: #1C2526; 
             position: relative; 
             clip-path: circle(50%); 
             transition: all 0.5s ease; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
         }
         .gauge-bg { 
             width: 90%; 
             height: 90%; 
-            background: #0a0e1a; 
+            background: #2E3B3E; 
             border-radius: 50%; 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); 
         }
         .gauge-value { 
             font-size: clamp(1.6rem, 2.8vw, 2rem); 
             font-weight: 700; 
-            color: #fff; 
+            color: #E8ECEF; 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
         }
         .top-gainer-circle { 
             width: clamp(100px, 14vw, 140px); 
             height: clamp(100px, 14vw, 140px); 
             border-radius: 50%; 
-            background: #252540; 
+            background: #1C2526; 
             position: relative; 
             overflow: hidden; 
-            border: 4px solid #3f51b5; 
-            box-shadow: 0 4px 15px rgba(63, 81, 181, 0.3);
+            border: 4px solid #2A4D69; 
+            box-shadow: 0 4px 15px rgba(42, 77, 105, 0.4); 
         }
         .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         .gauge-label { 
             font-size: clamp(0.9rem, 1.3vw, 1.1rem); 
-            color: #b0bec5; 
+            color: #E8ECEF; 
             margin-top: clamp(10px, 1.2vw, 15px); 
-            text-align: center;
+            text-align: center; 
         }
         .fear-greed-classification { 
             font-size: clamp(0.9rem, 1.3vw, 1.1rem); 
-            color: #fff; 
+            color: #E8ECEF; 
             margin-top: clamp(10px, 1.2vw, 15px); 
-            background: linear-gradient(90deg, #3f51b5, #536dfe); 
+            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
             padding: clamp(6px, 1vw, 10px) clamp(12px, 1.5vw, 18px); 
             border-radius: 25px; 
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3); 
         }
         #price-table { 
             width: 100%; 
             border-collapse: collapse; 
-            background: #252540; 
+            background: #1C2526; 
             border-radius: 15px; 
             overflow: hidden; 
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
         }
         #price-table thead { 
-            background: linear-gradient(135deg, #1a237e 40%, #3f51b5 100%); 
-            color: #fff; 
+            background: linear-gradient(135deg, #2A4D69 40%, #4DA8DA 100%); 
+            color: #E8ECEF; 
             text-transform: uppercase; 
             font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(1rem, 1.3vw, 1.2rem);
+            font-size: clamp(1rem, 1.3vw, 1.2rem); 
         }
         #price-table th { 
             padding: clamp(14px, 1.8vw, 18px); 
             text-align: left; 
-            border-bottom: 3px solid #3949ab; 
+            border-bottom: 3px solid #4DA8DA; 
             font-weight: 700; 
             cursor: pointer; 
             position: relative; 
-            transition: background 0.3s ease;
+            transition: background 0.3s ease; 
         }
-        #price-table th:hover { background: rgba(63, 81, 181, 0.3); }
+        #price-table th:hover { background: rgba(42, 77, 105, 0.3); }
         #price-table th::after { content: '↕'; margin-left: 6px; font-size: 0.9em; opacity: 0.6; }
         #price-table th.asc::after { content: '↑'; opacity: 1; }
         #price-table th.desc::after { content: '↓'; opacity: 1; }
         #price-table td { 
             padding: clamp(14px, 1.8vw, 18px); 
             text-align: left; 
-            border-bottom: 2px solid #3949ab; 
+            border-bottom: 2px solid #2A4D69; 
             font-size: clamp(0.9rem, 1.2vw, 1.1rem); 
-            color: #e0e7ff;
+            color: #E8ECEF; 
         }
-        #price-table tr:nth-child(even) { background: #1e1e2f; }
-        #price-table tr:hover { background: #303f9f; transition: background 0.3s ease; }
+        #price-table tr:nth-child(even) { background: #2E3B3E; }
+        #price-table tr:hover { background: #2A4D69; transition: background 0.3s ease; }
         #price-table .coin-icon { width: 36px; height: 36px; border-radius: 50%; vertical-align: middle; margin-right: 12px; }
-        #price-table .price.green { color: #00e676; font-weight: 700; }
-        #price-table .price.red { color: #ff5252; font-weight: 700; }
+        #price-table .price.green { color: #00FF00; font-weight: 700; }
+        #price-table .price.red { color: #FF0000; font-weight: 700; }
+        .alert-btn { 
+            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
+            color: #E8ECEF; 
+            border: none; 
+            padding: 8px 12px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: clamp(0.8rem, 1vw, 1rem); 
+            transition: all 0.3s ease; 
+        }
+        .alert-btn:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 0 10px rgba(77, 168, 218, 0.5); 
+        }
+        .events-list { 
+            max-height: 300px; 
+            overflow-y: auto; 
+            padding: 10px; 
+            border-radius: 10px; 
+            background: #1C2526; 
+        }
+        .event-item { 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            background: #2E3B3E; 
+            border-radius: 8px; 
+            border-left: 4px solid #4DA8DA; 
+            transition: all 0.3s ease; 
+        }
+        .event-item:hover { 
+            background: #2A4D69; 
+            transform: translateX(5px); 
+        }
+        .event-item h4 { 
+            font-size: clamp(1rem, 1.2vw, 1.1rem); 
+            margin-bottom: 5px; 
+            color: #E8ECEF; 
+        }
+        .event-item p { 
+            font-size: clamp(0.8rem, 1vw, 0.9rem); 
+            color: #B0BEC5; 
+        }
         
         @media (max-width: 768px) {
             header { padding: clamp(1rem, 1.5vw, 1.5rem); }
-            .fear-greed-container, .prices-container { padding: 25px; margin: 25px auto; max-width: 95%; }
+            .fear-greed-container, .prices-container, .events-container { padding: 25px; margin: 25px auto; max-width: 95%; }
             .gauge-circle, .top-gainer-circle { width: clamp(80px, 12vw, 120px); height: clamp(80px, 12vw, 120px); }
             .gauge-value { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.8rem, 1.1vw, 1rem); }
@@ -160,17 +239,23 @@
             #price-table th, #price-table td { padding: clamp(10px, 1.2vw, 14px); font-size: clamp(0.85rem, 1.1vw, 1rem); }
             #price-table .coin-icon { width: 32px; height: 32px; }
             .gauge-row { gap: clamp(15px, 2vw, 20px); }
+            .alert-btn { padding: 6px 10px; font-size: clamp(0.7rem, 0.9vw, 0.9rem); }
+            .event-item h4 { font-size: clamp(0.9rem, 1.1vw, 1rem); }
+            .event-item p { font-size: clamp(0.7rem, 0.9vw, 0.8rem); }
         }
         @media (max-width: 480px) {
             header h1 { font-size: clamp(1.6rem, 3.5vw, 2rem); }
             .highlight-x { font-size: clamp(2rem, 4vw, 2.5rem); }
-            .fear-greed-container h2, .prices-container h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+            .fear-greed-container h2, .prices-container h2, .events-container h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
             .gauge-circle, .top-gainer-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
             .gauge-value { font-size: clamp(1.2rem, 2vw, 1.6rem); }
             .gauge-label, .fear-greed-classification { font-size: clamp(0.7rem, 1vw, 0.9rem); }
             .gauge-row { gap: clamp(10px, 1.5vw, 15px); }
             #price-table th, #price-table td { padding: clamp(8px, 1vw, 12px); font-size: clamp(0.8rem, 1vw, 0.95rem); }
             #price-table .coin-icon { width: 28px; height: 28px; }
+            .alert-btn { padding: 5px 8px; font-size: clamp(0.6rem, 0.8vw, 0.8rem); }
+            .event-item h4 { font-size: clamp(0.8rem, 1vw, 0.9rem); }
+            .event-item p { font-size: clamp(0.6rem, 0.8vw, 0.7rem); }
         }
     </style>
 </head>
@@ -198,6 +283,16 @@
         </div>
     </div>
 
+    <div class="events-container">
+        <h2>კრიპტო ღონისძიებების კალენდარი</h2>
+        <div class="events-list" id="events-list">
+            <div class="event-item">
+                <h4>ჩატვირთვა...</h4>
+                <p>ღონისძიების დეტალები...</p>
+            </div>
+        </div>
+    </div>
+
     <div class="prices-container">
         <h2>კრიპტო კოლექტივის პროექტები</h2>
         <table id="price-table">
@@ -206,6 +301,7 @@
                     <th data-sort="name">კოინი</th>
                     <th data-sort="price">ფასი</th>
                     <th data-sort="change">24ს ცვლილება</th>
+                    <th>გაფრთხილება</th>
                 </tr>
             </thead>
             <tbody id="price-table-body"></tbody>
@@ -214,82 +310,11 @@
 
     <script>
         const quotesPool = [
-            "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე",
+            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
             "რისკი იმაში მდგომარეობს, რაც არ იცი. იცოდე მეტი, გარისკე ნაკლები.",
-            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
-            "ფული არ ქმნის იდეებს, იდეები ქმნიან ფულს.",
-            "მოითმინე დღეს, რომ ხვალ მოიმკა.",
-            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს。",
-            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს。",
-            "ფული მუშაობს, როცა შენ მას მართავ.",
-            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის。",
-            "ყოველი წარუმატებლობა ახალი დასაწყისია。",
-            "ინვესტიცია საკუთარ გონებაში ყოველთვის ანაზღაურდება。",
-            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
-            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
-            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
-            "გააკეთე ის, რაც გჯერა, და ფული მოგყვება。",
-            "წარმატება დროისა და შრომის შედეგია。",
-            "ნუ ელოდები შანსს, შექმენი ის。",
-            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
-            "შეცდომები გზაა სიბრძნისკენ。",
-            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში。",
-            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
-            "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
-            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
-            "წარმატება მოთმინების ჯილდოა。",
-            "რაც არ გცოდნია, ის გაკონტროლებს。",
-            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
-            "თუ არ გარისკავ, ვერ გაიზრდები。",
-            "ყოველი დღე ახალი შანსია ზრდისთვის。",
-            "ფულის ღირებულება მის გამოყენებაშია。",
-            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
-            "წარსული გაკვეთილია, მომავალი — შენი ხელშია。",
-            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
-            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
-            "ფული მოდის მათთან, ვინც მას ეძებს。",
-            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
-            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
-            "წარმატება არის შრომისა და რწმენის ნაზავი。",
-            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
-            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი。",
-            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
-            "თუ გჯერა, ყველაფერი შესაძლებელია。",
-            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
-            "ფული არის იარაღი, გამოიყენე გონივრულად。",
-            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
-            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
-            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
-            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
-            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
-            "წარმატება არის გზა, რომელსაც თავად აგებ。",
-            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
-            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
-            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
-            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
-            
-            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
-            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
-            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
-            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
-            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
-            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
-            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნება. — ჯესი ლივერმორი",
-            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
-            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
-            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
-            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
-            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
-            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
-            
-            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — ვალდებულებებს. — რობერტ კიოსაკი",
-            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
-            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
-            "რეპუტაციის აშენებას 20 წელი სჭირდება, მის განადგურებას კი 5 წუთი. — უორენ ბაფეტი",
-            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
-            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
-            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
-            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
+            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება。",
+            "ფული არ ქმნის იდეებს, იდეები ქმნიან ფულს。",
+            "მოითმინე დღეს, რომ ხვალ მოიმკა。"
         ];
 
         const fallbackData = {
@@ -297,8 +322,14 @@
             coins: [
                 { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
                 { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
+            ],
+            events: [
+                { title: "DeFi 101 by PancakeSwap", date: "2025-03-30", description: "Join us for DeFi 101, the latest PancakeSwap updates, games, networking, and exclusive merch giveaways at 1:30 PM." },
+                { title: "FLOKI Weekly Recap", date: "2025-03-31", description: "FLOKI hosts a weekly recap at 4 PM UTC." }
             ]
         };
+
+        let priceAlerts = JSON.parse(localStorage.getItem('priceAlerts')) || {};
 
         function getCachedData(key) {
             const cached = localStorage.getItem(key);
@@ -350,8 +381,37 @@
             }
         }
 
+        function renderEvents(events) {
+            const eventsList = document.getElementById('events-list');
+            eventsList.innerHTML = '';
+            events.forEach(event => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('event-item');
+                eventItem.innerHTML = `
+                    <h4>${event.title}</h4>
+                    <p>${event.date}: ${event.description}</p>
+                `;
+                eventsList.appendChild(eventItem);
+            });
+        }
+
         let coinData = [];
         const sortDirection = {};
+
+        function checkPriceAlerts(coin) {
+            const alert = priceAlerts[coin.symbol];
+            if (alert) {
+                const currentPrice = coin.current_price;
+                if (currentPrice >= alert.above || currentPrice <= alert.below) {
+                    new Notification(`${coin.name} Price Alert`, {
+                        body: `Price of ${coin.name} is now $${currentPrice.toFixed(2)}!`,
+                        icon: coin.image
+                    });
+                    delete priceAlerts[coin.symbol];
+                    localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
+                }
+            }
+        }
 
         function renderTable(data) {
             const priceTableBody = document.getElementById('price-table-body');
@@ -366,8 +426,10 @@
                     <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
                     <td class="price ${priceColorClass}">$${price}</td>
                     <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
+                    <td><button class="alert-btn" onclick="setPriceAlert('${coin.symbol}', ${coin.current_price}, '${coin.name}', '${coin.image}')">გაფრთხილების დაყენება</button></td>
                 `;
                 priceTableBody.appendChild(row);
+                checkPriceAlerts(coin);
             });
         }
 
@@ -395,6 +457,40 @@
             renderTable(coinData);
         }
 
+        async function requestNotificationPermission() {
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                const permission = await Notification.requestPermission();
+                if (permission === "granted") {
+                    console.log("Notification permission granted.");
+                } else {
+                    console.log("Notification permission denied.");
+                }
+            }
+        }
+
+        window.setPriceAlert = function(symbol, currentPrice, name, image) {
+            if (Notification.permission !== "granted") {
+                alert("Please enable notifications to set price alerts.");
+                return;
+            }
+
+            const above = prompt(`Set price alert for ${name} above current price ($${currentPrice.toFixed(2)}):`, currentPrice * 1.1);
+            const below = prompt(`Set price alert for ${name} below current price ($${currentPrice.toFixed(2)}):`, currentPrice * 0.9);
+
+            if (above && below && !isNaN(above) && !isNaN(below)) {
+                priceAlerts[symbol] = {
+                    above: parseFloat(above),
+                    below: parseFloat(below),
+                    name: name,
+                    image: image
+                };
+                localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
+                alert(`Price alert set for ${name}! You'll be notified if the price goes above $${parseFloat(above).toFixed(2)} or below $${parseFloat(below).toFixed(2)}.`);
+            } else {
+                alert("Please enter valid numbers for the price alert.");
+            }
+        };
+
         async function fetchData() {
             try {
                 const cachedCoins = getCachedData('coinData');
@@ -407,17 +503,23 @@
                     document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
                 }
 
-                const [fngData, priceData] = await Promise.all([
+                const cachedEvents = getCachedData('eventsData');
+                if (cachedEvents) {
+                    renderEvents(cachedEvents);
+                }
+
+                const [fngData, priceData, eventsData] = await Promise.all([
                     fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
-                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`),
+                    fetchWithRetry('https://api.coinmarketcap.com/data-api/v3/event/list?limit=5')
                 ]);
 
                 const fng = fngData?.data?.[0] || fallbackData.fearGreed;
                 document.getElementById('fear-greed-value').textContent = fng.value;
                 const todayAngle = (fng.value / 100) * 360;
                 const fearGreedCircle = document.getElementById('fear-greed-circle');
-                let sentimentColor = fng.value < 50 ? '#ff5252' : '#3f51b5';
-                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #536dfe ${todayAngle}deg, #252540 ${todayAngle}deg, #252540 360deg)`;
+                let sentimentColor = fng.value < 50 ? '#FF0000' : '#2A4D69';
+                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #4DA8DA ${todayAngle}deg, #1C2526 ${todayAngle}deg, #1C2526 360deg)`;
                 fearGreedCircle.style.borderColor = sentimentColor;
                 const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
                 document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
@@ -431,10 +533,18 @@
 
                 renderTable(coinData);
 
+                const events = eventsData?.data?.events?.map(event => ({
+                    title: event.name,
+                    date: new Date(event.start_date).toISOString().split('T')[0],
+                    description: event.description
+                })) || fallbackData.events;
+                setCachedData('eventsData', events);
+                renderEvents(events);
+
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#3f51b5 0deg, #536dfe 180deg, #252540 180deg, #252540 360deg)';
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#2A4D69 0deg, #4DA8DA 180deg, #1C2526 180deg, #1C2526 360deg)';
                 document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
 
                 coinData = getCachedData('coinData') || fallbackData.coins;
@@ -443,10 +553,14 @@
                     (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
                 document.getElementById('top-gainer-logo').src = topGainer.image;
                 document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+
+                const events = getCachedData('eventsData') || fallbackData.events;
+                renderEvents(events);
             }
         }
 
         console.log("Starting initial load...");
+        requestNotificationPermission();
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000);
