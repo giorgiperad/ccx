@@ -7,9 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; background: #1C2526; color: #E8ECEF; line-height: 1.6; overflow-x: hidden; }
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: #121A23; /* CoinMarketCap primary background */
+            color: #FFFFFF; /* White text for contrast */
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
         header { 
-            background: linear-gradient(135deg, #2A4D69 40%, #4DA8DA 100%); 
+            background: #1C2526; /* CoinMarketCap secondary background */
             padding: clamp(1.5rem, 2.5vw, 2.5rem); 
             display: flex; 
             justify-content: center; 
@@ -18,7 +24,7 @@
             position: sticky; 
             top: 0; 
             z-index: 10; 
-            border-bottom: 3px solid #4DA8DA; 
+            border-bottom: 3px solid #333333; /* Dark gray border */
             transition: all 0.3s ease; 
         }
         header:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
@@ -28,236 +34,185 @@
             font-weight: 700; 
             text-transform: uppercase; 
             letter-spacing: clamp(1.5px, 0.3vw, 2.5px); 
-            color: #E8ECEF; 
+            color: #FFFFFF; 
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
         }
         .highlight-x { 
-            color: #4DA8DA; 
+            color: #00FF00; /* CMC green for emphasis */
             font-size: clamp(2.8rem, 5.5vw, 3.8rem); 
             transition: all 0.3s ease; 
         }
-        header:hover .highlight-x { transform: scale(1.05); color: #E8ECEF; }
-        
-        .fear-greed-container, .prices-container, .events-container { 
-            padding: clamp(25px, 3vw, 50px); 
-            margin: clamp(25px, 2.5vw, 50px) auto; 
-            max-width: 90%; 
-            background: #2E3B3E; 
-            border-radius: 20px; 
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
+        header:hover .highlight-x { transform: scale(1.05); color: #FFFFFF; }
+
+        .fear-greed-container, .prices-container { 
+            padding: clamp(20px, 3vw, 40px); 
+            margin: clamp(20px, 2.5vw, 40px) auto; 
+            max-width: 85%; 
+            background: #1C2526; /* CoinMarketCap secondary background */
+            border-radius: 15px; 
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5); 
             text-align: center; 
             transition: all 0.3s ease; 
-            border: 1px solid #2A4D69; 
+            border: 1px solid #333333; /* Dark gray border */
         }
-        .fear-greed-container:hover, .prices-container:hover, .events-container:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 12px 40px rgba(42, 77, 105, 0.3); 
+        .fear-greed-container:hover, .prices-container:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 35px rgba(51, 51, 51, 0.3); 
         }
-        .fear-greed-container h2, .prices-container h2, .events-container h2 { 
+        .fear-greed-container h2, .prices-container h2 { 
             font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(1.6rem, 2.8vw, 2rem); 
-            margin-bottom: clamp(20px, 2vw, 25px); 
-            color: #E8ECEF; 
+            font-size: clamp(1.5rem, 2.5vw, 1.8rem); 
+            margin-bottom: clamp(15px, 2vw, 20px); 
+            color: #FFFFFF; 
             text-transform: uppercase; 
-            letter-spacing: clamp(1.5px, 0.3vw, 2px); 
-            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
-            padding: clamp(8px, 1.2vw, 12px); 
-            border-radius: 10px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
+            letter-spacing: clamp(1px, 0.2vw, 1.5px); 
+            background: #333333; /* Dark gray */
+            padding: clamp(6px, 1vw, 10px); 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); 
         }
         .gauge-row { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: clamp(20px, 2.5vw, 40px); 
+            gap: clamp(15px, 2vw, 30px); 
             flex-wrap: wrap; 
-            margin-bottom: clamp(25px, 2vw, 30px); 
+            margin-bottom: clamp(20px, 1.5vw, 25px); 
         }
         .gauge-column { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            width: clamp(140px, 22vw, 180px); 
-            background: #1C2526; 
-            padding: clamp(15px, 2vw, 20px); 
-            border-radius: 15px; 
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
+            width: clamp(130px, 20vw, 160px); 
+            background: #121A23; /* CoinMarketCap primary background */
+            padding: clamp(12px, 1.5vw, 15px); 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
             transition: all 0.3s ease; 
-            border: 1px solid #4DA8DA; 
+            border: 1px solid #333333; /* Dark gray */
         }
         .gauge-column:hover { 
-            transform: scale(1.08); 
-            box-shadow: 0 8px 25px rgba(77, 168, 218, 0.4); 
+            transform: scale(1.05); 
+            box-shadow: 0 7px 20px rgba(51, 51, 51, 0.4); 
         }
         .gauge-circle { 
-            width: clamp(100px, 14vw, 140px); 
-            height: clamp(100px, 14vw, 140px); 
+            width: clamp(90px, 13vw, 120px); 
+            height: clamp(90px, 13vw, 120px); 
             border-radius: 50%; 
-            background: #1C2526; 
+            background: #121A23; /* CoinMarketCap primary background */
             position: relative; 
             clip-path: circle(50%); 
             transition: all 0.5s ease; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4); 
         }
         .gauge-bg { 
             width: 90%; 
             height: 90%; 
-            background: #2E3B3E; 
+            background: #1C2526; /* CoinMarketCap secondary background */
             border-radius: 50%; 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); 
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5); 
         }
         .gauge-value { 
-            font-size: clamp(1.6rem, 2.8vw, 2rem); 
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem); 
             font-weight: 700; 
-            color: #E8ECEF; 
+            color: #FFFFFF; 
             position: absolute; 
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%); 
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); 
         }
         .top-gainer-circle { 
-            width: clamp(100px, 14vw, 140px); 
-            height: clamp(100px, 14vw, 140px); 
+            width: clamp(90px, 13vw, 120px); 
+            height: clamp(90px, 13vw, 120px); 
             border-radius: 50%; 
-            background: #1C2526; 
+            background: #121A23; /* CoinMarketCap primary background */
             position: relative; 
             overflow: hidden; 
-            border: 4px solid #2A4D69; 
-            box-shadow: 0 4px 15px rgba(42, 77, 105, 0.4); 
+            border: 3px solid #333333; /* Dark gray */
+            box-shadow: 0 3px 12px rgba(51, 51, 51, 0.3); 
         }
         .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         .gauge-label { 
-            font-size: clamp(0.9rem, 1.3vw, 1.1rem); 
-            color: #E8ECEF; 
-            margin-top: clamp(10px, 1.2vw, 15px); 
+            font-size: clamp(0.8rem, 1.2vw, 1rem); 
+            color: #B0B0B0; /* Light gray */
+            margin-top: clamp(8px, 1vw, 12px); 
             text-align: center; 
         }
         .fear-greed-classification { 
-            font-size: clamp(0.9rem, 1.3vw, 1.1rem); 
-            color: #E8ECEF; 
-            margin-top: clamp(10px, 1.2vw, 15px); 
-            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
-            padding: clamp(6px, 1vw, 10px) clamp(12px, 1.5vw, 18px); 
-            border-radius: 25px; 
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3); 
+            font-size: clamp(0.8rem, 1.2vw, 1rem); 
+            color: #FFFFFF; 
+            margin-top: clamp(8px, 1vw, 12px); 
+            background: #333333; /* Dark gray */
+            padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px); 
+            border-radius: 20px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); 
         }
         #price-table { 
             width: 100%; 
             border-collapse: collapse; 
-            background: #1C2526; 
-            border-radius: 15px; 
+            background: #121A23; /* CoinMarketCap primary background */
+            border-radius: 12px; 
             overflow: hidden; 
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
         }
         #price-table thead { 
-            background: linear-gradient(135deg, #2A4D69 40%, #4DA8DA 100%); 
-            color: #E8ECEF; 
+            background: #1C2526; /* CoinMarketCap secondary background */
+            color: #FFFFFF; 
             text-transform: uppercase; 
             font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(1rem, 1.3vw, 1.2rem); 
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem); 
         }
         #price-table th { 
-            padding: clamp(14px, 1.8vw, 18px); 
+            padding: clamp(12px, 1.5vw, 15px); 
             text-align: left; 
-            border-bottom: 3px solid #4DA8DA; 
+            border-bottom: 2px solid #333333; /* Dark gray */
             font-weight: 700; 
             cursor: pointer; 
             position: relative; 
             transition: background 0.3s ease; 
         }
-        #price-table th:hover { background: rgba(42, 77, 105, 0.3); }
-        #price-table th::after { content: '↕'; margin-left: 6px; font-size: 0.9em; opacity: 0.6; }
+        #price-table th:hover { background: #2A3435; /* Slightly lighter gray */
+        }
+        #price-table th::after { content: '↕'; margin-left: 5px; font-size: 0.8em; opacity: 0.5; }
         #price-table th.asc::after { content: '↑'; opacity: 1; }
         #price-table th.desc::after { content: '↓'; opacity: 1; }
         #price-table td { 
-            padding: clamp(14px, 1.8vw, 18px); 
+            padding: clamp(12px, 1.5vw, 15px); 
             text-align: left; 
-            border-bottom: 2px solid #2A4D69; 
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem); 
-            color: #E8ECEF; 
+            border-bottom: 1px solid #333333; /* Dark gray */
+            font-size: clamp(0.85rem, 1.1vw, 1rem); 
+            color: #B0B0B0; 
         }
-        #price-table tr:nth-child(even) { background: #2E3B3E; }
-        #price-table tr:hover { background: #2A4D69; transition: background 0.3s ease; }
-        #price-table .coin-icon { width: 36px; height: 36px; border-radius: 50%; vertical-align: middle; margin-right: 12px; }
-        #price-table .price.green { color: #00FF00; font-weight: 700; }
-        #price-table .price.red { color: #FF0000; font-weight: 700; }
-        .alert-btn { 
-            background: linear-gradient(90deg, #2A4D69, #4DA8DA); 
-            color: #E8ECEF; 
-            border: none; 
-            padding: 8px 12px; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: clamp(0.8rem, 1vw, 1rem); 
-            transition: all 0.3s ease; 
-        }
-        .alert-btn:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 0 10px rgba(77, 168, 218, 0.5); 
-        }
-        .events-list { 
-            max-height: 300px; 
-            overflow-y: auto; 
-            padding: 10px; 
-            border-radius: 10px; 
-            background: #1C2526; 
-        }
-        .event-item { 
-            padding: 10px; 
-            margin-bottom: 10px; 
-            background: #2E3B3E; 
-            border-radius: 8px; 
-            border-left: 4px solid #4DA8DA; 
-            transition: all 0.3s ease; 
-        }
-        .event-item:hover { 
-            background: #2A4D69; 
-            transform: translateX(5px); 
-        }
-        .event-item h4 { 
-            font-size: clamp(1rem, 1.2vw, 1.1rem); 
-            margin-bottom: 5px; 
-            color: #E8ECEF; 
-        }
-        .event-item p { 
-            font-size: clamp(0.8rem, 1vw, 0.9rem); 
-            color: #B0BEC5; 
-        }
-        .telegram-setup { margin: 10px 0; text-align: center; }
-        .telegram-setup input { padding: 5px; margin-right: 5px; }
-        
+        #price-table tr:nth-child(even) { background: #1C2526; /* CoinMarketCap secondary background */ }
+        #price-table tr:hover { background: #333333; /* Dark gray */ transition: background 0.3s ease; }
+        #price-table .coin-icon { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
+        #price-table .price.green { color: #00FF00; /* CMC green */ font-weight: 700; }
+        #price-table .price.red { color: #FF0000; /* CMC red */ font-weight: 700; }
+
         @media (max-width: 768px) {
             header { padding: clamp(1rem, 1.5vw, 1.5rem); }
-            .fear-greed-container, .prices-container, .events-container { padding: 25px; margin: 25px auto; max-width: 95%; }
-            .gauge-circle, .top-gainer-circle { width: clamp(80px, 12vw, 120px); height: clamp(80px, 12vw, 120px); }
-            .gauge-value { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.8rem, 1.1vw, 1rem); }
-            .gauge-column { width: clamp(120px, 20vw, 160px); }
-            #price-table th, #price-table td { padding: clamp(10px, 1.2vw, 14px); font-size: clamp(0.85rem, 1.1vw, 1rem); }
-            #price-table .coin-icon { width: 32px; height: 32px; }
-            .gauge-row { gap: clamp(15px, 2vw, 20px); }
-            .alert-btn { padding: 6px 10px; font-size: clamp(0.7rem, 0.9vw, 0.9rem); }
-            .event-item h4 { font-size: clamp(0.9rem, 1.1vw, 1rem); }
-            .event-item p { font-size: clamp(0.7rem, 0.9vw, 0.8rem); }
+            .fear-greed-container, .prices-container { padding: 20px; margin: 20px auto; max-width: 90%; }
+            .gauge-circle, .top-gainer-circle { width: clamp(70px, 11vw, 100px); height: clamp(70px, 11vw, 100px); }
+            .gauge-value { font-size: clamp(1.2rem, 2.2vw, 1.6rem); }
+            .gauge-label, .fear-greed-classification { font-size: clamp(0.75rem, 1vw, 0.9rem); }
+            .gauge-column { width: clamp(110px, 18vw, 140px); }
+            #price-table th, #price-table td { padding: clamp(8px, 1vw, 12px); font-size: clamp(0.8rem, 1vw, 0.95rem); }
+            .gauge-row { gap: clamp(10px, 1.5vw, 15px); }
         }
         @media (max-width: 480px) {
-            header h1 { font-size: clamp(1.6rem, 3.5vw, 2rem); }
-            .highlight-x { font-size: clamp(2rem, 4vw, 2.5rem); }
-            .fear-greed-container h2, .prices-container h resiliency2, .events-container h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
-            .gauge-circle, .top-gainer-circle { width: clamp(60px, 10vw, 100px); height: clamp(60px, 10vw, 100px); }
-            .gauge-value { font-size: clamp(1.2rem, 2vw, 1.6rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.7rem, 1vw, 0.9rem); }
-            .gauge-row { gap: clamp(10px, 1.5vw, 15px); }
-            #price-table th, #price-table td { padding: clamp(8px, 1vw, 12px); font-size: clamp(0.8rem, 1vw, 0.95rem); }
-            #price-table .coin-icon { width: 28px; height: 28px; }
-            .alert-btn { padding: 5px 8px; font-size: clamp(0.6rem, 0.8vw, 0.8rem); }
-            .event-item h4 { font-size: clamp(0.8rem, 1vw, 0.9rem); }
-            .event-item p { font-size: clamp(0.6rem, 0.8vw, 0.7rem); }
+            header h1 { font-size: clamp(1.5rem, 3vw, 1.8rem); }
+            .highlight-x { font-size: clamp(1.8rem, 3.5vw, 2.2rem); }
+            .fear-greed-container h2, .prices-container h2 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+            .gauge-circle, .top-gainer-circle { width: clamp(60px, 9vw, 80px); height: clamp(60px, 9vw, 80px); }
+            .gauge-value { font-size: clamp(1rem, 1.8vw, 1.4rem); }
+            .gauge-label, .fear-greed-classification { font-size: clamp(0.65rem, 0.9vw, 0.8rem); }
+            #price-table th, #price-table td { padding: clamp(6px, 0.8vw, 10px); font-size: clamp(0.75rem, 0.9vw, 0.9rem); }
+            #price-table .coin-icon { width: 24px; height: 24px; }
         }
     </style>
 </head>
@@ -268,10 +223,6 @@
     
     <div class="fear-greed-container">
         <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
-        <div class="telegram-setup">
-            <input type="text" id="telegramChatId" placeholder="Enter your Telegram Chat ID">
-            <button class="alert-btn" onclick="saveChatId()">Save Chat ID</button>
-        </div>
         <div class="gauge-row">
             <div class="gauge-column">
                 <div class="gauge-circle" id="fear-greed-circle">
@@ -289,16 +240,6 @@
         </div>
     </div>
 
-    <div class="events-container">
-        <h2>კრიპტო ღონისძიებების კალენდარი</h2>
-        <div class="events-list" id="events-list">
-            <div class="event-item">
-                <h4>ჩატვირთვა...</h4>
-                <p>ღონისძიების დეტალები...</p>
-            </div>
-        </div>
-    </div>
-
     <div class="prices-container">
         <h2>კრიპტო კოლექტივის პროექტები</h2>
         <table id="price-table">
@@ -307,7 +248,6 @@
                     <th data-sort="name">კოინი</th>
                     <th data-sort="price">ფასი</th>
                     <th data-sort="change">24ს ცვლილება</th>
-                    <th>გაფრთხილება</th>
                 </tr>
             </thead>
             <tbody id="price-table-body"></tbody>
@@ -328,16 +268,8 @@
             coins: [
                 { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
                 { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
-            ],
-            events: [
-                { title: "DeFi 101 by PancakeSwap", date: "2025-03-30", description: "Join us for DeFi 101, the latest PancakeSwap updates, games, networking, and exclusive merch giveaways at 1:30 PM." },
-                { title: "FLOKI Weekly Recap", date: "2025-03-31", description: "FLOKI hosts a weekly recap at 4 PM UTC." }
             ]
         };
-
-        let priceAlerts = JSON.parse(localStorage.getItem('priceAlerts')) || {};
-        let telegramChatId = localStorage.getItem('telegramChatId') || '';
-        const TELEGRAM_BOT_TOKEN = '7736447581:AAFA-MqQ8DdSUl1EpTvHSnsMaJ4ku1mOPVw'; // Replace with your bot token
 
         function getCachedData(key) {
             const cached = localStorage.getItem(key);
@@ -363,29 +295,6 @@
             setCachedData('lastQuote', newQuote);
         }
 
-        async function sendTelegramMessage(chatId, text) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Failed to send Telegram message');
-                console.log('Telegram message sent successfully');
-            } catch (error) {
-                console.error('Error sending Telegram message:', error);
-            }
-        }
-
-        function saveChatId() {
-            const chatId = document.getElementById('telegramChatId').value.trim();
-            if (chatId) {
-                telegramChatId = chatId;
-                localStorage.setItem('telegramChatId', chatId);
-                alert('Telegram Chat ID saved! You can now receive price alerts.');
-                sendTelegramMessage(chatId, 'Welcome to Crypto Collective X Alerts!');
-            } else {
-                alert('Please enter a valid Telegram Chat ID.');
-            }
-        }
-
         async function fetchWithRetry(url, retries = 2, delay = 500) {
             for (let i = 0; i < retries; i++) {
                 try {
@@ -399,35 +308,8 @@
             }
         }
 
-        function renderEvents(events) {
-            const eventsList = document.getElementById('events-list');
-            eventsList.innerHTML = '';
-            events.forEach(event => {
-                const eventItem = document.createElement('div');
-                eventItem.classList.add('event-item');
-                eventItem.innerHTML = `
-                    <h4>${event.title}</h4>
-                    <p>${event.date}: ${event.description}</p>
-                `;
-                eventsList.appendChild(eventItem);
-            });
-        }
-
         let coinData = [];
         const sortDirection = {};
-
-        function checkPriceAlerts(coin) {
-            const alert = priceAlerts[coin.symbol];
-            if (alert && telegramChatId) {
-                const currentPrice = coin.current_price;
-                if (currentPrice >= alert.above || currentPrice <= alert.below) {
-                    const message = `Price Alert: ${coin.name} is now $${currentPrice.toFixed(2)}! (Target: Above $${alert.above.toFixed(2)} or Below $${alert.below.toFixed(2)})`;
-                    sendTelegramMessage(telegramChatId, message);
-                    delete priceAlerts[coin.symbol];
-                    localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
-                }
-            }
-        }
 
         function renderTable(data) {
             const priceTableBody = document.getElementById('price-table-body');
@@ -442,10 +324,8 @@
                     <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
                     <td class="price ${priceColorClass}">$${price}</td>
                     <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
-                    <td><button class="alert-btn" onclick="setPriceAlert('${coin.symbol}', ${coin.current_price}, '${coin.name}')">გაფრთხილების დაყენება</button></td>
                 `;
                 priceTableBody.appendChild(row);
-                checkPriceAlerts(coin);
             });
         }
 
@@ -473,28 +353,6 @@
             renderTable(coinData);
         }
 
-        window.setPriceAlert = function(symbol, currentPrice, name) {
-            if (!telegramChatId) {
-                alert("Please enter and save your Telegram Chat ID first!");
-                return;
-            }
-
-            const above = prompt(`Set price alert for ${name} above current price ($${currentPrice.toFixed(2)}):`, currentPrice * 1.1);
-            const below = prompt(`Set price alert for ${name} below current price ($${currentPrice.toFixed(2)}):`, currentPrice * 0.9);
-
-            if (above && below && !isNaN(above) && !isNaN(below)) {
-                priceAlerts[symbol] = {
-                    above: parseFloat(above),
-                    below: parseFloat(below),
-                    name: name
-                };
-                localStorage.setItem('priceAlerts', JSON.stringify(priceAlerts));
-                alert(`Price alert set for ${name}! You'll receive a Telegram message if the price goes above $${parseFloat(above).toFixed(2)} or below $${parseFloat(below).toFixed(2)}.`);
-            } else {
-                alert("Please enter valid numbers for the price alert.");
-            }
-        };
-
         async function fetchData() {
             try {
                 const cachedCoins = getCachedData('coinData');
@@ -507,23 +365,17 @@
                     document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
                 }
 
-                const cachedEvents = getCachedData('eventsData');
-                if (cachedEvents) {
-                    renderEvents(cachedEvents);
-                }
-
-                const [fngData, priceData, eventsData] = await Promise.all([
+                const [fngData, priceData] = await Promise.all([
                     fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
-                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`),
-                    fetchWithRetry('https://api.coinmarketcap.com/data-api/v3/event/list?limit=5')
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
                 ]);
 
                 const fng = fngData?.data?.[0] || fallbackData.fearGreed;
                 document.getElementById('fear-greed-value').textContent = fng.value;
                 const todayAngle = (fng.value / 100) * 360;
                 const fearGreedCircle = document.getElementById('fear-greed-circle');
-                let sentimentColor = fng.value < 50 ? '#FF0000' : '#2A4D69';
-                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #4DA8DA ${todayAngle}deg, #1C2526 ${todayAngle}deg, #1C2526 360deg)`;
+                let sentimentColor = fng.value < 50 ? '#FF0000' : '#00FF00';
+                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #1C2526 ${todayAngle}deg, #121A23 ${todayAngle}deg, #121A23 360deg)`;
                 fearGreedCircle.style.borderColor = sentimentColor;
                 const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
                 document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
@@ -537,18 +389,10 @@
 
                 renderTable(coinData);
 
-                const events = eventsData?.data?.events?.map(event => ({
-                    title: event.name,
-                    date: new Date(event.start_date).toISOString().split('T')[0],
-                    description: event.description
-                })) || fallbackData.events;
-                setCachedData('eventsData', events);
-                renderEvents(events);
-
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#2A4D69 0deg, #4DA8DA 180deg, #1C2526 180deg, #1C2526 360deg)';
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#00FF00 0deg, #1C2526 180deg, #121A23 180deg, #121A23 360deg)';
                 document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
 
                 coinData = getCachedData('coinData') || fallbackData.coins;
@@ -557,13 +401,9 @@
                     (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
                 document.getElementById('top-gainer-logo').src = topGainer.image;
                 document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
-
-                const events = getCachedData('eventsData') || fallbackData.events;
-                renderEvents(events);
             }
         }
 
-        document.getElementById('telegramChatId').value = telegramChatId;
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000);
