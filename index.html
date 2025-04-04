@@ -2,217 +2,154 @@
 <html lang="ka">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>კრიპტო კოლექტივი X</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background: #121A23; /* CoinMarketCap primary background */
-            color: #FFFFFF; /* White text for contrast */
-            line-height: 1.6; 
-            overflow-x: hidden; 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A2E 0%, #2E2E4D 100%);
+            color: #E0E0E0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-size: 16px;
         }
-        header { 
-            background: #1C2526; /* CoinMarketCap secondary background */
-            padding: clamp(1.5rem, 2.5vw, 2.5rem); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
-            position: sticky; 
-            top: 0; 
-            z-index: 10; 
-            border-bottom: 3px solid #333333; /* Dark gray border */
-            transition: all 0.3s ease; 
+        header {
+            background: rgba(30, 30, 60, 0.95);
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        header:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); }
-        header h1 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(2rem, 4.5vw, 3rem); 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: clamp(1.5px, 0.3vw, 2.5px); 
-            color: #FFFFFF; 
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); 
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFFFFF;
         }
-        .highlight-x { 
-            color: #00FF00; /* CMC green for emphasis */
-            font-size: clamp(2.8rem, 5.5vw, 3.8rem); 
-            transition: all 0.3s ease; 
+        .highlight-x {
+            color: #7B68EE;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
-        header:hover .highlight-x { transform: scale(1.05); color: #FFFFFF; }
+        .container {
+            margin: 1rem;
+            padding: 1rem;
+            background: rgba(40, 40, 70, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .gauge-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .gauge-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 45%;
+            padding: 0.75rem;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 10px;
+            transition: transform 0.2s ease;
+        }
+        .gauge-column:hover { transform: scale(1.03); }
+        .gauge-circle, .dominance-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+        .gauge-bg {
+            width: 85%;
+            height: 85%;
+            background: #2E2E4D;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .gauge-value, .dominance-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .top-gainer-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #7B68EE;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+        .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .gauge-label, .fear-greed-classification, .dominance-label {
+            font-size: 0.9rem;
+            color: #B0BEC5;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        .fear-greed-classification {
+            background: rgba(70, 60, 110, 0.7);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+        }
+        #price-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #price-table thead {
+            background: rgba(50, 50, 90, 0.9);
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+        #price-table th {
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        #price-table td {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            color: #CFD8DC;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #price-table tr:hover { background: rgba(70, 60, 110, 0.5); }
+        #price-table .coin-icon { width: 24px; height: 24px; border-radius: 50%; vertical-align: middle; margin-right: 8px; }
+        #price-table .price.green { color: #7B68EE; font-weight: 600; }
+        #price-table .price.red { color: #FF5252; font-weight: 600; }
 
-        .fear-greed-container, .prices-container { 
-            padding: clamp(20px, 3vw, 40px); 
-            margin: clamp(20px, 2.5vw, 40px) auto; 
-            max-width: 85%; 
-            background: #1C2526; /* CoinMarketCap secondary background */
-            border-radius: 15px; 
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5); 
-            text-align: center; 
-            transition: all 0.3s ease; 
-            border: 1px solid #333333; /* Dark gray border */
-        }
-        .fear-greed-container:hover, .prices-container:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 35px rgba(51, 51, 51, 0.3); 
-        }
-        .fear-greed-container h2, .prices-container h2 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(1.5rem, 2.5vw, 1.8rem); 
-            margin-bottom: clamp(15px, 2vw, 20px); 
-            color: #FFFFFF; 
-            text-transform: uppercase; 
-            letter-spacing: clamp(1px, 0.2vw, 1.5px); 
-            background: #333333; /* Dark gray */
-            padding: clamp(6px, 1vw, 10px); 
-            border-radius: 8px; 
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); 
-        }
-        .gauge-row { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: clamp(15px, 2vw, 30px); 
-            flex-wrap: wrap; 
-            margin-bottom: clamp(20px, 1.5vw, 25px); 
-        }
-        .gauge-column { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            width: clamp(130px, 20vw, 160px); 
-            background: #121A23; /* CoinMarketCap primary background */
-            padding: clamp(12px, 1.5vw, 15px); 
-            border-radius: 12px; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
-            transition: all 0.3s ease; 
-            border: 1px solid #333333; /* Dark gray */
-        }
-        .gauge-column:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 7px 20px rgba(51, 51, 51, 0.4); 
-        }
-        .gauge-circle { 
-            width: clamp(90px, 13vw, 120px); 
-            height: clamp(90px, 13vw, 120px); 
-            border-radius: 50%; 
-            background: #121A23; /* CoinMarketCap primary background */
-            position: relative; 
-            clip-path: circle(50%); 
-            transition: all 0.5s ease; 
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4); 
-        }
-        .gauge-bg { 
-            width: 90%; 
-            height: 90%; 
-            background: #1C2526; /* CoinMarketCap secondary background */
-            border-radius: 50%; 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5); 
-        }
-        .gauge-value { 
-            font-size: clamp(1.4rem, 2.5vw, 1.8rem); 
-            font-weight: 700; 
-            color: #FFFFFF; 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); 
-        }
-        .top-gainer-circle { 
-            width: clamp(90px, 13vw, 120px); 
-            height: clamp(90px, 13vw, 120px); 
-            border-radius: 50%; 
-            background: #121A23; /* CoinMarketCap primary background */
-            position: relative; 
-            overflow: hidden; 
-            border: 3px solid #333333; /* Dark gray */
-            box-shadow: 0 3px 12px rgba(51, 51, 51, 0.3); 
-        }
-        .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .gauge-label { 
-            font-size: clamp(0.8rem, 1.2vw, 1rem); 
-            color: #B0B0B0; /* Light gray */
-            margin-top: clamp(8px, 1vw, 12px); 
-            text-align: center; 
-        }
-        .fear-greed-classification { 
-            font-size: clamp(0.8rem, 1.2vw, 1rem); 
-            color: #FFFFFF; 
-            margin-top: clamp(8px, 1vw, 12px); 
-            background: #333333; /* Dark gray */
-            padding: clamp(5px, 0.8vw, 8px) clamp(10px, 1.2vw, 15px); 
-            border-radius: 20px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); 
-        }
-        #price-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            background: #121A23; /* CoinMarketCap primary background */
-            border-radius: 12px; 
-            overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
-        }
-        #price-table thead { 
-            background: #1C2526; /* CoinMarketCap secondary background */
-            color: #FFFFFF; 
-            text-transform: uppercase; 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem); 
-        }
-        #price-table th { 
-            padding: clamp(12px, 1.5vw, 15px); 
-            text-align: left; 
-            border-bottom: 2px solid #333333; /* Dark gray */
-            font-weight: 700; 
-            cursor: pointer; 
-            position: relative; 
-            transition: background 0.3s ease; 
-        }
-        #price-table th:hover { background: #2A3435; /* Slightly lighter gray */
-        }
-        #price-table th::after { content: '↕'; margin-left: 5px; font-size: 0.8em; opacity: 0.5; }
-        #price-table th.asc::after { content: '↑'; opacity: 1; }
-        #price-table th.desc::after { content: '↓'; opacity: 1; }
-        #price-table td { 
-            padding: clamp(12px, 1.5vw, 15px); 
-            text-align: left; 
-            border-bottom: 1px solid #333333; /* Dark gray */
-            font-size: clamp(0.85rem, 1.1vw, 1rem); 
-            color: #B0B0B0; 
-        }
-        #price-table tr:nth-child(even) { background: #1C2526; /* CoinMarketCap secondary background */ }
-        #price-table tr:hover { background: #333333; /* Dark gray */ transition: background 0.3s ease; }
-        #price-table .coin-icon { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; margin-right: 10px; }
-        #price-table .price.green { color: #00FF00; /* CMC green */ font-weight: 700; }
-        #price-table .price.red { color: #FF0000; /* CMC red */ font-weight: 700; }
-
-        @media (max-width: 768px) {
-            header { padding: clamp(1rem, 1.5vw, 1.5rem); }
-            .fear-greed-container, .prices-container { padding: 20px; margin: 20px auto; max-width: 90%; }
-            .gauge-circle, .top-gainer-circle { width: clamp(70px, 11vw, 100px); height: clamp(70px, 11vw, 100px); }
-            .gauge-value { font-size: clamp(1.2rem, 2.2vw, 1.6rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.75rem, 1vw, 0.9rem); }
-            .gauge-column { width: clamp(110px, 18vw, 140px); }
-            #price-table th, #price-table td { padding: clamp(8px, 1vw, 12px); font-size: clamp(0.8rem, 1vw, 0.95rem); }
-            .gauge-row { gap: clamp(10px, 1.5vw, 15px); }
-        }
         @media (max-width: 480px) {
-            header h1 { font-size: clamp(1.5rem, 3vw, 1.8rem); }
-            .highlight-x { font-size: clamp(1.8rem, 3.5vw, 2.2rem); }
-            .fear-greed-container h2, .prices-container h2 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
-            .gauge-circle, .top-gainer-circle { width: clamp(60px, 9vw, 80px); height: clamp(60px, 9vw, 80px); }
-            .gauge-value { font-size: clamp(1rem, 1.8vw, 1.4rem); }
-            .gauge-label, .fear-greed-classification { font-size: clamp(0.65rem, 0.9vw, 0.8rem); }
-            #price-table th, #price-table td { padding: clamp(6px, 0.8vw, 10px); font-size: clamp(0.75rem, 0.9vw, 0.9rem); }
-            #price-table .coin-icon { width: 24px; height: 24px; }
+            header h1 { font-size: 1.3rem; }
+            .highlight-x { font-size: 1.5rem; }
+            .gauge-circle, .top-gainer-circle, .dominance-circle { width: 70px; height: 70px; }
+            .gauge-value, .dominance-value { font-size: 1.3rem; }
+            .gauge-label, .fear-greed-classification, .dominance-label { font-size: 0.85rem; }
+            #price-table th, #price-table td { font-size: 0.85rem; padding: 0.6rem; }
+            .gauge-column { width: 100%; margin-bottom: 0.5rem; }
         }
     </style>
 </head>
@@ -221,7 +158,7 @@
         <h1>CRYPTO COLLECTIVE <span class="highlight-x">X</span></h1>
     </header>
     
-    <div class="fear-greed-container">
+    <div class="container fear-greed-container">
         <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
         <div class="gauge-row">
             <div class="gauge-column">
@@ -240,7 +177,20 @@
         </div>
     </div>
 
-    <div class="prices-container">
+    <div class="container dominance-container">
+        <h2>ბიტკოინის დომინაცია</h2>
+        <div class="gauge-row">
+            <div class="gauge-column">
+                <div class="dominance-circle" id="dominance-circle">
+                    <div class="gauge-bg"></div>
+                    <span id="dominance-value" class="dominance-value">ჩატვირთვა...</span>
+                </div>
+                <span id="dominance-label" class="dominance-label"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container prices-container">
         <h2>კრიპტო კოლექტივის პროექტები</h2>
         <table id="price-table">
             <thead>
@@ -272,11 +222,11 @@
             "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
             "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
             "გააკეთე ის, რაც გჯერა, და ფული მოგყვება.",
-            "წარმატება დროისა და შრომის შედეგია.",
+            "წარმატება დროისა და შრომის შედეგია。",
             "ნუ ელოდები შანსს, შექმენი ის。",
             "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
-            "შეცდომები გზაა სიბრძნისკენ.",
-            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში.",
+            "შეცდომები გზაა სიბრძნისკენ。",
+            "ინვესტირება მომავალში ნიშნავს რწმენას საკუთარ თავში。",
             "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
             "არავინ გახდა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
             "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
@@ -287,7 +237,7 @@
             "ყოველი დღე ახალი შანსია ზრდისთვის。",
             "ფულის ღირებულება მის გამოყენებაშია。",
             "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
-            "წარსული გაკვეთილია, მომავალი — შენი ხელშია.",
+            "წარსული გაკვეთილია, მომავალი — შენი ხელშია。",
             "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
             "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
             "ფული მოდის მათთან, ვინც მას ეძებს。",
@@ -335,6 +285,7 @@
 
         const fallbackData = {
             fearGreed: { value: 50, classification: "Neutral" },
+            dominance: { value: 62.5 }, // Typical recent BTC.D value as of early 2025
             coins: [
                 { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
                 { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
@@ -415,9 +366,7 @@
 
             document.querySelectorAll('#price-table th').forEach(th => {
                 th.classList.remove('asc', 'desc');
-                if (th.getAttribute('data-sort') === field) {
-                    th.classList.add(direction);
-                }
+                if (th.getAttribute('data-sort') === field) th.classList.add(direction);
             });
 
             renderTable(coinData);
@@ -440,16 +389,27 @@
                     fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
                 ]);
 
+                // Fear and Greed
                 const fng = fngData?.data?.[0] || fallbackData.fearGreed;
                 document.getElementById('fear-greed-value').textContent = fng.value;
                 const todayAngle = (fng.value / 100) * 360;
                 const fearGreedCircle = document.getElementById('fear-greed-circle');
-                let sentimentColor = fng.value < 50 ? '#FF0000' : '#00FF00';
-                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #1C2526 ${todayAngle}deg, #121A23 ${todayAngle}deg, #121A23 360deg)`;
+                let sentimentColor = fng.value < 50 ? '#FF5252' : '#7B68EE';
+                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #2E2E4D ${todayAngle}deg, #1A1A2E ${todayAngle}deg, #1A1A2E 360deg)`;
                 fearGreedCircle.style.borderColor = sentimentColor;
                 const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
                 document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
 
+                // Bitcoin Dominance (BTC.D from TradingView concept, static fallback)
+                const dominance = getCachedData('dominance') || fallbackData.dominance.value; // Replace with TradingView widget or manual update in practice
+                document.getElementById('dominance-value').textContent = `${dominance}%`;
+                const dominanceAngle = (dominance / 100) * 360;
+                const dominanceCircle = document.getElementById('dominance-circle');
+                dominanceCircle.style.background = `conic-gradient(#7B68EE 0deg, #2E2E4D ${dominanceAngle}deg, #1A1A2E ${dominanceAngle}deg, #1A1A2E 360deg)`;
+                dominanceCircle.style.borderColor = '#7B68EE';
+                setCachedData('dominance', dominance); // Cache for next load
+
+                // Coin Prices
                 coinData = priceData?.length > 0 ? priceData : (cachedCoins || fallbackData.coins);
                 setCachedData('coinData', coinData);
                 const topGainer = coinData.reduce((max, coin) => 
@@ -462,8 +422,11 @@
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#00FF00 0deg, #1C2526 180deg, #121A23 180deg, #121A23 360deg)';
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#7B68EE 0deg, #2E2E4D 180deg, #1A1A2E 180deg, #1A1A2E 360deg)';
                 document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
+
+                document.getElementById('dominance-value').textContent = `${fallbackData.dominance.value}%`;
+                document.getElementById('dominance-circle').style.background = 'conic-gradient(#7B68EE 0deg, #2E2E4D 225deg, #1A1A2E 225deg, #1A1A2E 360deg)';
 
                 coinData = getCachedData('coinData') || fallbackData.coins;
                 renderTable(coinData);
