@@ -403,7 +403,7 @@
 
                 const [fngData, priceData] = await Promise.all([
                     fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
-                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,badger-dao,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,starknet,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,troy,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
                 ]);
 
                 const fng = fngData?.data?.[0] || fallbackData.fearGreed;
