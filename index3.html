@@ -1,229 +1,656 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Collective X Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1A1A2E">
+    <title>კრიპტო კოლექტივი X</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', 'Arial', sans-serif;
-            background: #0a0e14;
-            color: #d9e1e8;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A2E 0%, #2E2E4D 100%);
+            color: #E0E0E0;
+            line-height: 1.5;
             overflow-x: hidden;
+            font-size: 14px;
+            max-width: 400px;
+            margin: 0 auto;
         }
         header {
-            background: linear-gradient(135deg, #1a0f29, #4b2b63, #3e2443);
-            padding: 1.5rem; /* Smaller header */
+            background: rgba(30, 30, 60, 0.95);
+            padding: 0.8rem;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 4px solid #962bc0; /* Slightly thinner border */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
         }
-        h1 {
-            font-size: 2rem; /* Smaller base size */
-            font-weight: 900;
+        header h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 4px; /* Slightly reduced spacing */
-            color: #ffffff;
-            text-shadow: 
-                0 0 8px rgba(255, 255, 255, 0.5),
-                0 0 16px rgba(150, 43, 192, 0.7);
+            letter-spacing: 1px;
+            color: #FFFFFF;
         }
         .highlight-x {
-            color: #962bc0;
-            font-size: 2.8rem; /* Smaller X */
-            font-weight: 950;
-            text-shadow: 
-                0 0 20px #962bc0, 
-                0 0 30px #962bc0, 
-                0 0 50px #962bc0, 
-                -2px -2px 0 #ffffff, 
-                2px -2px 0 #ffffff, 
-                -2px 2px 0 #ffffff, 
-                2px 2px 0 #ffffff;
-        }
-        .fear-greed-container {
-            background: #1a2029;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            border-bottom: 2px solid #962bc0;
-        }
-        .fear-greed-label {
+            color: #7B68EE;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.75rem;
         }
-        .fear-greed-bar {
-            width: 80%;
-            max-width: 600px;
-            height: 25px;
-            background: #333;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 3px solid #ffffff;
+        .bell-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #7B68EE;
         }
-        .fear-greed-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d81b60, #ffd700, #00c853);
-            transition: width 0.5s ease;
+        .bell-icon:hover { color: #FFFFFF; }
+        .container {
+            margin: 0.8rem;
+            padding: 0.8rem;
+            background: rgba(40, 40, 70, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
         }
-        .fear-greed-value {
-            font-size: 1.3rem;
+        .alerts-container { display: none; }
+        .alerts-container.active { display: block; }
+        h2 {
+            font-size: 1rem;
             font-weight: 600;
-            color: #ffffff;
-            margin-top: 0.75rem;
+            color: #FFFFFF;
+            margin-bottom: 0.8rem;
+            text-align: center;
         }
-        .crypto-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
+        .gauge-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
         }
-        .crypto-table {
+        .gauge-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48%;
+            padding: 0.6rem;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .gauge-column:hover { transform: scale(1.02); }
+        .gauge-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .gauge-bg {
+            width: 85%;
+            height: 85%;
+            background: #2E2E4D;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .gauge-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .top-gainer-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #7B68EE;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .gauge-label, .fear-greed-classification {
+            font-size: 0.8rem;
+            color: #B0BEC5;
+            margin-top: 0.4rem;
+            text-align: center;
+        }
+        .fear-greed-classification {
+            background: rgba(70, 60, 110, 0.7);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+        }
+        .tradingview-widget-container {
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            background: transparent;
+        }
+        .tradingview-widget-container__widget {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .tradingview-widget-copyright {
+            text-align: center;
+            font-size: 0.7rem;
+            margin-top: 0.4rem;
+        }
+        .tradingview-widget-copyright a { color: #7B68EE; text-decoration: none; }
+        #price-table, #alerts-table {
             width: 100%;
             border-collapse: collapse;
-            background: #161b22;
-            border-radius: 12px;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
-        .crypto-table thead {
-            background: #2a3238;
+        #price-table thead, #alerts-table thead {
+            background: rgba(50, 50, 90, 0.9);
+            color: #FFFFFF;
+            font-weight: 600;
         }
-        .crypto-table th {
-            width: 50%; /* 50%/50% split for Name and Price */
-            padding: 18px 25px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ffffff;
+        #price-table th, #alerts-table th {
+            padding: 0.6rem;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+        #price-table td, #alerts-table td {
+            padding: 0.6rem;
+            font-size: 0.8rem;
+            color: #CFD8DC;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #price-table tr:hover, #alerts-table tr:hover { background: rgba(70, 60, 110, 0.5); }
+        #price-table .coin-icon { width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
+        #price-table .price.green { color: #089981; font-weight: 600; }
+        #price-table .price.red { color: #FF5252; font-weight: 600; }
+        #alerts-table .delete-btn {
+            background: #FF5252;
+            border: none;
+            color: #FFFFFF;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
             cursor: pointer;
-            user-select: none;
-            transition: all 0.3s ease;
+            font-size: 0.75rem;
         }
-        .crypto-table th:hover {
-            background: #3a4248;
-        }
-        .crypto-table th.active {
-            background: #962bc0;
-            color: #ffffff;
-        }
-        .crypto-table td {
-            padding: 18px 25px;
-            font-size: 1.1rem;
-        }
-        .crypto-table tr {
-            transition: all 0.3s ease;
-        }
-        .crypto-table tr:hover {
-            background: #1e252b;
-            transform: scale(1.005);
-        }
-        .crypto-name {
-            font-weight: 600;
-            text-transform: capitalize;
+        #alerts-table .delete-btn:hover { background: #e04848; }
+        .alert-form {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
-        .crypto-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            vertical-align: middle;
+        .alert-form select, .alert-form input, .alert-form button {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(30, 30, 50, 0.8);
+            color: #E0E0E0;
+            font-size: 0.8rem;
         }
-        .crypto-price {
-            color: #00c853;
-            font-weight: 700;
+        .alert-form button {
+            background: #7B68EE;
+            border: none;
+            cursor: pointer;
         }
-        .error-message {
-            text-align: center;
-            color: #d81b60;
-            padding: 20px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        /* Mobile responsiveness */
-        @media (max-width: 900px) {
-            .crypto-table th, .crypto-table td {
-                font-size: 1rem;
-                padding: 14px 12px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .highlight-x {
-                font-size: 2.4rem;
-            }
-            .fear-greed-bar {
-                width: 90%;
-            }
-        }
-        @media (max-width: 600px) {
-            .crypto-table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            .crypto-table th, .crypto-table td {
-                min-width: 120px;
-                font-size: 0.95rem;
-                padding: 12px 10px;
-            }
-            header {
-                padding: 1rem;
-            }
-            h1 {
-                font-size: 1.6rem;
-            }
-            .highlight-x {
-                font-size: 2rem;
-            }
-            .crypto-icon {
-                width: 20px;
-                height: 20px;
-            }
-            .fear-greed-label {
-                font-size: 1.3rem;
-            }
-            .fear-greed-value {
-                font-size: 1.1rem;
-            }
+        .alert-form button:hover { background: #6a57d5; }
+
+        @media (max-width: 400px) {
+            body { font-size: 13px; }
+            header h1 { font-size: 1.1rem; }
+            .highlight-x { font-size: 1.3rem; }
+            .gauge-circle, .top-gainer-circle { width: 50px; height: 50px; }
+            .gauge-value { font-size: 1rem; }
+            .gauge-label, .fear-greed-classification { font-size: 0.75rem; }
+            #price-table th, #price-table td, #alerts-table th, #alerts-table td { font-size: 0.75rem; padding: 0.5rem; }
+            .gauge-column { width: 100%; margin-bottom: 0.4rem; }
+            .tradingview-widget-container { max-width: 100%; }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Crypto Collective <span class="highlight-x">X</span> </h1>
+        <h1>CRYPTO COLLECTIVE <span class="highlight-x">X</span></h1>
+        <span class="bell-icon" id="toggle-alerts">🔔</span>
     </header>
-    <div class="fear-greed-container">
-        <div class="fear-greed-label">შიშისა და სიხარბის ინდექსი</div>
-        <div class="fear-greed-bar">
-            <div class="fear-greed-fill" id="fear-greed-fill"></div>
+    
+    <div class="container fear-greed-container">
+        <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
+        <div class="gauge-row">
+            <div class="gauge-column">
+                <div class="gauge-circle" id="fear-greed-circle">
+                    <div class="gauge-bg"></div>
+                    <span id="fear-greed-value" class="gauge-value">ჩატვირთვა...</span>
+                </div>
+                <span id="fear-greed-classification" class="fear-greed-classification">ჩატვირთვა...</span>
+            </div>
+            <div class="gauge-column">
+                <div class="top-gainer-circle" id="top-gainer-circle">
+                    <img id="top-gainer-logo" src="" alt="Top Gainer Logo">
+                </div>
+                <span id="top-gainer-label" class="gauge-label">ჩატვირთვა...</span>
+            </div>
         </div>
-        <div class="fear-greed-value" id="fear-greed-value">იტვირთება...</div>
     </div>
-    <div class="crypto-container">
-        <table class="crypto-table">
+
+    <div class="container dominance-container">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+            {
+                "symbol": "CRYPTOCAP:BTC.D",
+                "width": "100%",
+                "locale": "en",
+                "colorTheme": "dark",
+                "isTransparent": true
+            }
+            </script>
+        </div>
+    </div>
+
+    <div class="container alerts-container" id="alerts-container">
+        <h2>ფასის გაფრთხილებები</h2>
+        <form class="alert-form" id="alert-form">
+            <select id="alert-coin" required>
+                <option value="">აირჩიეთ კოინი</option>
+            </select>
+            <input type="number" id="alert-price" placeholder="სამიზნე ფასი (USD)" step="0.01" required>
+            <select id="alert-direction" required>
+                <option value="above">ზევით</option>
+                <option value="below">ქვევით</option>
+            </select>
+            <button type="submit">გაფრთხილების დამატება</button>
+        </form>
+        <table id="alerts-table">
             <thead>
                 <tr>
-                    <th data-sort="name">Name</th>
-                    <th data-sort="price">Price</th>
+                    <th>კოინი</th>
+                    <th>სამიზნე ფასი</th>
+                    <th>მიმართულება</th>
+                    <th>მოქმედება</th>
                 </tr>
             </thead>
-            <tbody id="crypto-list"></tbody>
+            <tbody id="alerts-table-body"></tbody>
         </table>
     </div>
-    <script src="script.js"></script>
+
+    <div class="container prices-container">
+        <h2>კრიპტო კოლექტივის პროექტები</h2>
+        <table id="price-table">
+            <thead>
+                <tr>
+                    <th data-sort="name">კოინი</th>
+                    <th data-sort="price">ფასი</th>
+                    <th data-sort="change">24ს</th>
+                </tr>
+            </thead>
+            <tbody id="price-table-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const quotesPool = [
+            "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე. — გ.ხ",
+            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
+            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
+            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს。",
+            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს。",
+            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის。",
+            "ყოველი წარუმატებლობა ახალი დასაწყისია。",
+            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
+            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
+            "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება。",
+            "წარმატება დროისა და შრომის შედეგია。",
+            "ნუ ელოდები შანსს, შექმენი ის。",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
+            "შეცდომები გზაა სიბრძნისკენ。",
+            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
+            "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
+            "წარმატება მოთმინების ჯილდოა。",
+            "რაც არ გცოდნია, ის გაკონტროლებს。",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
+            "თუ არ გარისკავ, ვერ გაიზრდები。",
+            "ყოველი დღე ახალი შანსია ზრდისთვის。",
+            "ფულის ღირებულება მის გამოყენებაშია。",
+            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
+            "წარსული გაკვეთილია, მომავალი — შენ ხელშია。",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
+            "ფული მოდის მათთან, ვინც მას ეძებს。",
+            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
+            "წარმატება არის შრომისა და რწმენის ნაზავი。",
+            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრუ�ყოფილი。",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
+            "თუ გჯერა, ყველაფერი შესაძლებელია。",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
+            "ფული არის იარაღი, გამოიყენე გონივრულად。",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
+            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
+            "წარმატება არის გზა, რომელსაც თავად აგებ.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
+            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
+            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
+            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
+            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
+            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
+            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
+            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
+            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა. — ჯესი ლივერმორი",
+            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
+            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
+            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
+            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
+            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
+            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
+            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს!. — რობერტ კიოსაკი",
+            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
+            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
+            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
+            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
+            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
+            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
+        ];
+
+        const fallbackData = {
+            fearGreed: { value: 50, classification: "Neutral" },
+            coins: [
+                { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
+                { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
+            ]
+        };
+
+        function getCachedData(key) {
+            const cached = localStorage.getItem(key);
+            return cached ? JSON.parse(cached) : null;
+        }
+
+        function setCachedData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function getRandomQuote(recentQuotes) {
+            const availableQuotes = quotesPool.filter(q => !recentQuotes.includes(q));
+            if (availableQuotes.length === 0) return quotesPool[Math.floor(Math.random() * quotesPool.length)]; // Fallback if all quotes used
+            const newQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
+            return newQuote;
+        }
+
+        function displayRandomQuote() {
+            let recentQuotes = getCachedData('recentQuotes') || [];
+            if (!Array.isArray(recentQuotes)) recentQuotes = []; // Ensure it's an array
+            const newQuote = getRandomQuote(recentQuotes);
+            document.getElementById('quote-display').textContent = `"${newQuote}"`;
+            recentQuotes.unshift(newQuote); // Add new quote to start
+            if (recentQuotes.length > 5) recentQuotes.pop(); // Keep only last 5
+            setCachedData('recentQuotes', recentQuotes);
+        }
+
+        async function fetchWithRetry(url, retries = 2, delay = 500) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) return null;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        let coinData = [];
+        const sortDirection = {};
+
+        function renderTable(data) {
+            const priceTableBody = document.getElementById('price-table-body');
+            priceTableBody.innerHTML = '';
+            data.forEach(coin => {
+                const price = coin.current_price.toFixed(coin.symbol === 'btc' ? 2 : 6);
+                const change24h = coin.price_change_percentage_24h || 0;
+                const priceColorClass = change24h >= 0 ? 'green' : 'red';
+                const row = document.createElement('tr');
+                row.dataset.coin = coin.symbol;
+                row.innerHTML = `
+                    <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
+                    <td class="price ${priceColorClass}">$${price}</td>
+                    <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
+                `;
+                priceTableBody.appendChild(row);
+            });
+            // Update coin selector for alerts
+            updateCoinSelector();
+        }
+
+        function sortTable(field) {
+            if (!coinData.length) return;
+
+            const direction = sortDirection[field] === 'asc' ? 'desc' : 'asc';
+            sortDirection[field] = direction;
+            const multiplier = direction === 'asc' ? 1 : -1;
+
+            coinData.sort((a, b) => {
+                if (field === 'name') return multiplier * (a.name || '').localeCompare(b.name || '');
+                if (field === 'price') return multiplier * ((a.current_price || 0) - (b.current_price || 0));
+                if (field === 'change') return multiplier * ((a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
+                return 0;
+            });
+
+            document.querySelectorAll('#price-table th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+                if (th.getAttribute('data-sort') === field) th.classList.add(direction);
+            });
+
+            renderTable(coinData);
+        }
+
+        // Price Alerts Functions
+        function updateCoinSelector() {
+            const select = document.getElementById('alert-coin');
+            select.innerHTML = '<option value="">აირჩიეთ კოინი</option>';
+            coinData.forEach(coin => {
+                const option = document.createElement('option');
+                option.value = coin.symbol;
+                option.textContent = `${coin.name} (${coin.symbol.toUpperCase()})`;
+                select.appendChild(option);
+            });
+        }
+
+        function setPriceAlert(symbol, targetPrice, direction) {
+            const alerts = getCachedData('priceAlerts') || [];
+            if (alerts.length >= 10) {
+                alert('გაფრთხილებების მაქსიმალური რაოდენობა (10) მიღწეულია!');
+                return;
+            }
+            alerts.push({ symbol, targetPrice: parseFloat(targetPrice), direction });
+            setCachedData('priceAlerts', alerts);
+            renderAlerts();
+        }
+
+        function deleteAlert(index) {
+            const alerts = getCachedData('priceAlerts') || [];
+            alerts.splice(index, 1);
+            setCachedData('priceAlerts', alerts);
+            renderAlerts();
+        }
+
+        function renderAlerts() {
+            const alertsTableBody = document.getElementById('alerts-table-body');
+            alertsTableBody.innerHTML = '';
+            const alerts = getCachedData('priceAlerts') || [];
+            alerts.forEach((alert, index) => {
+                const coin = coinData.find(c => c.symbol === alert.symbol) || { name: alert.symbol.toUpperCase() };
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${coin.name}</td>
+                    <td>$${alert.targetPrice.toFixed(2)}</td>
+                    <td>${alert.direction === 'above' ? 'ზევით' : 'ქვევით'}</td>
+                    <td><button class="delete-btn" data-index="${index}">წაშლა</button></td>
+                `;
+                alertsTableBody.appendChild(row);
+            });
+            // Add delete button listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteAlert(btn.dataset.index));
+            });
+        }
+
+        function checkPriceAlerts() {
+            const alerts = getCachedData('priceAlerts') || [];
+            alerts.forEach((alert, index) => {
+                const coin = coinData.find(c => c.symbol === alert.symbol);
+                if (coin) {
+                    if ((alert.direction === 'above' && coin.current_price >= alert.targetPrice) ||
+                        (alert.direction === 'below' && coin.current_price <= alert.targetPrice)) {
+                        if (Notification.permission === 'granted') {
+                            new Notification(`${coin.name} ${alert.direction === 'above' ? 'აღწევს' : 'ჩამოვარდა'} $${alert.targetPrice.toFixed(2)}!`);
+                        } else {
+                            alert(`${coin.name} ${alert.direction === 'above' ? 'აღწევს' : 'ჩამოვარდა'} $${alert.targetPrice.toFixed(2)}!`);
+                        }
+                        alerts.splice(index, 1);
+                        setCachedData('priceAlerts', alerts);
+                        renderAlerts();
+                    }
+                }
+            });
+        }
+
+        async function fetchData() {
+            try {
+                const cachedCoins = getCachedData('coinData');
+                if (cachedCoins) {
+                    coinData = cachedCoins;
+                    renderTable(coinData);
+                    const topGainer = coinData.reduce((max, coin) => 
+                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
+                    document.getElementById('top-gainer-logo').src = topGainer.image;
+                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+                    checkPriceAlerts();
+                }
+
+                const [fngData, priceData] = await Promise.all([
+                    fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,starknet,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,troy,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
+                ]);
+
+                const fng = fngData?.data?.[0] || fallbackData.fearGreed;
+                document.getElementById('fear-greed-value').textContent = fng.value;
+                const todayAngle = (fng.value / 100) * 360;
+                const fearGreedCircle = document.getElementById('fear-greed-circle');
+                let sentimentColor = fng.value < 50 ? '#FF5252' : '#7B68EE';
+                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #2E2E4D ${todayAngle}deg, #1A1A2E ${todayAngle}deg, #1A1A2E 360deg)`;
+                fearGreedCircle.style.borderColor = sentimentColor;
+                const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
+                document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
+
+                coinData = priceData?.length > 0 ? priceData : (cachedCoins || fallbackData.coins);
+                setCachedData('coinData', coinData);
+                const topGainer = coinData.reduce((max, coin) => 
+                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
+                document.getElementById('top-gainer-logo').src = topGainer.image;
+                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+
+                renderTable(coinData);
+                checkPriceAlerts();
+
+            } catch (error) {
+                console.error('Critical error in fetchData:', error.message);
+                document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
+                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#7B68EE 0deg, #2E2E4D 180deg, #1A1A2E 180deg, #1A1A2E 360deg)';
+                document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
+
+                coinData = getCachedData('coinData') || fallbackData.coins;
+                renderTable(coinData);
+                const topGainer = coinData.reduce((max, coin) => 
+                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
+                document.getElementById('top-gainer-logo').src = topGainer.image;
+                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
+                checkPriceAlerts();
+            }
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Request Notification Permission
+        window.addEventListener('load', () => {
+            if ('Notification' in window && Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted');
+                    } else {
+                        console.log('Notification permission denied');
+                    }
+                });
+            }
+        });
+
+        // Toggle Alerts Section
+        document.getElementById('toggle-alerts').addEventListener('click', () => {
+            const alertsContainer = document.getElementById('alerts-container');
+            alertsContainer.classList.toggle('active');
+        });
+
+        // Handle Alert Form Submission
+        document.getElementById('alert-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const symbol = document.getElementById('alert-coin').value;
+            const targetPrice = document.getElementById('alert-price').value;
+            const direction = document.getElementById('alert-direction').value;
+            if (symbol && targetPrice && direction) {
+                setPriceAlert(symbol, targetPrice, direction);
+                document.getElementById('alert-form').reset();
+            }
+        });
+
+        // Initialize Alerts
+        displayRandomQuote();
+        fetchData();
+        setInterval(fetchData, 300000);
+        renderAlerts();
+
+        document.querySelectorAll('#price-table th').forEach(th => {
+            th.addEventListener('click', () => {
+                const field = th.getAttribute('data-sort');
+                if (field) sortTable(field);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                displayRandomQuote();
+            }
+        });
+    </script>
 </body>
 </html>
