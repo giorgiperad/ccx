@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1A1A2E">
     <title>კრიპტო კოლექტივი X</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -294,7 +297,7 @@
             "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
             "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
             "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
-            "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ. — უორენ ბაფეტი",
+            "ფასი ისაა, რასაც იხდი, ღிரებულება — რასაც იღებ. — უორენ ბაფეტი",
             "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
             "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
         ];
@@ -438,6 +441,19 @@
                 document.getElementById('top-gainer-logo').src = topGainer.image;
                 document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
             }
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
         }
 
         displayRandomQuote();
