@@ -28,10 +28,6 @@
             top: 0;
             z-index: 10;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
         }
         header h1 {
             font-size: 1.2rem;
@@ -45,12 +41,6 @@
             font-size: 1.5rem;
             font-weight: 700;
         }
-        .bell-icon {
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #7B68EE;
-        }
-        .bell-icon:hover { color: #FFFFFF; }
         .container {
             margin: 0.8rem;
             padding: 0.8rem;
@@ -58,8 +48,6 @@
             border-radius: 10px;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
         }
-        .alerts-container { display: none; }
-        .alerts-container.active { display: block; }
         h2 {
             font-size: 1rem;
             font-weight: 600;
@@ -147,63 +135,33 @@
             margin-top: 0.4rem;
         }
         .tradingview-widget-copyright a { color: #7B68EE; text-decoration: none; }
-        #price-table, #alerts-table {
+        #price-table {
             width: 100%;
             border-collapse: collapse;
             background: rgba(30, 30, 50, 0.8);
             border-radius: 8px;
             overflow: hidden;
         }
-        #price-table thead, #alerts-table thead {
+        #price-table thead {
             background: rgba(50, 50, 90, 0.9);
             color: #FFFFFF;
             font-weight: 600;
         }
-        #price-table th, #alerts-table th {
+        #price-table th {
             padding: 0.6rem;
             text-align: left;
             font-size: 0.85rem;
         }
-        #price-table td, #alerts-table td {
+        #price-table td {
             padding: 0.6rem;
             font-size: 0.8rem;
             color: #CFD8DC;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        #price-table tr:hover, #alerts-table tr:hover { background: rgba(70, 60, 110, 0.5); }
+        #price-table tr:hover { background: rgba(70, 60, 110, 0.5); }
         #price-table .coin-icon { width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
         #price-table .price.green { color: #089981; font-weight: 600; }
         #price-table .price.red { color: #FF5252; font-weight: 600; }
-        #alerts-table .delete-btn {
-            background: #FF5252;
-            border: none;
-            color: #FFFFFF;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-        }
-        #alerts-table .delete-btn:hover { background: #e04848; }
-        .alert-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .alert-form select, .alert-form input, .alert-form button {
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(30, 30, 50, 0.8);
-            color: #E0E0E0;
-            font-size: 0.8rem;
-        }
-        .alert-form button {
-            background: #7B68EE;
-            border: none;
-            cursor: pointer;
-        }
-        .alert-form button:hover { background: #6a57d5; }
 
         @media (max-width: 400px) {
             body { font-size: 13px; }
@@ -212,7 +170,7 @@
             .gauge-circle, .top-gainer-circle { width: 50px; height: 50px; }
             .gauge-value { font-size: 1rem; }
             .gauge-label, .fear-greed-classification { font-size: 0.75rem; }
-            #price-table th, #price-table td, #alerts-table th, #alerts-table td { font-size: 0.75rem; padding: 0.5rem; }
+            #price-table th, #price-table td { font-size: 0.75rem; padding: 0.5rem; }
             .gauge-column { width: 100%; margin-bottom: 0.4rem; }
             .tradingview-widget-container { max-width: 100%; }
         }
@@ -221,7 +179,6 @@
 <body>
     <header>
         <h1>CRYPTO COLLECTIVE <span class="highlight-x">X</span></h1>
-        <span class="bell-icon" id="toggle-alerts">🔔</span>
     </header>
     
     <div class="container fear-greed-container">
@@ -259,32 +216,6 @@
         </div>
     </div>
 
-    <div class="container alerts-container" id="alerts-container">
-        <h2>ფასის გაფრთხილებები</h2>
-        <form class="alert-form" id="alert-form">
-            <select id="alert-coin" required>
-                <option value="">აირჩიეთ კოინი</option>
-            </select>
-            <input type="number" id="alert-price" placeholder="სამიზნე ფასი (USD)" step="0.01" required>
-            <select id="alert-direction" required>
-                <option value="above">ზევით</option>
-                <option value="below">ქვევით</option>
-            </select>
-            <button type="submit">გაფრთხილების დამატება</button>
-        </form>
-        <table id="alerts-table">
-            <thead>
-                <tr>
-                    <th>კოინი</th>
-                    <th>სამიზნე ფასი</th>
-                    <th>მიმართულება</th>
-                    <th>მოქმედება</th>
-                </tr>
-            </thead>
-            <tbody id="alerts-table-body"></tbody>
-        </table>
-    </div>
-
     <div class="container prices-container">
         <h2>კრიპტო კოლექტივის პროექტები</h2>
         <table id="price-table">
@@ -302,8 +233,73 @@
     <script>
         const quotesPool = [
             "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე. — გ.ხ",
-            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."
-            // ... (other quotes omitted for brevity)
+            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
+            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
+            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს。",
+            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს。",
+            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის。",
+            "ყოველი წარუმატებლობა ახალი დასაწყისია。",
+            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
+            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
+            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
+            "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება。",
+            "წარმატება დროისა და შრომის შედეგია。",
+            "ნუ ელოდები შანსს, შექმენი ის。",
+            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
+            "შეცდომები გზაა სიბრძნისკენ。",
+            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
+            "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
+            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
+            "წარმატება მოთმინების ჯილდოა。",
+            "რაც არ გცოდნია, ის გაკონტროლებს。",
+            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
+            "თუ არ გარისკავ, ვერ გაიზრდები。",
+            "ყოველი დღე ახალი შანსია ზრდისთვის。",
+            "ფულის ღირებულება მის გამოყენებაშია。",
+            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
+            "წარსული გაკვეთილია, მომავალი — შენ ხელშია。",
+            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
+            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
+            "ფული მოდის მათთან, ვინც მას ეძებს。",
+            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
+            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
+            "წარმატება არის შრომისა და რწმენის ნაზავი。",
+            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
+            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრუ�ყოფილი。",
+            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
+            "თუ გჯერა, ყველაფერი შესაძლებელია。",
+            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
+            "ფული არის იარაღი, გამოიყენე გონივრულად。",
+            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
+            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
+            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
+            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
+            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
+            "წარმატება არის გზა, რომელსაც თავად აგებ.",
+            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
+            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
+            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
+            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
+            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
+            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
+            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
+            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
+            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
+            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
+            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა. — ჯესი ლივერმორი",
+            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
+            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
+            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
+            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
+            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
+            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
+            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს!. — რობერტ კიოსაკი",
+            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
+            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
+            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
+            "ფასი ისაა, რასაც იხდი, ღிரებულება — რასაც იღებ. — უორენ ბაფეტი",
+            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
+            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
         ];
 
         const fallbackData = {
@@ -325,17 +321,18 @@
 
         function getRandomQuote(recentQuotes) {
             const availableQuotes = quotesPool.filter(q => !recentQuotes.includes(q));
-            if (availableQuotes.length === 0) return quotesPool[Math.floor(Math.random() * quotesPool.length)];
-            return availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
+            if (availableQuotes.length === 0) return quotesPool[Math.floor(Math.random() * quotesPool.length)]; // Fallback if all quotes used
+            const newQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
+            return newQuote;
         }
 
         function displayRandomQuote() {
             let recentQuotes = getCachedData('recentQuotes') || [];
-            if (!Array.isArray(recentQuotes)) recentQuotes = [];
+            if (!Array.isArray(recentQuotes)) recentQuotes = []; // Ensure it's an array
             const newQuote = getRandomQuote(recentQuotes);
             document.getElementById('quote-display').textContent = `"${newQuote}"`;
-            recentQuotes.unshift(newQuote);
-            if (recentQuotes.length > 5) recentQuotes.pop();
+            recentQuotes.unshift(newQuote); // Add new quote to start
+            if (recentQuotes.length > 5) recentQuotes.pop(); // Keep only last 5
             setCachedData('recentQuotes', recentQuotes);
         }
 
@@ -353,7 +350,6 @@
         }
 
         let coinData = [];
-        let priceAlerts = []; // In-memory storage for alerts
         const sortDirection = {};
 
         function renderTable(data) {
@@ -372,129 +368,28 @@
                 `;
                 priceTableBody.appendChild(row);
             });
-            updateCoinSelector();
         }
 
         function sortTable(field) {
             if (!coinData.length) return;
+
             const direction = sortDirection[field] === 'asc' ? 'desc' : 'asc';
             sortDirection[field] = direction;
             const multiplier = direction === 'asc' ? 1 : -1;
+
             coinData.sort((a, b) => {
                 if (field === 'name') return multiplier * (a.name || '').localeCompare(b.name || '');
                 if (field === 'price') return multiplier * ((a.current_price || 0) - (b.current_price || 0));
                 if (field === 'change') return multiplier * ((a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
                 return 0;
             });
+
             document.querySelectorAll('#price-table th').forEach(th => {
                 th.classList.remove('asc', 'desc');
                 if (th.getAttribute('data-sort') === field) th.classList.add(direction);
             });
+
             renderTable(coinData);
-        }
-
-        // Price Alerts Functions
-        function updateCoinSelector() {
-            const select = document.getElementById('alert-coin');
-            select.innerHTML = '<option value="">ა選擇';
-            coinData.forEach(coin => {
-                const option = document.createElement('option');
-                option.value = coin.symbol;
-                option.textContent = `${coin.name} (${coin.symbol.toUpperCase()})`;
-                select.appendChild(option);
-            });
-        }
-
-        async function setPriceAlert(symbol, targetPrice, direction) {
-            if (priceAlerts.length >= 10) {
-                alert('Γαφαρίξακε το μέγεθος των μέγιστων ειδοποιήσεων (10)!');
-                return;
-            }
-            const alert = { symbol, targetPrice: parseFloat(targetPrice), direction };
-            priceAlerts.push(alert);
-            // Send to server
-            try {
-                const subscription = await getPushSubscription();
-                if (subscription) {
-                    await fetch('/api/alerts', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ alert, subscription })
-                    });
-                }
-                renderAlerts();
-            } catch (error) {
-                console.error('Error sending alert to server:', error);
-                alert('Η προσθήκη ειδοποίησης απέτυχε. Παρακαλώ προσπαθήστε ξανά.');
-            }
-        }
-
-        async function deleteAlert(index) {
-            const alert = priceAlerts[index];
-            priceAlerts.splice(index, 1);
-            try {
-                const subscription = await getPushSubscription();
-                if (subscription) {
-                    await fetch('/api/alerts', {
-                        method: 'DELETE',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ alert, subscription })
-                    });
-                }
-                renderAlerts();
-            } catch (error) {
-                console.error('Error deleting alert from server:', error);
-            }
-        }
-
-        function renderAlerts() {
-            const alertsTableBody = document.getElementById('alerts-table-body');
-            alertsTableBody.innerHTML = '';
-            priceAlerts.forEach((alert, index) => {
-                const coin = coinData.find(c => c.symbol === alert.symbol)) || { name: alert.symbol.toUpperCase() };
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${coin.name}</td>
-                    <td>$${alert.targetPrice.toFixed(2)}</td>
-                    <td>${alert.direction === 'above' ? 'άνω' : 'κάτω'}</td>
-                    <td><button class="delete-btn" data-index="${index}">Διαγραφή</button></td>
-                `;
-                alertsTableBody.appendChild(row);
-            });
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', () => deleteAlert(btn.dataset.index));
-            });
-        }
-
-        function checkPriceAlerts() {
-            priceAlerts.forEach((alert, index) => {
-                const coin = coinData.find(c => c.symbol === alertSymbol));
-                if (coin) {
-                    if ((alert.direction === 'above' && coin.current_price >= alert.targetPrice)) ||
-                        (alert.direction === 'below' && coin.current_price <= alert.targetPrice)) {
-                        if (Notification.permission === 'granted') {
-                            new Notification(`${coin.name} ${alert.direction} === 'above' ? 'έφτασε' : 'έπεσε') $${alert.targetPrice.toFixed(2)}!}`);
-                        } else {
-                            alert(`${coin.name} ${alert.direction === 'above' ? 'έφταξε' : 'έπεσε'} $${alert.targetPrice.toFixed(2)}!}`);
-                        }
-                        priceAlerts.splice(index, 1);
-                        renderAlerts();
-                    }
-                }
-            });
-        }
-
-        async function getPushSubscription() {
-            if ('serviceWorker' in navigator && 'PushManager' in window) {
-                const registration = await navigator.serviceWorker.ready;
-                const subscription = await registration.pushManager.getSubscription();
-                if (subscription) return subscription;
-                return await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY' // Replace with your public VAPID key
-                });
-            }
-            return null;
         }
 
         async function fetchData() {
@@ -506,8 +401,7 @@
                     const topGainer = coinData.reduce((max, coin) => 
                         (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
                     document.getElementById('top-gainer-logo').src = topGainer.image;
-                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`);;
-                    checkPriceAlerts();
+                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
                 }
 
                 const [fngData, priceData] = await Promise.all([
@@ -522,7 +416,7 @@
                 let sentimentColor = fng.value < 50 ? '#FF5252' : '#7B68EE';
                 fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #2E2E4D ${todayAngle}deg, #1A1A2E ${todayAngle}deg, #1A1A2E 360deg)`;
                 fearGreedCircle.style.borderColor = sentimentColor;
-                const translations = { "Extreme Fear": "Υπερβολικός φόβος", "Fear": "Φόβος", "Neutral": "Ουδέτερο", "Greed": "Απληστία", "Extreme Greed": "Υπερβολική απληστία"};
+                const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
                 document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
 
                 coinData = priceData?.length > 0 ? priceData : (cachedCoins || fallbackData.coins);
@@ -530,91 +424,47 @@
                 const topGainer = coinData.reduce((max, coin) => 
                     (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
                 document.getElementById('top-gainer-logo').src = topGainer.image;
-                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`);
+                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
 
                 renderTable(coinData);
-                checkPriceAlerts();
 
             } catch (error) {
                 console.error('Critical error in fetchData:', error.message);
                 document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
                 document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#7B68EE 0deg, #2E2E4D 180deg, #1A1A2E 180deg, #1A1A2E 360deg)';
-                document.getElementById('fear-greed-classification').textContent = 'Failed to load';
+                document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
 
                 coinData = getCachedData('coinData') || fallbackData.coins;
                 renderTable(coinData);
                 const topGainer = coinData.reduce((max, coin) => 
-                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : coinData[0]);
+                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
                 document.getElementById('top-gainer-logo').src = topGainer.image;
-                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`);
-                checkPriceAlerts();
+                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
             }
         }
 
-        // Register Service Worker and Subscribe to Push Notifications
-        if ('serviceWorker' in navigator && 'PushManager' in window) {
-            window.addEventListener('load', async () => {
-                try {
-                    const registration = await navigator.serviceWorker.register('/sw.js');
-                    console.log('Service Worker registered with scope:', registration.scope);
-                    // Subscribe to push notifications
-                    const subscription = await getPushSubscription();
-                    if (subscription) {
-                        // Send subscription to server
-                        await fetch('/api/alerts/subscribe', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(subscription)
-                        });
-                    }
-                } catch (error) {
-                    console.error('Service Worker or Push subscription failed:', error);
-                }
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
             });
         }
 
-        // Request Notification Permission
-        window.addEventListener('load', () => {
-            if ('Notification' in window && Notification.permission !== 'denied') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        console.log('Notification permission granted');
-                    } else {
-                        console.log('Notification permission denied');
-                    }
-                });
-            }
-        });
-
-        // Toggle Alerts Section
-        document.getElementById('toggle-alerts').addEventListener('click', () => {
-            const alertsContainer = document.getElementById('alerts-container');
-            alertsContainer.classList.toggle('active');
-        });
-
-        // Handle Alert Form Submission
-        document.getElementById('alert-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const symbol = document.getElementById('alert-coin').value;
-            const targetPrice = document.getElementById('alert-price').value;
-            const direction = document.getElementById('alert-direction').value;
-            if (symbol && targetPrice && direction) {
-                await setPriceAlert(symbol, targetPrice, direction);
-                document.getElementById('alert-form').reset();
-            }
-        });
-
-        // Initialize
         displayRandomQuote();
         fetchData();
         setInterval(fetchData, 300000);
-        renderAlerts();
 
         document.querySelectorAll('#price-table th').forEach(th => {
             th.addEventListener('click', () => {
                 const field = th.getAttribute('data-sort');
                 if (field) sortTable(field);
-            }
+            });
         });
 
         document.addEventListener('keydown', (event) => {
@@ -626,75 +476,3 @@
     </script>
 </body>
 </html>
-```
-
-**Important**: Replace `YOUR_PUBLIC_VAPID_KEY` in the `getPushSubscription` function with your actual public VAPID key generated in Step 1.
-
-##### 4. Update Service Worker
-Update `sw.js` to handle incoming push notifications and display them to the user.
-
-<xaiArtifact artifact_id="39879785-db80-4fcd-8c99-b7360e72b7cb" artifact_version_id="121bac76-97c2-4aa2-9864-fcb7a0d2ec1a" title="sw.js" contentType="application/javascript">
-const CACHE_NAME = 'crypto-collective-x-v1';
-const urlsToCache = [
-    '/index.html',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
-    'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js'
-];
-
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
-        );
-    });
-
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
-            .catch(() => {
-                return caches.match('/index.html');
-            })
-        );
-    });
-
-self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (!cacheWhitelist.includes(cacheName)) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
-
-self.addEventListener('push', event => {
-    const data = event.data.json();
-    const { title, body } = data;
-    event.waitUntil(
-        self.registration.showNotification(title, {
-            body,
-            icon: '/icons/icon-192x192.png',
-            badge: '/icons/icon-192x192.png'
-        })
-    );
-});
-
-self.addEventListener('notificationclick', event => {
-    event.notification.close();
-    event.waitUntil(
-        clients.openWindow('/')
-    );
-});
