@@ -3,446 +3,474 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1A1A2E">
-    <title>კრიპტო კოლექტივი X</title>
+    <meta name="theme-color" content="#0F0F23">
+    <title>კრიპტო  </title>
+    <!-- PWA Manifest and Icon -->
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Existing styles remain unchanged */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1A1A2E 0%, #2E2E4D 100%);
-            color: #E0E0E0;
-            line-height: 1.5;
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A3E 50%, #2D1B69 100%);
+            color: #E8E8E8;
+            line-height: 1.6;
             overflow-x: hidden;
+            min-height: 100vh;
             font-size: 14px;
-            max-width: 400px;
+            max-width: 420px;
             margin: 0 auto;
+            position: relative;
         }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(123, 104, 238, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
         header {
-            background: rgba(30, 30, 60, 0.95);
-            padding: 0.8rem;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 10;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            border-bottom: 1px solid rgba(123, 104, 238, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
+        
         header h1 {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7B68EE, #FF1493, #00CED1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #FFFFFF;
+            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
         }
-        .highlight-x {
-            color: #7B68EE;
-            font-size: 1.5rem;
-            font-weight: 700;
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: #A0A0A0;
+            font-weight: 300;
         }
+        
         .container {
-            margin: 0.8rem;
-            padding: 0.8rem;
-            background: rgba(40, 40, 70, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+            margin: 1rem;
+            padding: 1.2rem;
+            background: rgba(26, 26, 62, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            border: 1px solid rgba(123, 104, 238, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        h2 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #FFFFFF;
-            margin-bottom: 0.8rem;
+
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .quote-section {
             text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(123, 104, 238, 0.1), rgba(255, 20, 147, 0.1));
+            border-radius: 12px;
+            border: 1px solid rgba(123, 104, 238, 0.2);
         }
-        .gauge-row {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
+        
+        #quote-display {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #F0F0F0;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
         }
-        .gauge-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 48%;
-            padding: 0.6rem;
-            background: rgba(30, 30, 50, 0.8);
-            border-radius: 8px;
-            transition: transform 0.2s ease;
+
+        .quote-author {
+            font-size: 0.75rem;
+            color: #7B68EE;
+            font-weight: 600;
         }
-        .gauge-column:hover { transform: scale(1.02); }
-        .gauge-circle {
-            width: 60px;
-            height: 60px;
+
+        .refresh-quote {
+            background: linear-gradient(135deg, #7B68EE, #FF1493);
+            border: none;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .refresh-quote:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(123, 104, 238, 0.4);
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, #7B68EE, #FF1493);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .metric-card {
+            background: rgba(30, 30, 60, 0.6);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(123, 104, 238, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(123, 104, 238, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .metric-card:hover::before {
+            left: 100%;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-3px);
+            border-color: #7B68EE;
+            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
+        }
+        
+        .fear-greed-gauge {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            margin: 0 auto 0.8rem;
+            border: 3px solid #2E2E4D;
+            transition: all 0.5s ease;
         }
-        .gauge-bg {
-            width: 85%;
-            height: 85%;
-            background: #2E2E4D;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        
         .gauge-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #FFFFFF;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #FFFFFF;
         }
-        .top-gainer-circle {
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #B8B8B8;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .classification-badge {
+            background: rgba(123, 104, 238, 0.2);
+            color: #7B68EE;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .gainer-avatar {
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            border: 3px solid #7B68EE;
+            margin: 0 auto 0.8rem;
             overflow: hidden;
-            border: 2px solid #7B68EE;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 30, 60, 0.8);
+            transition: all 0.3s ease;
         }
-        .top-gainer-circle img { width: 100%; height: 100%; object-fit: cover; }
-        .gauge-label, .fear-greed-classification {
-            font-size: 0.8rem;
-            color: #B0BEC5;
-            margin-top: 0.4rem;
-            text-align: center;
+
+        .gainer-avatar:hover {
+            transform: scale(1.1);
+            border-color: #FF1493;
         }
-        .fear-greed-classification {
-            background: rgba(70, 60, 110, 0.7);
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-        }
-        .tradingview-widget-container {
+
+        .gainer-avatar img {
             width: 100%;
-            max-width: 360px;
-            margin: 0 auto;
-            background: transparent;
+            height: 100%;
+            object-fit: cover;
         }
-        .tradingview-widget-container__widget {
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .tradingview-widget-copyright {
-            text-align: center;
-            font-size: 0.7rem;
-            margin-top: 0.4rem;
-        }
-        .tradingview-widget-copyright a { color: #7B68EE; text-decoration: none; }
-        #price-table {
+        
+        .crypto-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(30, 30, 50, 0.8);
-            border-radius: 8px;
+            background: rgba(20, 20, 40, 0.6);
+            border-radius: 12px;
             overflow: hidden;
+            border: 1px solid rgba(123, 104, 238, 0.15);
         }
-        #price-table thead {
-            background: rgba(50, 50, 90, 0.9);
-            color: #FFFFFF;
-            font-weight: 600;
+        
+        .crypto-table thead {
+            background: linear-gradient(135deg, rgba(123, 104, 238, 0.3), rgba(255, 20, 147, 0.3));
         }
-        #price-table th {
-            padding: 0.6rem;
+        
+        .crypto-table th {
+            padding: 0.8rem;
             text-align: left;
             font-size: 0.85rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: background-color ..................color: 0.3s ease;
+            user-select: none;
         }
-        #price-table td {
-            padding: 0.6rem;
-            font-size: 0.8rem;
-            color: #CFD8DC;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        #price-table tr:hover { background: rgba(70, 60, 110, 0.5); }
-        #price-table .coin-icon { width: 20px; height: 20px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
-        #price-table .price.green { color: #089981; font-weight: 600; }
-        #price-table .price.red { color: #FF5252; font-weight: 600; }
 
-        @media (max-width: 400px) {
+        .crypto-table th:hover {
+            background: rgba(123, 104, 238, 0.2);
+        }
+        
+        .crypto-table td {
+            padding: 0.8rem;
+            font-size: 0.8rem;
+            color: #D0D0D0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .crypto-table tr:hover {
+            background: rgba(123, 104, 238, 0.1);
+            transform: scale(1.01);
+        }
+        
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .coin-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(123, 104, 238, 0.3);
+        }
+        
+        .coin-name {
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+        
+        .coin-symbol {
+            color: #A0A0A0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        
+        .price-positive {
+            color: #00FF88;
+            font-weight: 600;
+        }
+        
+        .price-negative {
+            color: #FF4757;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            color: #7B68EE;
+            font-weight: 500;
+            padding: 2rem;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+
+        .sort-indicator {
+            display: inline-block;
+            margin-left: 0.3rem;
+            opacity: 0.5;
+        }
+
+        .sort-asc .sort-indicator::after { content: '↑'; }
+        .sort-desc .sort-indicator::after { content: '↓'; }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(30, 30, 60, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(123, 104, 238, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #7B68EE;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #A0A0A0;
+            margin-top: 0.2rem;
+        }
+        
+        @media (max-width: 380px) {
             body { font-size: 13px; }
-            header h1 { font-size: 1.1rem; }
-            .highlight-x { font-size: 1.3rem; }
-            .gauge-circle, .top-gainer-circle { width: 50px; height: 50px; }
-            .gauge-value { font-size: 1rem; }
-            .gauge-label, .fear-greed-classification { font-size: 0.75rem; }
-            #price-table th, #price-table td { font-size: 0.75rem; padding: 0.5rem; }
-            .gauge-column { width: 100%; margin-bottom: 0.4rem; }
-            .tradingview-widget-container { max-width: 100%; }
+            header h1 { font-size: 1.2rem; }
+            .container { margin: 0.8rem; padding: 1rem; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .fear-greed-gauge { width: 70px; height: 70px; }
+            .crypto-table th, .crypto-table td { padding: 0.6rem; font-size: 0.75rem; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>CRYPTO COLLECTIVE <span class="highlight-x">X</span></h1>
+        <h1>CRYPTO COLLECTIVE X</h1>
+        <div class="subtitle">ბაზრის რეალურ დროში ინფორმაცია</div>
     </header>
     
-    <div class="container fear-greed-container">
-        <h2 id="quote-display">"საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა."</h2>
-        <div class="gauge-row">
-            <div class="gauge-column">
-                <div class="gauge-circle" id="fear-greed-circle">
-                    <div class="gauge-bg"></div>
-                    <span id="fear-greed-value" class="gauge-value">ჩატვირთვა...</span>
+    <div class="container">
+        <div class="quote-section">
+            <div id="quote-display">"საუკეთესო დრო ხის დარგვისთვის 20 წლის წინ იყო. მეორე საუკეთესო დრო ახლაა."</div>
+            <div class="quote-author">- ჩინური ანდაზა</div>
+            <button class="refresh-quote" onclick="displayRandomQuote()">ახალი ციტატა</button>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="fear-greed-gauge" id="fear-greed-gauge">
+                    <div id="fear-greed-value" class="gauge-value">ჩატვირთვა...</div>
                 </div>
-                <span id="fear-greed-classification" class="fear-greed-classification">ჩატვირთვა...</span>
+                <div class="metric-label">შიშისა და სიხარბის ინდექსი</div>
+                <div id="fear-greed-classification" class="classification-badge">ჩატვირთვა...</div>
             </div>
-            <div class="gauge-column">
-                <div class="top-gainer-circle" id="top-gainer-circle">
-                    <img id="top-gainer-logo" src="" alt="Top Gainer Logo">
+            
+            <div class="metric-card">
+                <div class="gainer-avatar" id="top-gainer-avatar">
+                    <img id="top-gainer-logo" src="" alt="საუკეთესო მომგებიანი" style="display: none;">
                 </div>
-                <span id="top-gainer-label" class="gauge-label">ჩატვირთვა...</span>
+                <div class="metric-label">საუკეთესო მომგებიანი 24ს</div>
+                <div id="top-gainer-info" class="metric-value">ჩატვირთვა...</div>
+            </div>
+        </div>
+
+        <div class="market-stats">
+            <div class="stat-item">
+                <div id="total-market-cap" class="stat-value">$0</div>
+                <div class="stat-label">ბაზრის კაპიტალი</div>
+            </div>
+            <div class="stat-item">
+                <div id="btc-dominance" class="stat-value">0%</div>
+                <div class="stat-label">BTC დომინირება</div>
+            </div>
+            <div class="stat-item">
+                <div id="total-volume" class="stat-value">$0</div>
+                <div class="stat-label">24ს მოცულობა</div>
             </div>
         </div>
     </div>
 
-    <div class="container dominance-container">
-        <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <div class="tradingview-widget-copyright"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
-            {
-                "symbol": "CRYPTOCAP:BTC.D",
-                "width": "100%",
-                "locale": "en",
-                "colorTheme": "dark",
-                "isTransparent": true
-            }
-            </script>
-        </div>
-    </div>
-
-    <div class="container prices-container">
-        <h2>კრიპტო კოლექტივის პროექტები</h2>
-        <table id="price-table">
+    <div class="container">
+        <h2>🚀 CCX კრიპტოვალუტები</h2>
+        <table class="crypto-table">
             <thead>
                 <tr>
-                    <th data-sort="name">კოინი</th>
-                    <th data-sort="price">ფასი</th>
-                    <th data-sort="change">24ს</th>
+                    <th onclick="sortTable('name')">
+                        კოინი <span class="sort-indicator"></span>
+                    </th>
+                    <th onclick="sortTable('price')">
+                        ფასი <span class="sort-indicator"></span>
+                    </th>
+                    <th onclick="sortTable('change')">
+                        24ს % <span class="sort-indicator"></span>
+                    </th>
                 </tr>
             </thead>
-            <tbody id="price-table-body"></tbody>
+            <tbody id="crypto-table-body">
+                <tr><td colspan="3" class="loading">ბაზრის მონაცემების ჩატვირთვა</td></tr>
+            </tbody>
         </table>
     </div>
 
     <script>
-        const quotesPool = [
-            "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე. — გ.ხ",
-            "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
-            "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება.",
-            "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს。",
-            "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს。",
-            "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის。",
-            "ყოველი წარუმატებლობა ახალი დასაწყისია。",
-            "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
-            "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა。",
-            "ყველაზე დიდი რისკი არის არაფრის გარისკვა。",
-            "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება。",
-            "წარმატება დროისა და შრომის შედეგია。",
-            "ნუ ელოდები შანსს, შექმენი ის。",
-            "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება。",
-            "შეცდომები გზაა სიბრძნისკენ。",
-            "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა。",
-            "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით。",
-            "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას。",
-            "წარმატება მოთმინების ჯილდოა。",
-            "რაც არ გცოდნია, ის გაკონტროლებს。",
-            "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას。",
-            "თუ არ გარისკავ, ვერ გაიზრდები。",
-            "ყოველი დღე ახალი შანსია ზრდისთვის。",
-            "ფულის ღირებულება მის გამოყენებაშია。",
-            "დიდი ოცნებები დიდი ნაბიჯებით იწყება。",
-            "წარსული გაკვეთილია, მომავალი — შენ ხელშია。",
-            "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ。",
-            "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ。",
-            "ფული მოდის მათთან, ვინც მას ეძებს。",
-            "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია。",
-            "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო。",
-            "წარმატება არის შრომისა და რწმენის ნაზავი。",
-            "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს。",
-            "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრუ�ყოფილი。",
-            "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა。",
-            "თუ გჯერა, ყველაფერი შესაძლებელია。",
-            "დიდი შედეგები მცირე თანმიმდევრულობით იბადება。",
-            "ფული არის იარაღი, გამოიყენე გონივრულად。",
-            "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც。",
-            "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს。",
-            "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის。",
-            "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში。",
-            "გააკეთე ის, რაც გაშინებს, და შიში გაქრება。",
-            "წარმატება არის გზა, რომელსაც თავად აგებ.",
-            "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად。",
-            "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო。",
-            "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს。",
-            "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით. — უორენ ბაფეტი",
-            "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას. — პიტერ ლინჩი",
-            "შეცდომების აღიარება წარმატების გასაღებია. — რეი დალიო",
-            "დიდი ფული არა გონებაშია, არამედ მოთმინებაში. — ჩარლი მანგერი",
-            "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი. — ბენჯამინ გრეჰემი",
-            "დრო შენი მეგობარია, იმპულსი — მტერი. — ჯონ ბოგლი",
-            "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია. — ფილიპ ფიშერი",
-            "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა. — ჯესი ლივერმორი",
-            "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება. — ჯიმ რიკარდსი",
-            "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი. — ჰოვარდ მარკსი",
-            "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია. — კარლ აიკანი",
-            "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება. — ჯონ ტემპლტონი",
-            "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან. — უორენ ბაფეტი",
-            "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე. — პოლ ტიუდორ ჯონსი",
-            "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს!. — რობერტ კიოსაკი",
-            "მონაცემები მეტყველებს, თუ მოუსმენ. — ჯეიმს საიმონსი",
-            "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ. — ჯონ პოლსონი",
-            "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს. — უორენ ბაფეტი",
-            "ფასი ისაა, რასაც იხდი, ღிரებულება — რასაც იღებ. — უორენ ბაფეტი",
-            "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება. — უორენ ბაფეტი",
-            "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს. — უორენ ბაფეტი"
-        ];
-
-        const fallbackData = {
-            fearGreed: { value: 50, classification: "Neutral" },
-            coins: [
-                { name: "Bitcoin", symbol: "btc", current_price: 60000, price_change_percentage_24h: 2.5, image: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png" },
-                { name: "Ethereum", symbol: "eth", current_price: 2000, price_change_percentage_24h: -1.2, image: "https://assets.coingecko.com/coins/images/279/small/ethereum.png" }
-            ]
-        };
-
-        function getCachedData(key) {
-            const cached = localStorage.getItem(key);
-            return cached ? JSON.parse(cached) : null;
-        }
-
-        function setCachedData(key, data) {
-            localStorage.setItem(key, JSON.stringify(data));
-        }
-
-        function getRandomQuote(recentQuotes) {
-            const availableQuotes = quotesPool.filter(q => !recentQuotes.includes(q));
-            if (availableQuotes.length === 0) return quotesPool[Math.floor(Math.random() * quotesPool.length)]; // Fallback if all quotes used
-            const newQuote = availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
-            return newQuote;
-        }
-
-        function displayRandomQuote() {
-            let recentQuotes = getCachedData('recentQuotes') || [];
-            if (!Array.isArray(recentQuotes)) recentQuotes = []; // Ensure it's an array
-            const newQuote = getRandomQuote(recentQuotes);
-            document.getElementById('quote-display').textContent = `"${newQuote}"`;
-            recentQuotes.unshift(newQuote); // Add new quote to start
-            if (recentQuotes.length > 5) recentQuotes.pop(); // Keep only last 5
-            setCachedData('recentQuotes', recentQuotes);
-        }
-
-        async function fetchWithRetry(url, retries = 2, delay = 500) {
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) return null;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-
-        let coinData = [];
-        const sortDirection = {};
-
-        function renderTable(data) {
-            const priceTableBody = document.getElementById('price-table-body');
-            priceTableBody.innerHTML = '';
-            data.forEach(coin => {
-                const price = coin.current_price.toFixed(coin.symbol === 'btc' ? 2 : 6);
-                const change24h = coin.price_change_percentage_24h || 0;
-                const priceColorClass = change24h >= 0 ? 'green' : 'red';
-                const row = document.createElement('tr');
-                row.dataset.coin = coin.symbol;
-                row.innerHTML = `
-                    <td><img src="${coin.image}" alt="${coin.name} icon" class="coin-icon">${coin.name} (${coin.symbol.toUpperCase()})</td>
-                    <td class="price ${priceColorClass}">$${price}</td>
-                    <td class="price ${priceColorClass}">${change24h.toFixed(2)}%</td>
-                `;
-                priceTableBody.appendChild(row);
-            });
-        }
-
-        function sortTable(field) {
-            if (!coinData.length) return;
-
-            const direction = sortDirection[field] === 'asc' ? 'desc' : 'asc';
-            sortDirection[field] = direction;
-            const multiplier = direction === 'asc' ? 1 : -1;
-
-            coinData.sort((a, b) => {
-                if (field === 'name') return multiplier * (a.name || '').localeCompare(b.name || '');
-                if (field === 'price') return multiplier * ((a.current_price || 0) - (b.current_price || 0));
-                if (field === 'change') return multiplier * ((a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
-                return 0;
-            });
-
-            document.querySelectorAll('#price-table th').forEach(th => {
-                th.classList.remove('asc', 'desc');
-                if (th.getAttribute('data-sort') === field) th.classList.add(direction);
-            });
-
-            renderTable(coinData);
-        }
-
-        async function fetchData() {
-            try {
-                const cachedCoins = getCachedData('coinData');
-                if (cachedCoins) {
-                    coinData = cachedCoins;
-                    renderTable(coinData);
-                    const topGainer = coinData.reduce((max, coin) => 
-                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
-                    document.getElementById('top-gainer-logo').src = topGainer.image;
-                    document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
-                }
-
-                const [fngData, priceData] = await Promise.all([
-                    fetchWithRetry('https://api.alternative.me/fng/?limit=1'),
-                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,rejuve-ai,sophiaverse,chia,stellar,kava,decentraland,zksync,starknet,arbitrum,optimism,dforce-token,band-protocol,notcoin,polkadot,solana,singularity-finance,flare-networks,redbelly-network-token,songbird,vestate,coin98,hypercycle,alien-worlds,chainge-finance,befi-labs,hello-labs,masa-finance,cardano,ripple,celo,osmosis,cosmos,berachain-bera,sui,beoble,dia-data,chainlink,agridex-governance-token,kolz,kitten-haimer,troy,iota,worldcoin-wld,mintlayer,ethereum&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
-                ]);
-
-                const fng = fngData?.data?.[0] || fallbackData.fearGreed;
-                document.getElementById('fear-greed-value').textContent = fng.value;
-                const todayAngle = (fng.value / 100) * 360;
-                const fearGreedCircle = document.getElementById('fear-greed-circle');
-                let sentimentColor = fng.value < 50 ? '#FF5252' : '#7B68EE';
-                fearGreedCircle.style.background = `conic-gradient(${sentimentColor} 0deg, #2E2E4D ${todayAngle}deg, #1A1A2E ${todayAngle}deg, #1A1A2E 360deg)`;
-                fearGreedCircle.style.borderColor = sentimentColor;
-                const translations = { "Extreme Fear": "უკიდურესი შიში", "Fear": "შიში", "Neutral": "ნეიტრალური", "Greed": "სიხარბე", "Extreme Greed": "უკიდურესი სიხარბე" };
-                document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
-
-                coinData = priceData?.length > 0 ? priceData : (cachedCoins || fallbackData.coins);
-                setCachedData('coinData', coinData);
-                const topGainer = coinData.reduce((max, coin) => 
-                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
-                document.getElementById('top-gainer-logo').src = topGainer.image;
-                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
-
-                renderTable(coinData);
-
-            } catch (error) {
-                console.error('Critical error in fetchData:', error.message);
-                document.getElementById('fear-greed-value').textContent = fallbackData.fearGreed.value;
-                document.getElementById('fear-greed-circle').style.background = 'conic-gradient(#7B68EE 0deg, #2E2E4D 180deg, #1A1A2E 180deg, #1A1A2E 360deg)';
-                document.getElementById('fear-greed-classification').textContent = "ნეიტრალური";
-
-                coinData = getCachedData('coinData') || fallbackData.coins;
-                renderTable(coinData);
-                const topGainer = coinData.reduce((max, coin) => 
-                    (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max, coinData[0]);
-                document.getElementById('top-gainer-logo').src = topGainer.image;
-                document.getElementById('top-gainer-label').textContent = `${topGainer.name} (${topGainer.price_change_percentage_24h.toFixed(2)}%)`;
-            }
-        }
-
         // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -456,22 +484,218 @@
             });
         }
 
-        displayRandomQuote();
-        fetchData();
-        setInterval(fetchData, 300000);
+        const inspirationalQuotes = [
+            { quote: "ფასი ის არის, რასაც იხდით; ღირებულება — რასაც იღებთ.", author: "უორენ ბაფეტი" },
+            { quote: "იყავი ფრთხილი, როცა სხვები მშიერნი არიან, და მშიერი, როცა სხვები ფრთხილობენ.", author: "უორენ ბაფეტი" },
+            { quote: "წესი №1: არასოდეს დაკარგო ფული. წესი №2: არასოდეს დაივიწყო წესი №1.", author: "უორენ ბაფეტი" },
+            { quote: "მოკლევადიან პერსპექტივაში, ბაზარი ხმის მიცემის მანქანაა; გრძელვადიანში — წონის მანქანა.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "ინვესტორის მთავარი პრობლემა და შესაძლოა ყველაზე დიდი მტერი თავად ინვესტორია.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ მას.", author: "პიტერ ლინჩი" },
+            { quote: "ბაზარი არასოდეს ცდება — მოსაზრებები ხშირად ცდებიან.", author: "ჯესი ლივერმორი" },
+            { quote: "შეამცირე დანაკარგები. შეამცირე დანაკარგები. შეამცირე დანაკარგები. შემდეგ, შესაძლოა, შანსი გქონდეს.", author: "ედ სეიკოტა" },
+            { quote: "თუ პოზიციები ჩემს წინააღმდეგ მიდის, მაშინვე ვტოვებ; თუ ჩემს სასარგებლოდ მიდის, ვრჩები. რისკის კონტროლი ყველაზე მნიშვნელოვანია ვაჭრობაში.", author: "პოლ ტიუდორ ჯონსი" },
+            { quote: "ბაზრები შეიძლება დარჩნენ არარაციონალური უფრო დიდხანს, ვიდრე შენ შეძლებ დარჩე გადახდისუნარიანი.", author: "ჯონ მეინარდ კეინსი" },
+            { quote: "ინვესტირება მარტივია, მაგრამ არა ადვილი.", author: "უორენ ბაფეტი" },
+            { quote: "დივერსიფიკაცია არის დაცვა უმეცრებისგან. ის არ აქვს აზრი მათთვის, ვინც იცის, რას აკეთებს.", author: "უორენ ბაფეტი" },
+            { quote: "მხოლოდ მაშინ, როცა მოქცევა წავა, გაირკვევა, ვინ ცურავდა შიშველი.", author: "უორენ ბაფეტი" },
+            { quote: "შეინარჩუნე კონტროლი შენს დროზე; ამისთვის უნდა თქვა 'არა'.", author: "უორენ ბაფეტი" },
+            { quote: "არასოდეს მოიტყუო თავი, რომ ინვესტირებ, როცა სინამდვილეში სპეკულირებ.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "შეიძინე არა ოპტიმიზმით, არამედ არითმეტიკით.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "დიდი კომპანია არ არის კარგი ინვესტიცია, თუ მის აქციას ზედმეტად ძვირად ყიდულობ.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "შეინარჩუნე სიმშვიდე, როცა სხვები პანიკაში არიან.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყიდო ისეთი რამ, რასაც ბედნიერი იქნები, თუ ბაზარი 10 წლით დაიხურება.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყიდო შესანიშნავი კომპანია სამართლიან ფასად, ვიდრე სამართლიანი კომპანია შესანიშნავ ფასად.", author: "უორენ ბაფეტი" },
+            { quote: "ვიღაც დღეს ჩრდილში ზის, რადგან ვიღაცამ დიდი ხნის წინ ხე დარგო.", author: "უორენ ბაფეტი" },
+            { quote: "ინვესტორისთვის ყველაზე მნიშვნელოვანი თვისებაა ტემპერამენტი, არა ინტელექტი.", author: "უორენ ბაფეტი" },
+            { quote: "სარისკო ხდება ის, რაც არ იცი, რას აკეთებ.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყიდო კარგი კომპანია, როცა ის დროებით პრობლემებშია.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყო სწორი და მარტო, ვიდრე ცდებოდე და ბრბოში იყო.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყო მდიდარი და მოკრძალებული, ვიდრე ღარიბი და ამაყი.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყო კარგი ადამიანი, ვიდრე წარმატებული.", author: "უორენ ბაფეტი" },
+            { quote: "სჯობს იყო ბედნიერი, ვიდრე მართალი.", author: "უორენ ბაფეტი" },
+            { quote: "ინვესტირება არ არის სხვების თამაშში გამარჯვება; ის არის საკუთარი თავის კონტროლი საკუთარ თამაშში.", author: "ბენჟამინ გრეჰემი" },
+            { quote: "ინდივიდები, რომლებიც ვერ აკონტროლებენ ემოციებს, არ არიან შესაფერისები საინვესტიციო პროცესისთვის.", author: "ბენჟამინ გრეჰემი" }
+        ];
 
-        document.querySelectorAll('#price-table th').forEach(th => {
-            th.addEventListener('click', () => {
-                const field = th.getAttribute('data-sort');
-                if (field) sortTable(field);
-            });
-        });
+        let cryptoData = [];
+        let sortConfig = { key: null, direction: 'asc' };
 
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                displayRandomQuote();
+        function displayRandomQuote() {
+            const randomQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+            document.getElementById('quote-display').textContent = `"${randomQuote.quote}"`;
+            document.querySelector('.quote-author').textContent = `- ${randomQuote.author}`;
+        }
+
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+            return num.toFixed(2);
+        }
+
+        function formatPrice(price) {
+            if (price >= 1) return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return '$' + price.toFixed(6);
+        }
+
+        async function fetchCryptoData() {
+            try {
+                const [marketData, globalData, fngData] = await Promise.all([
+                    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h').then(res => res.json()),
+                    fetch('https://api.coingecko.com/api/v3/global').then(res => res.json()),
+                    fetch('https://api.alternative.me/fng/').then(res => res.json())
+                ]);
+
+                // Update market stats
+                if (globalData?.data) {
+                    document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap.usd);
+                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
+                    document.getElementById('total-volume').textContent = '$' + formatNumber(globalData.data.total_volume.usd);
+                }
+
+                // Update Fear & Greed Index
+                if (fngData?.data?.[0]) {
+                    const fng = fngData.data[0];
+                    document.getElementById('fear-greed-value').textContent = fng.value;
+                    const translations = {
+                        "Extreme Fear": "უკიდურესი შიში",
+                        "Fear": "შიში",
+                        "Neutral": "ნეიტრალური",
+                        "Greed": "სიხარბე",
+                        "Extreme Greed": "უკიდურესი სიხარბე"
+                    };
+                    document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
+                    
+                    const gauge = document.getElementById('fear-greed-gauge');
+                    const angle = (fng.value / 100) * 360;
+                    let color = '#FF4757'; // Fear (red)
+                    if (fng.value > 25 && fng.value < 75) color = '#FFA502'; // Neutral (orange)
+                    if (fng.value >= 75) color = '#00FF88'; // Greed (green)
+                    
+                    gauge.style.background = `conic-gradient(${color} 0deg ${angle}deg, rgba(46, 46, 77, 0.5) ${angle}deg 360deg)`;
+                    gauge.style.borderColor = color;
+                }
+
+                // Update crypto table
+                if (marketData?.length > 0) {
+                    cryptoData = marketData;
+                    renderCryptoTable();
+                    
+                    // Find top gainer
+                    const topGainer = marketData.reduce((max, coin) => 
+                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
+                    );
+                    
+                    if (topGainer) {
+                        const logo = document.getElementById('top-gainer-logo');
+                        logo.src = topGainer.image;
+                        logo.style.display = 'block';
+                        logo.onerror = () => logo.style.display = 'none';
+                        
+                        document.getElementById('top-gainer-info').innerHTML = 
+                            `<div>${topGainer.name}</div><div class="price-positive">+${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error fetching crypto data:', error);
+                document.getElementById('crypto-table-body').innerHTML = 
+                    '<tr><td colspan="3" style="color: #FF4757; text-align: center;">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადეთ მოგვიანებით.</td></tr>';
             }
+        }
+
+        function renderCryptoTable() {
+            const tbody = document.getElementById('crypto-table-body');
+            tbody.innerHTML = '';
+
+            cryptoData.forEach(coin => {
+                const changeClass = coin.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative';
+                const changeSymbol = coin.price_change_percentage_24h >= 0 ? '+' : '';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="coin-info">
+                            <img src="${coin.image}" alt="${coin.name}" class="coin-icon" onerror="this.style.display='none'">
+                            <div>
+                                <div class="coin-name">${coin.name}</div>
+                                <div class="coin-symbol">${coin.symbol}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${formatPrice(coin.current_price)}</td>
+                    <td class="${changeClass}">${changeSymbol}${coin.price_change_percentage_24h.toFixed(2)}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function sortTable(key) {
+            const direction = sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc';
+            sortConfig = { key, direction };
+
+            // Update sort indicators
+            document.querySelectorAll('.crypto-table th').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+            event.target.closest('th').classList.add(`sort-${direction}`);
+
+            cryptoData.sort((a, b) => {
+                let aVal, bVal;
+                
+                switch(key) {
+                    case 'name':
+                        aVal = a.name.toLowerCase();
+                        bVal = b.name.toLowerCase();
+                        break;
+                    case 'price':
+                        aVal = a.current_price;
+                        bVal = b.current_price;
+                        break;
+                    case 'change':
+                        aVal = a.price_change_percentage_24h || 0;
+                        bVal = b.price_change_percentage_24h || 0;
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (typeof aVal === 'string') {
+                    return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                }
+                
+                return direction === 'asc' ? aVal - bVal : bVal - aVal;
+            });
+
+            renderCryptoTable();
+        }
+
+        // Initialize app
+        displayRandomQuote();
+        fetchCryptoData();
+
+        // Auto-refresh every 5 minutes
+        setInterval(fetchCryptoData, 5 * 60 * 1000);
+
+        // Refresh quote every 30 seconds
+        setInterval(displayRandomQuote, 30 * 1000);
+
+        // Add some visual feedback
+        document.addEventListener('DOMContentLoaded', () => {
+            const containers = document.querySelectorAll('.container');
+            containers.forEach((container, index) => {
+                setTimeout(() => {
+                    container.style.opacity = '0';
+                    container.style.transform = 'translateY(20px)';
+                    container.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                        container.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
         });
     </script>
 </body>
