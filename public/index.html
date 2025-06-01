@@ -419,7 +419,7 @@
                 <div class="fear-greed-gauge" id="fear-greed-gauge">
                     <div id="fear-greed-value" class="gauge-value">ჩატვირთვა...</div>
                 </div>
-                <div class="metric-label">შიშისა და სიხარბის ინდექსი</div>
+                <div class="metric-label"></div>
                 <div id="fear-greed-classification" class="classification-badge">ჩატვირთვა...</div>
             </div>
             
@@ -435,11 +435,11 @@
         <div class="market-stats">
             <div class="stat-item">
                 <div id="total-market-cap" class="stat-value">$0</div>
-                <div class="stat-label">ბაზრის კაპიტალი</div>
+                <div class="stat-label">კაპიტალიზაცია</div>
             </div>
             <div class="stat-item">
                 <div id="btc-dominance" class="stat-value">0%</div>
-                <div class="stat-label">BTC დომინირება</div>
+                <div class="stat-label">BTC დომინაცია</div>
             </div>
             <div class="stat-item">
                 <div id="total-volume" class="stat-value">$0</div>
@@ -619,8 +619,8 @@
                     
                     const gauge = document.getElementById('fear-greed-gauge');
                     const angle = (fng.value / 100) * 360;
-                    let color = '#FF4757'; // Fear (red)
-                    if (fng.value > 25 && fng.value < 75) color = '#FFA502'; // Neutral (orange)
+                    let color = '#FF4757'; // Fer (red)
+                    if (fng.value > 25 && fng.value < 75) color = '#b87b0d'; // Neutral (orange)
                     if (fng.value >= 75) color = '#00FF88'; // Greed (green)
                     
                     gauge.style.background = `conic-gradient(${color} 0deg ${angle}deg, rgba(46, 46, 77, 0.5) ${angle}deg 360deg)`;
