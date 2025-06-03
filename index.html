@@ -573,7 +573,7 @@
         function displayRandomQuote() {
             const randomQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
             document.getElementById('quote-display').textContent = `"${randomQuote.quote}"`;
-            document.querySelector('.quote-author').textContent = `- ${randomQuote.author || 'ჩინური ანდაზა'}`;
+            document.querySelector('.quote-author').textContent = `- ${randomQuote.author || ''}`;
         }
 
         function formatNumber(num) {
