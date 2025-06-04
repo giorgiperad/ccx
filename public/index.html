@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0F0F23">
+    <meta name="theme-color" content="#0A0A1F">
     <title>კრიპტო</title>
     <!-- PWA Manifest and Icon -->
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link rel="icon" href="/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0F0F23 0%, #1A1A3E 50%, #2D1B69 100%);
-            color: #E8E8E8;
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(180deg, #0A0A1F 0%, #1A1A3E 100%);
+            color: #E0E0E0;
             min-height: 100vh;
-            font-size: 14px;
-            max-width: 420px;
+            max-width: 448px;
             margin: 0 auto;
+            padding: 16px;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -37,290 +37,403 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(123, 104, 238, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
             z-index: -1;
         }
-        
+
         header {
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem;
+            background: rgba(10, 10, 31, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 16px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(123, 104, 238, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        
+
         header h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #7B68EE, #FF1493, #00CED1);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00FFFF, #FF00FF);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 0.2rem;
+            position: relative;
+            z-index: 2;
         }
 
-        .subtitle {
-            font-size: 0.8rem;
-            color: #A0A0A0;
-            font-weight: 300;
+        .crypto-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-size: cover;
+            animation: cryptoFloat 3s infinite ease-in-out;
+            z-index: 1;
+            border-radius: 50%;
         }
-        
+
+        .crypto-particle:nth-child(1) { top: 80%; left: 10%; animation-delay: 0s; }
+        .crypto-particle:nth-child(2) { top: 80%; left: 30%; animation-delay: 0.8s; }
+        .crypto-particle:nth-child(3) { top: 80%; left: 60%; animation-delay: 1.6s; }
+        .crypto-particle:nth-child(4) { top: 80%; left: 80%; animation-delay: 2.4s; }
+
+        @keyframes cryptoFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .quote-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-size: cover;
+            animation: quoteFloat 4s infinite ease-in-out;
+            z-index: 0;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .quote-particle:nth-child(1) { top: 90%; left: 15%; animation-delay: 0s; }
+        .quote-particle:nth-child(2) { top: 90%; left: 35%; animation-delay: 1s; }
+        .quote-particle:nth-child(3) { top: 90%; left: 65%; animation-delay: 2s; }
+        .quote-particle:nth-child(4) { top: 90%; left: 85%; animation-delay: 3s; }
+
+        @keyframes quoteFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-40px) rotate(180deg);
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-60px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .container {
-            margin: 1rem;
-            padding: 1.2rem;
-            background: rgba(26, 26, 62, 0.8);
-            backdrop-filter: blur(15px);
-            border-radius: 16px;
-            border: 1px solid rgba(123, 104, 238, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: rgba(20, 20, 40, 0.85);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 255, 255, 0.2);
         }
 
         .quote-section {
             text-align: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, rgba(123, 104, 238, 0.1), rgba(255, 20, 147, 0.1));
-            border-radius: 12px;
-            border: 1px solid rgba(123, 104, 238, 0.2);
+            padding: 16px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            position: relative;
+            animation: pulseGlow 3s infinite ease-in-out;
+            overflow: hidden;
         }
-        
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
+        }
+
         #quote-display {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #F0F0F0;
+            font-size: 0.9rem;
             font-style: italic;
-            line-height: 1.5;
-            margin-bottom: 0.5rem;
+            color: #E0E0E0;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
         }
 
         .quote-author {
             font-size: 0.75rem;
-            color: #7B68EE;
-            font-weight: 600;
+            color: #00FFFF;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
         }
 
         .refresh-quote {
-            background: linear-gradient(135deg, #7B68EE, #FF1493);
+            background: linear-gradient(90deg, #00FFFF, #FF00FF);
             border: none;
-            color: white;
-            padding: 0.4rem 0.8rem;
+            color: #0A0A1F;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            transition: all 0.3s ease;
+            font-size: 0.75rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .refresh-quote:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(123, 104, 238, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
         }
-        
+
         h2 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00FFFF;
             text-align: center;
-            background: linear-gradient(135deg, #7B68EE, #FF1493);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
         }
-        
+
         .metrics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 12px;
+            margin-bottom: 16px;
         }
-        
+
         .metric-card {
-            background: rgba(30, 30, 60, 0.6);
-            border-radius: 12px;
-            padding: 1rem;
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 8px;
+            padding: 12px;
             text-align: center;
-            border: 1px solid rgba(123, 104, 238, 0.2);
+            border: 1px solid rgba(0, 255, 255, 0.2);
             transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: #FF00FF;
+            box-shadow: 0 4px 16px rgba(255, 0, 255, 0.2);
+        }
+
+        .fear-greed-gauge {
+            width: 100px;
+            height: 50px;
             position: relative;
+            margin: 0 auto 8px;
             overflow: hidden;
         }
 
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .gauge-background {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(123, 104, 238, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 50px 50px 0 0;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-bottom: none;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        .metric-card:hover::before {
-            left: 100%;
+        .gauge-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: 50px 50px 0 0;
+            transform-origin: center bottom;
+            transform: rotate(0deg);
+            transition: transform 1s ease, background 0.5s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
-        
-        .metric-card:hover {
-            transform: translateY(-3px);
-            border-color: #7B68EE;
-            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
-        }
-        
-        .fear-greed-gauge {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            position: relative;
-            margin: 0 auto 0.8rem;
-            border: 3px solid #2E2E4D;
-            transition: all 0.5s ease;
-        }
-        
+
         .gauge-value {
             position: absolute;
-            top: 50%;
+            top: 70%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
-        
-        .metric-label {
-            font-size: 0.8rem;
-            color: #B8B8B8;
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-        }
-        
-        .metric-value {
+            transform: translateX(-50%);
             font-size: 1rem;
-            font-weight: 700;
-            color: #FFFFFF;
+            font-weight: 600;
+            color: #E0E0E0;
+            z-index: 10;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #A0A0A0;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #E0E0E0;
         }
 
         .classification-badge {
-            background: rgba(123, 104, 238, 0.2);
-            color: #7B68EE;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
+            background: rgba(0, 255, 255, 0.2);
+            color: #00FFFF;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-top: 8px;
             display: inline-block;
         }
 
         .gainer-avatar {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            border: 3px solid #7B68EE;
-            margin: 0 auto 0.8rem;
+            border: 2px solid #00FFFF;
+            margin: 0 auto 8px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(30, 30, 60, 0.8);
+            background: rgba(30, 30, 60, 0.7);
             transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .gainer-avatar.zoom-spark {
+            animation: zoomIn 1s ease-out forwards;
+            position: relative;
+        }
+
+        .gainer-avatar.zoom-spark::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 10%, transparent 60%);
+            animation: sparkBurst 1s ease-out forwards;
+            z-index: -1;
         }
 
         .gainer-avatar:hover {
-            transform: scale(1.1);
-            border-color: #FF1493;
+            border-color: #FF00FF;
+            transform: scale(1.1) rotateY(10deg);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
         }
 
         .gainer-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform: translateZ(10px);
         }
-        
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes sparkBurst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
         .crypto-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(20, 20, 40, 0.6);
-            border-radius: 12px;
+            background: rgba(20, 20, 40, 0.7);
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(123, 104, 238, 0.15);
+            perspective: 1000px;
         }
-        
+
         .crypto-table thead {
-            background: linear-gradient(135deg, rgba(123, 104, 238, 0.3), rgba(255, 20, 147, 0.3));
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
         }
-        
+
         .crypto-table th {
-            padding: 0.8rem;
+            padding: 12px;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #FFFFFF;
+            color: #E0E0E0;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            user-select: none;
+            transition: background 0.2s ease;
         }
 
         .crypto-table th:hover {
-            background: rgba(123, 104, 238, 0.2);
+            background: rgba(0, 255, 255, 0.3);
         }
-        
+
         .crypto-table td {
-            padding: 0.8rem;
-            font-size: 0.8rem;
+            padding: 12px;
+            font-size: 0.75rem;
             color: #D0D0D0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
-        
+
+        .crypto-table tr {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
         .crypto-table tr:hover {
-            background: rgba(123, 104, 238, 0.1);
-            transform: scale(1.01);
+            background: rgba(0, 255, 255, 0.1);
+            transform: rotateX(5deg) rotateY(5deg) translateZ(10px);
+            box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
         }
-        
+
         .coin-info {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
         }
-        
+
         .coin-icon {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            border: 1px solid rgba(123, 104, 238, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
-        
+
         .coin-name {
-            font-weight: 600;
-            color: #FFFFFF;
+            font-weight: 500;
+            color: #E0E0E0;
         }
-        
+
         .coin-symbol {
             color: #A0A0A0;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
         }
-        
+
         .price-positive {
             color: #00FF88;
             font-weight: 600;
         }
-        
+
         .price-negative {
             color: #FF4757;
             font-weight: 600;
@@ -328,9 +441,9 @@
 
         .loading {
             text-align: center;
-            color: #7B68EE;
+            color: #00FFFF;
             font-weight: 500;
-            padding: 2rem;
+            padding: 16px;
         }
 
         .loading::after {
@@ -347,8 +460,8 @@
 
         .sort-indicator {
             display: inline-block;
-            margin-left: 0.3rem;
-            opacity: 0.5;
+            margin-left: 4px;
+            opacity: 0.6;
         }
 
         .sort-asc .sort-indicator::after { content: '↑'; }
@@ -356,73 +469,83 @@
 
         .market-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 0.8rem;
-            margin: 1rem 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         .stat-item {
-            text-align: center;
-            padding: 0.8rem;
-            background: rgba(30, 30, 60, 0.4);
+            background: rgba(30, 30, 60, 0.7);
+            padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(123, 104, 238, 0.1);
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         .stat-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #7B68EE;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #00FFFF;
         }
 
         .stat-label {
             font-size: 0.7rem;
             color: #A0A0A0;
-            margin-top: 0.2rem;
+            margin-top: 4px;
         }
-        
+
         @media (max-width: 380px) {
             body { font-size: 13px; }
-            header h1 { font-size: 1.2rem; }
-            .container { margin: 0.8rem; padding: 1rem; }
+            header h1 { font-size: 1.3rem; }
+            .container { padding: 12px; }
             .metrics-grid { grid-template-columns: 1fr; }
-            .fear-greed-gauge { width: 70px; height: 70px; }
-            .crypto-table th, .crypto-table td { padding: 0.6rem; font-size: 0.75rem; }
+            .fear-greed-gauge { width: 80px; height: 40px; }
+            .gainer-avatar { width: 48px; height: 48px; }
+            .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
+            .market-stats { grid-template-columns: 1fr; }
+            .crypto-particle, .quote-particle { width: 8px; height: 8px; }
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>CRYPTO COLLECTIVE X</h1>
-        <div class="subtitle"></div>
+        <div class="crypto-particle" id="particle-bitcoin"></div>
+        <div class="crypto-particle" id="particle-ethereum"></div>
+        <div class="crypto-particle" id="particle-tether"></div>
+        <div class="crypto-particle" id="particle-stellar"></div>
     </header>
-    
-    <div class="container">
+
+    <div class="container fade-in">
         <div class="quote-section">
             <div id="quote-display">"საუკეთესო დრო ხის დარგვისთვის 20 წლის წინ იყო. მეორე საუკეთესო დრო ახლაა."</div>
             <div class="quote-author">- ჩინური ანდაზა</div>
             <button class="refresh-quote" onclick="displayRandomQuote()">ახალი ციტატა</button>
+            <div class="quote-particle" id="quote-particle-bitcoin"></div>
+            <div class="quote-particle" id="quote-particle-ethereum"></div>
+            <div class="quote-particle" id="quote-particle-tether"></div>
+            <div class="quote-particle" id="quote-particle-stellar"></div>
         </div>
-        
+
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="fear-greed-gauge" id="fear-greed-gauge">
+                    <div class="gauge-background"></div>
+                    <div class="gauge-fill" id="gauge-fill"></div>
                     <div id="fear-greed-value" class="gauge-value">ჩატვირთვა...</div>
                 </div>
-                <div class="metric-label"></div>
+                <div class="metric-label">შიშისა და სიხარბის ინდექსი</div>
                 <div id="fear-greed-classification" class="classification-badge">ჩატვირთვა...</div>
             </div>
-            
             <div class="metric-card">
                 <div class="gainer-avatar" id="top-gainer-avatar">
                     <img id="top-gainer-logo" src="" alt="" style="display: none;">
@@ -448,7 +571,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container fade-in" style="animation-delay: 0.2s;">
         <h2>🚀 CCX კრიპტოვალუტები</h2>
         <table class="crypto-table">
             <thead>
@@ -471,16 +594,12 @@
     </div>
 
     <script>
-        // Register Service Worker (optional, remove if not needed)
+        // Register Service Worker (optional)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.error('Service Worker registration failed:', error);
-                    });
+                    .then(registration => console.log('Service Worker registered:', registration.scope))
+                    .catch(error => console.error('Service Worker registration failed:', error));
             });
         }
 
@@ -558,7 +677,6 @@
         let cryptoData = [];
         let sortConfig = { key: null, direction: 'asc' };
 
-        // List of coin IDs for CoinGecko API
         const coinIds = [
             'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar', 'kava', 'decentraland',
             'zksync', 'starknet', 'arbitrum', 'optimism', 'dforce-token', 'band-protocol',
@@ -567,7 +685,7 @@
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
             'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
-            'mintlayer', 'ethereum'
+            'mintlayer', 'ethereum', 'tether'
         ];
 
         function displayRandomQuote() {
@@ -617,19 +735,46 @@
                     };
                     document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
                     
-                    const gauge = document.getElementById('fear-greed-gauge');
-                    const angle = (fng.value / 100) * 360;
-                    let color = '#FF4757'; // Fer (red)
-                    if (fng.value > 25 && fng.value < 75) color = '#b87b0d'; // Neutral (orange)
-                    if (fng.value >= 75) color = '#00FF88'; // Greed (green)
+                    const gaugeFill = document.getElementById('gauge-fill');
+                    const angle = (fng.value / 100) * 180;
+                    let color = '#FF4757';
+                    if (fng.value > 25 && fng.value < 75) color = '#F59E0B';
+                    if (fng.value >= 75) color = '#00FF88';
                     
-                    gauge.style.background = `conic-gradient(${color} 0deg ${angle}deg, rgba(46, 46, 77, 0.5) ${angle}deg 360deg)`;
-                    gauge.style.borderColor = color;
+                    gaugeFill.style.background = color;
+                    gaugeFill.style.transform = `rotate(${angle}deg)`;
+                    document.querySelector('.gauge-background').style.borderColor = color;
                 }
 
-                // Update crypto table
+                // Update crypto table and particle images
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
+
+                    // Set header and quote particle images
+                    const coinImages = {
+                        'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
+                        'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
+                        'tether': marketData.find(coin => coin.id === 'tether')?.image,
+                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image
+                    };
+
+                    if (coinImages.bitcoin) {
+                        document.getElementById('particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
+                        document.getElementById('quote-particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
+                    }
+                    if (coinImages.ethereum) {
+                        document.getElementById('particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
+                        document.getElementById('quote-particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
+                    }
+                    if (coinImages.tether) {
+                        document.getElementById('particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
+                        document.getElementById('quote-particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
+                    }
+                    if (coinImages.stellar) {
+                        document.getElementById('particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
+                        document.getElementById('quote-particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
+                    }
+
                     renderCryptoTable();
                     
                     // Find top gainer
@@ -644,17 +789,17 @@
                         logo.onerror = () => logo.style.display = 'none';
                         
                         document.getElementById('top-gainer-info').innerHTML = 
-                            `<div>${topGainer.name}</div><div class="price-positive">+${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
+                            `<div>${topGainer.name}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
                     }
                 } else {
                     document.getElementById('crypto-table-body').innerHTML = 
-                        '<tr><td colspan="3" style="color: #FF4757; text-align: center;">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
+                        '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
                 }
 
             } catch (error) {
                 console.error('Error fetching crypto data:', error);
                 document.getElementById('crypto-table-body').innerHTML = 
-                    '<tr><td colspan="3" style="color: #FF4757; text-align: center;">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადეთ მოგვიანებით.</td></tr>';
+                    '<tr><td colspan="3" class="text-center text-red-400">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადეთ მოგვიანებით.</td></tr>';
             }
         }
 
@@ -688,7 +833,6 @@
             const direction = sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc';
             sortConfig = { key, direction };
 
-            // Update sort indicators
             document.querySelectorAll('.crypto-table th').forEach(th => {
                 th.classList.remove('sort-asc', 'sort-desc');
             });
@@ -696,7 +840,6 @@
 
             cryptoData.sort((a, b) => {
                 let aVal, bVal;
-                
                 switch(key) {
                     case 'name':
                         aVal = a.name.toLowerCase();
@@ -710,14 +853,10 @@
                         aVal = a.price_change_percentage_24h || 0;
                         bVal = b.price_change_percentage_24h || 0;
                         break;
-                    default:
-                        return 0;
                 }
-
                 if (typeof aVal === 'string') {
                     return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
                 }
-                
                 return direction === 'asc' ? aVal - bVal : bVal - aVal;
             });
 
@@ -725,32 +864,28 @@
         }
 
         // Initialize app
-        console.log('Initializing app with quotes:', inspirationalQuotes.length);
-        displayRandomQuote();
-        fetchCryptoData();
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply zoom-spark effect to top gainer on load
+            const gainerAvatar = document.getElementById('top-gainer-avatar');
+            gainerAvatar.classList.add('zoom-spark');
+            setTimeout(() => {
+                gainerAvatar.classList.remove('zoom-spark');
+            }, 1000);
+
+            // Apply fade-in animations
+            document.querySelectorAll('.fade-in').forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            displayRandomQuote();
+            fetchCryptoData();
+        });
 
         // Auto-refresh every 5 minutes
         setInterval(fetchCryptoData, 5 * 60 * 1000);
 
         // Refresh quote every 30 seconds
         setInterval(displayRandomQuote, 30 * 1000);
-
-        // Add some visual feedback
-        document.addEventListener('DOMContentLoaded', () => {
-            const containers = document.querySelectorAll('.container');
-            containers.forEach((container, index) => {
-                setTimeout(() => {
-                    container.style.opacity = '0';
-                    container.style.transform = 'translateY(20px)';
-                    container.style.transition = 'all 0.5s ease';
-                    
-                    setTimeout(() => {
-                        container.style.opacity = '1';
-                        container.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 200);
-            });
-        });
     </script>
 </body>
 </html>
