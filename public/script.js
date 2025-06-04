@@ -1,15 +1,13 @@
 // List of cryptocurrencies to track (CoinGecko IDs) - 44 coins
 const cryptoIds = [
-    'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar',
-    'kava', 'decentraland', 'zksync', 'arbitrum', 'optimism',
-    'dforce-token', 'band-protocol', 'notcoin', 'polkadot', 'solana',
-    'singularity-finance', 'flare-networks', 'redbelly-network-token',
-    'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds',
-    'chainge-finance', 'befi-labs', 'hello-labs', 'masa-finance',
-    'cardano', 'ripple', 'celo', 'osmosis', 'cosmos', 'berachain-bera',
-    'sui', 'beoble', 'dia-data', 'chainlink', 'agridex-governance-token',
-    'kolz', 'kitten-haimer', 'badger-dao', 'iota', 'worldcoin-wld',
-    'mintlayer', 'ethereum'
+    'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar', 'kava', 'decentraland',
+            'zksync', 'starknet', 'arbitrum', 'optimism', 'dforce-token', 'band-protocol',
+            'notcoin', 'polkadot', 'solana', 'singularity-finance', 'flare', 'redbelly-network-token',
+            'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds', 'chainge',
+            'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
+            'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
+            'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
+            'mintlayer', 'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium', 'sui'
 ];
 
 // Store the current sort state
