@@ -38,7 +38,51 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            z-index: -2;
+        }
+
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: -1;
+            pointer-events: none;
+        }
+
+        .background-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-size: cover;
+            animation: backgroundFloat 5s infinite ease-in-out;
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        .background-particle:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .background-particle:nth-child(2) { top: 20%; left: 25%; animation-delay: 0.5s; }
+        .background-particle:nth-child(3) { top: 30%; left: 50%; animation-delay: 1s; }
+        .background-particle:nth-child(4) { top: 40%; left: 75%; animation-delay: 1.5s; }
+        .background-particle:nth-child(5) { top: 50%; left: 15%; animation-delay: 2s; }
+        .background-particle:nth-child(6) { top: 60%; left: 35%; animation-delay: 2.5s; }
+        .background-particle:nth-child(7) { top: 70%; left: 60%; animation-delay: 3s; }
+        .background-particle:nth-child(8) { top: 80%; left: 85%; animation-delay: 3.5s; }
+
+        @keyframes backgroundFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         header {
@@ -136,6 +180,8 @@
             margin-bottom: 16px;
             border: 1px solid rgba(0, 255, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 10;
         }
 
         .container:hover {
@@ -494,7 +540,7 @@
             margin-top: 4px;
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 384px) {
             body { font-size: 13px; }
             header h1 { font-size: 1.3rem; }
             .container { padding: 12px; }
@@ -503,7 +549,7 @@
             .gainer-avatar { width: 48px; height: 48px; }
             .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
             .market-stats { grid-template-columns: 1fr; }
-            .crypto-particle, .quote-particle { width: 8px; height: 8px; }
+            .crypto-particle, .quote-particle, .background-particle { width: 8px; height: 8px; }
         }
 
         @keyframes fadeIn {
@@ -517,6 +563,17 @@
     </style>
 </head>
 <body>
+    <div class="background-particles">
+        <div class="background-particle" id="bg-particle-bitcoin-1"></div>
+        <div class="background-particle" id="bg-particle-ethereum-1"></div>
+        <div class="background-particle" id="bg-particle-tether-1"></div>
+        <div class="background-particle" id="bg-particle-stellar-1"></div>
+        <div class="background-particle" id="bg-particle-bitcoin-2"></div>
+        <div class="background-particle" id="bg-particle-ethereum-2"></div>
+        <div class="background-particle" id="bg-particle-tether-2"></div>
+        <div class="background-particle" id="bg-particle-stellar-2"></div>
+    </div>
+
     <header>
         <h1>CRYPTO COLLECTIVE X</h1>
         <div class="crypto-particle" id="particle-bitcoin"></div>
@@ -750,7 +807,7 @@
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
 
-                    // Set header and quote particle images
+                    // Set header, quote, and background particle images
                     const coinImages = {
                         'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
                         'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
@@ -761,18 +818,26 @@
                     if (coinImages.bitcoin) {
                         document.getElementById('particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
                         document.getElementById('quote-particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
+                        document.getElementById('bg-particle-bitcoin-1').style.backgroundImage = `url(${coinImages.bitcoin})`;
+                        document.getElementById('bg-particle-bitcoin-2').style.backgroundImage = `url(${coinImages.bitcoin})`;
                     }
                     if (coinImages.ethereum) {
                         document.getElementById('particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
                         document.getElementById('quote-particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
+                        document.getElementById('bg-particle-ethereum-1').style.backgroundImage = `url(${coinImages.ethereum})`;
+                        document.getElementById('bg-particle-ethereum-2').style.backgroundImage = `url(${coinImages.ethereum})`;
                     }
                     if (coinImages.tether) {
                         document.getElementById('particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
                         document.getElementById('quote-particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
+                        document.getElementById('bg-particle-tether-1').style.backgroundImage = `url(${coinImages.tether})`;
+                        document.getElementById('bg-particle-tether-2').style.backgroundImage = `url(${coinImages.tether})`;
                     }
                     if (coinImages.stellar) {
                         document.getElementById('particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
                         document.getElementById('quote-particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
+                        document.getElementById('bg-particle-stellar-1').style.backgroundImage = `url(${coinImages.stellar})`;
+                        document.getElementById('bg-particle-stellar-2').style.backgroundImage = `url(${coinImages.stellar})`;
                     }
 
                     renderCryptoTable();
@@ -818,7 +883,7 @@
                             <img src="${coin.image}" alt="${coin.name}" class="coin-icon" onerror="this.style.display='none'">
                             <div>
                                 <div class="coin-name">${coin.name}</div>
-                                <div class="coin-symbol">${coin.symbol}</div>
+                                <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
                             </div>
                         </div>
                     </td>
