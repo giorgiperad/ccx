@@ -50,6 +50,8 @@
             top: 0;
             z-index: 100;
             border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         header h1 {
@@ -62,6 +64,38 @@
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .crypto-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-size: cover;
+            animation: cryptoFloat 3s infinite ease-in-out;
+            z-index: 1;
+            border-radius: 50%;
+        }
+
+        .crypto-particle:nth-child(1) { top: 80%; left: 10%; animation-delay: 0s; }
+        .crypto-particle:nth-child(2) { top: 80%; left: 30%; animation-delay: 0.8s; }
+        .crypto-particle:nth-child(3) { top: 80%; left: 60%; animation-delay: 1.6s; }
+        .crypto-particle:nth-child(4) { top: 80%; left: 80%; animation-delay: 2.4s; }
+
+        @keyframes cryptoFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-50px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         .container {
@@ -84,6 +118,13 @@
             background: rgba(0, 255, 255, 0.05);
             border-radius: 8px;
             margin-bottom: 16px;
+            position: relative;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
         }
 
         #quote-display {
@@ -225,9 +266,21 @@
             transform-style: preserve-3d;
         }
 
-        .gainer-avatar.candy-bomb {
-            animation: candyBomb 2s ease-out forwards;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.6);
+        .gainer-avatar.zoom-spark {
+            animation: zoomIn 1s ease-out forwards;
+            position: relative;
+        }
+
+        .gainer-avatar.zoom-spark::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 10%, transparent 60%);
+            animation: sparkBurst 1s ease-out forwards;
+            z-index: -1;
         }
 
         .gainer-avatar:hover {
@@ -243,21 +296,29 @@
             transform: translateZ(10px);
         }
 
-        @keyframes candyBomb {
+        @keyframes zoomIn {
             0% {
-                transform: scale(0.5) rotateY(0deg) translateZ(0px);
+                transform: scale(0.5);
                 opacity: 0;
-                box-shadow: 0 0 0 rgba(0, 255, 255, 0);
             }
             50% {
-                transform: scale(1.5) rotateY(180deg) translateZ(30px);
+                transform: scale(1.2);
                 opacity: 1;
-                box-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(255, 0, 255, 0.8);
             }
             100% {
-                transform: scale(1) rotateY(0deg) translateZ(10px);
+                transform: scale(1);
                 opacity: 1;
-                box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.6);
+            }
+        }
+
+        @keyframes sparkBurst {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
             }
         }
 
@@ -267,6 +328,7 @@
             background: rgba(20, 20, 40, 0.7);
             border-radius: 8px;
             overflow: hidden;
+            perspective: 1000px;
         }
 
         .crypto-table thead {
@@ -294,10 +356,15 @@
             border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
 
+        .crypto-table tr {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
         .crypto-table tr:hover {
             background: rgba(0, 255, 255, 0.1);
-            transform: scale(1.01);
-            transition: all 0.2s ease;
+            transform: rotateX(5deg) rotateY(5deg) translateZ(10px);
+            box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
         }
 
         .coin-info {
@@ -398,6 +465,7 @@
             .gainer-avatar { width: 48px; height: 48px; }
             .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
             .market-stats { grid-template-columns: 1fr; }
+            .crypto-particle { width: 10px; height: 10px; }
         }
 
         @keyframes fadeIn {
@@ -413,6 +481,10 @@
 <body>
     <header>
         <h1>CRYPTO COLLECTIVE X</h1>
+        <div class="crypto-particle" id="particle-bitcoin"></div>
+        <div class="crypto-particle" id="particle-ethereum"></div>
+        <div class="crypto-particle" id="particle-tether"></div>
+        <div class="crypto-particle" id="particle-stellar"></div>
     </header>
 
     <div class="container fade-in">
@@ -469,7 +541,7 @@
                         ფასი <span class="sort-indicator"></span>
                     </th>
                     <th onclick="sortTable('change')">
-                        24ს % <span class="sort-indicator"></span>
+                        24ს <span class="sort-indicator"></span>
                     </th>
                 </tr>
             </thead>
@@ -490,74 +562,9 @@
         }
 
         const inspirationalQuotes = [
-            { quote: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.", author: "გ.ხ" },
-            { quote: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
-            { quote: "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება." },
-            { quote: "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს." },
-            { quote: "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს." },
-            { quote: "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის." },
-            { quote: "ყოველი წარუმატებლობა ახალი დასაწყისია." },
-            { quote: "გონივრული რისკი დღეს, დიდი მოგება ხვალ." },
-            { quote: "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა." },
-            { quote: "ყველაზე დიდი რისკი არის არაფრის გარისკვა." },
-            { quote: "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება." },
-            { quote: "წარმატება დროისა და შრომის შედეგია." },
-            { quote: "ნუ ელოდები შანსს, შექმენი ის." },
-            { quote: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება." },
-            { quote: "შეცდომები გivate to wisdom." },
-            { quote: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა." },
-            { quote: "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით." },
-            { quote: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას." },
-            { quote: "წარმატება მოთმინების ჯილდოა." },
-            { quote: "რაც არ გცოდნია, ის გაკონტროლებს." },
-            { quote: "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას." },
-            { quote: "თუ არ გარისკავ, ვერ გაიზრდები." },
-            { quote: "ყოველი დღე ახალი შანსია ზრდისთვის." },
-            { quote: "ფულის ღირებულება მის გამოყენებაშია." },
-            { quote: "დიდი ოცნებები დიდი ნაბიჯებით იწყება." },
-            { quote: "წარსული გაკვეთილია, მომავალი — შენ ხელშია." },
-            { quote: "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ." },
-            { quote: "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ." },
-            { quote: "ფული მოდის მათთან, ვინც მას ეძებს." },
-            { quote: "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია." },
-            { quote: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო." },
-            { quote: "წარმატება არის შრომისა და რწმენის ნაზავი." },
-            { quote: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს." },
-            { quote: "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
-            { quote: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა." },
-            { quote: "თუ გჯერა, ყველაფერი შესაძლებელია." },
-            { quote: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება." },
-            { quote: "ფული არის იარაღი, გამოიყენე გონივრულად." },
-            { quote: "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც." },
-            { quote: "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს." },
-            { quote: "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის." },
-            { quote: "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში." },
-            { quote: "გააკეთე ის, რაც გაშინებს, და შიში გაქრება." },
-            { quote: "წარმატება არის გზა, რომელსაც თავად აგებ." },
-            { quote: "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად." },
-            { quote: "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო." },
-            { quote: "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს." },
-            { quote: "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით.", author: "უორენ ბაფეტი" },
-            { quote: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას.", author: "პიტერ ლინჩი" },
-            { quote: "შეცდომების აღიარება წარმატების გასაღებია.", author: "რეი დალიო" },
-            { quote: "დიდი ფული არა გონებაშია, არამედ მოთმინებაში.", author: "ჩარლი მანგერი" },
-            { quote: "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი.", author: "ბენჯამინ გრეჰემი" },
-            { quote: "დრო შენი მეგობარია, იმპულსი — მტერი.", author: "ჯონ ბოგლი" },
-            { quote: "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია.", author: "ფილიპ ფიშერი" },
-            { quote: "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა.", author: "ჯესი ლივერმორი" },
-            { quote: "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება.", author: "ჯიმ რიკარდსი" },
-            { quote: "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი.", author: "ჰოვარდ მარკსი" },
-            { quote: "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია.", author: "კარლ აიკანი" },
-            { quote: "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება.", author: "ჯონ ტემპლტონი" },
-            { quote: "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან.", author: "უორენ ბაფეტი" },
-            { quote: "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე.", author: "პოლ ტიუდორ ჯონსი" },
-            { quote: "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს.", author: "რობერტ კიოსაკი" },
-            { quote: "მონაცემები მეტყველებს, თუ მოუსმენ.", author: "ჯეიმს საიმონსი" },
-            { quote: "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ.", author: "ჯონ პოლსონი" },
-            { quote: "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს.", author: "უორენ ბაფეტი" },
-            { quote: "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ.", author: "უორენ ბაფეტი" },
-            { quote: "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება.", author: "უორენ ბაფეტი" },
-            { quote: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.", author: "უორენ ბაფეტი" }
+            { quote: "პრაქტიკა არის გამოცდილება, რომელიც მივყავართ სრულყოფილებამდე.", author: "გ.ხ." },
+            { quote: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.", author: "უორენ ბაფეთი" },
+            { quote: "საუკეთესო დრო ხის დარგვისთვის 20 წლის წინ იყო. მეორე საუკეთესო დრო ახლაა.", author: "ჩინური ანდაზა" }
         ];
 
         let cryptoData = [];
@@ -571,7 +578,7 @@
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
             'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
-            'mintlayer', 'ethereum'
+            'mintlayer', 'ethereum', 'tether'
         ];
 
         function displayRandomQuote() {
@@ -632,9 +639,23 @@
                     document.querySelector('.gauge-background').style.borderColor = color;
                 }
 
-                // Update crypto table
+                // Update crypto table and particle images
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
+
+                    // Set particle images
+                    const coinImages = {
+                        'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
+                        'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
+                        'tether': marketData.find(coin => coin.id === 'tether')?.image,
+                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image
+                    };
+
+                    if (coinImages.bitcoin) document.getElementById('particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
+                    if (coinImages.ethereum) document.getElementById('particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
+                    if (coinImages.tether) document.getElementById('particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
+                    if (coinImages.stellar) document.getElementById('particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
+
                     renderCryptoTable();
                     
                     // Find top gainer
@@ -665,9 +686,7 @@
 
         function renderCryptoTable() {
             const tbody = document.getElementById('crypto-table-body');
-           
-
- tbody.innerHTML = '';
+            tbody.innerHTML = '';
 
             cryptoData.forEach(coin => {
                 const changeClass = coin.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative';
@@ -729,13 +748,12 @@
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
-            // Apply candy bomb effect to top gainer on load
+            // Apply zoom-spark effect to top gainer on load
             const gainerAvatar = document.getElementById('top-gainer-avatar');
-            gainerAvatar.classList.add('candy-bomb');
-            // Remove animation class after it completes to allow hover effects
+            gainerAvatar.classList.add('zoom-spark');
             setTimeout(() => {
-                gainerAvatar.classList.remove('candy-bomb');
-            }, 2000);
+                gainerAvatar.classList.remove('zoom-spark');
+            }, 1000);
 
             // Apply fade-in animations
             document.querySelectorAll('.fade-in').forEach((el, index) => {
