@@ -51,38 +51,16 @@
             pointer-events: none;
         }
 
-        .background-particle {
+        .background-particle,
+        .crypto-particle,
+        .quote-particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 16px;
+            height: 16px;
             background-size: cover;
-            animation: backgroundFloat 5s infinite ease-in-out;
             border-radius: 50%;
             opacity: 0.2;
-        }
-
-        .background-particle:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .background-particle:nth-child(2) { top: 20%; left: 25%; animation-delay: 0.5s; }
-        .background-particle:nth-child(3) { top: 30%; left: 50%; animation-delay: 1s; }
-        .background-particle:nth-child(4) { top: 40%; left: 75%; animation-delay: 1.5s; }
-        .background-particle:nth-child(5) { top: 50%; left: 15%; animation-delay: 2s; }
-        .background-particle:nth-child(6) { top: 60%; left: 35%; animation-delay: 2.5s; }
-        .background-particle:nth-child(7) { top: 70%; left: 60%; animation-delay: 3s; }
-        .background-particle:nth-child(8) { top: 80%; left: 85%; animation-delay: 3.5s; }
-
-        @keyframes backgroundFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.2;
-            }
-            50% {
-                transform: translateY(-50px) rotate(180deg);
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+            pointer-events: none;
         }
 
         header {
@@ -110,67 +88,6 @@
             letter-spacing: 2px;
             position: relative;
             z-index: 2;
-        }
-
-        .crypto-particle {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-size: cover;
-            animation: cryptoFloat 3s infinite ease-in-out;
-            z-index: 1;
-            border-radius: 50%;
-        }
-
-        .crypto-particle:nth-child(1) { top: 80%; left: 10%; animation-delay: 0s; }
-        .crypto-particle:nth-child(2) { top: 80%; left: 30%; animation-delay: 0.8s; }
-        .crypto-particle:nth-child(3) { top: 80%; left: 60%; animation-delay: 1.6s; }
-        .crypto-particle:nth-child(4) { top: 80%; left: 80%; animation-delay: 2.4s; }
-
-        @keyframes cryptoFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateY(-30px) rotate(180deg);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-50px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .quote-particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-size: cover;
-            animation: quoteFloat 4s infinite ease-in-out;
-            z-index: 0;
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-
-        .quote-particle:nth-child(1) { top: 90%; left: 15%; animation-delay: 0s; }
-        .quote-particle:nth-child(2) { top: 90%; left: 35%; animation-delay: 1s; }
-        .quote-particle:nth-child(3) { top: 90%; left: 65%; animation-delay: 2s; }
-        .quote-particle:nth-child(4) { top: 90%; left: 85%; animation-delay: 3s; }
-
-        @keyframes quoteFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateY(-40px) rotate(180deg);
-                opacity: 0.15;
-            }
-            100% {
-                transform: translateY(-60px) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         .container {
@@ -549,7 +466,7 @@
             .gainer-avatar { width: 48px; height: 48px; }
             .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
             .market-stats { grid-template-columns: 1fr; }
-            .crypto-particle, .quote-particle, .background-particle { width: 8px; height: 8px; }
+            .crypto-particle, .quote-particle, .background-particle { width: 32px; height: 32px; }
         }
 
         @keyframes fadeIn {
@@ -568,10 +485,22 @@
         <div class="background-particle" id="bg-particle-ethereum-1"></div>
         <div class="background-particle" id="bg-particle-tether-1"></div>
         <div class="background-particle" id="bg-particle-stellar-1"></div>
+        <div class="background-particle" id="bg-particle-sophiaverse-1"></div>
+        <div class="background-particle" id="bg-particle-rejuve-1"></div>
+        <div class="background-particle" id="bg-particle-xch-1"></div>
+        <div class="background-particle" id="bg-particle-arbitrum-1"></div>
+        <div class="background-particle" id="bg-particle-optimism-1"></div>
+        <div class="background-particle" id="bg-particle-solana-1"></div>
         <div class="background-particle" id="bg-particle-bitcoin-2"></div>
         <div class="background-particle" id="bg-particle-ethereum-2"></div>
         <div class="background-particle" id="bg-particle-tether-2"></div>
         <div class="background-particle" id="bg-particle-stellar-2"></div>
+        <div class="background-particle" id="bg-particle-sophiaverse-2"></div>
+        <div class="background-particle" id="bg-particle-rejuve-2"></div>
+        <div class="background-particle" id="bg-particle-xch-2"></div>
+        <div class="background-particle" id="bg-particle-arbitrum-2"></div>
+        <div class="background-particle" id="bg-particle-optimism-2"></div>
+        <div class="background-particle" id="bg-particle-solana-2"></div>
     </div>
 
     <header>
@@ -580,6 +509,12 @@
         <div class="crypto-particle" id="particle-ethereum"></div>
         <div class="crypto-particle" id="particle-tether"></div>
         <div class="crypto-particle" id="particle-stellar"></div>
+        <div class="crypto-particle" id="particle-sophiaverse"></div>
+        <div class="crypto-particle" id="particle-rejuve"></div>
+        <div class="crypto-particle" id="particle-xch"></div>
+        <div class="crypto-particle" id="particle-arbitrum"></div>
+        <div class="crypto-particle" id="particle-optimism"></div>
+        <div class="crypto-particle" id="particle-solana"></div>
     </header>
 
     <div class="container fade-in">
@@ -591,6 +526,12 @@
             <div class="quote-particle" id="quote-particle-ethereum"></div>
             <div class="quote-particle" id="quote-particle-tether"></div>
             <div class="quote-particle" id="quote-particle-stellar"></div>
+            <div class="quote-particle" id="quote-particle-sophiaverse"></div>
+            <div class="quote-particle" id="quote-particle-rejuve"></div>
+            <div class="quote-particle" id="quote-particle-xch"></div>
+            <div class="quote-particle" id="quote-particle-arbitrum"></div>
+            <div class="quote-particle" id="quote-particle-optimism"></div>
+            <div class="quote-particle" id="quote-particle-solana"></div>
         </div>
 
         <div class="metrics-grid">
@@ -675,9 +616,9 @@
             { quote: "წარმატება დროისა და შრომის შედეგია." },
             { quote: "ნუ ელოდები შანსს, შექმენი ის." },
             { quote: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება." },
-            { quote: "შეცდომები გivate to wisdom." },
+            { quote: "შეცდომები გავითვალისწინოთ, რათა გონივრულად მოვიქცეთ." },
             { quote: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა." },
-            { quote: "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით." },
+            { quote: "არავინ გამხდარა მდიდარი დაზოჯით, არამედ ინვესტირებით." },
             { quote: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას." },
             { quote: "წარმატება მოთმინების ჯილდოა." },
             { quote: "რაც არ გცოდნია, ის გაკონტროლებს." },
@@ -742,7 +683,7 @@
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
             'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
-            'mintlayer', 'ethereum', 'tether'
+            'mintlayer', 'ethereum', 'tether' 'nunet','xai-blockchain','twin-protocol','status','gamium','sui',
         ];
 
         function displayRandomQuote() {
@@ -762,6 +703,43 @@
         function formatPrice(price) {
             if (price >= 1) return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             return '$' + price.toFixed(6);
+        }
+
+        function animateParticles() {
+            const particleClasses = ['background-particle', 'crypto-particle', 'quote-particle'];
+            
+            particleClasses.forEach(particleClass => {
+                const particles = document.querySelectorAll(`.${particleClass}`);
+                
+                particles.forEach(particle => {
+                    // Randomize initial position
+                    const startX = Math.random() * 100; // 0% to 100% of viewport width
+                    const startY = Math.random() * 100; // 0% to 100% of viewport height
+                    particle.style.left = `${startX}%`;
+                    particle.style.top = `${startY}%`;
+
+                    // Randomize animation properties
+                    const duration = 3 + Math.random() * 5; // 3 to 8 seconds
+                    const delay = Math.random() * 2; // 0 to 2 seconds delay
+                    const moveX = (Math.random() - 0.5) * 100; // Random horizontal movement (-50px to +50px)
+                    const moveY = (Math.random() - 0.5) * 100; // Random vertical movement (-50px to +50px)
+
+                    // Apply animation
+                    particle.animate(
+                        [
+                            { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
+                            { transform: `translate(${moveX}px, ${moveY}px) rotate(${Math.random() * 360}deg)`, opacity: 0.2 },
+                            { transform: `translate(${moveX * 1.5}px, ${moveY * 1.5}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                        ],
+                        {
+                            duration: duration * 1000,
+                            delay: delay * 1000,
+                            easing: 'ease-in-out',
+                            iterations: Infinity
+                        }
+                    );
+                });
+            });
         }
 
         async function fetchCryptoData() {
@@ -812,7 +790,13 @@
                         'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
                         'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
                         'tether': marketData.find(coin => coin.id === 'tether')?.image,
-                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image
+                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image,
+                        'sophiaverse': marketData.find(coin => coin.id === 'sophiaverse')?.image,
+                        'rejuve-ai': marketData.find(coin => coin.id === 'rejuve-ai')?.image,
+                        'chia': marketData.find(coin => coin.id === 'chia')?.image,
+                        'arbitrum': marketData.find(coin => coin.id === 'arbitrum')?.image,
+                        'optimism': marketData.find(coin => coin.id === 'optimism')?.image,
+                        'solana': marketData.find(coin => coin.id === 'solana')?.image
                     };
 
                     if (coinImages.bitcoin) {
@@ -839,6 +823,42 @@
                         document.getElementById('bg-particle-stellar-1').style.backgroundImage = `url(${coinImages.stellar})`;
                         document.getElementById('bg-particle-stellar-2').style.backgroundImage = `url(${coinImages.stellar})`;
                     }
+                    if (coinImages.sophiaverse) {
+                        document.getElementById('particle-sophiaverse').style.backgroundImage = `url(${coinImages.sophiaverse})`;
+                        document.getElementById('quote-particle-sophiaverse').style.backgroundImage = `url(${coinImages.sophiaverse})`;
+                        document.getElementById('bg-particle-sophiaverse-1').style.backgroundImage = `url(${coinImages.sophiaverse})`;
+                        document.getElementById('bg-particle-sophiaverse-2').style.backgroundImage = `url(${coinImages.sophiaverse})`;
+                    }
+                    if (coinImages['rejuve-ai']) {
+                        document.getElementById('particle-rejuve').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
+                        document.getElementById('quote-particle-rejuve').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
+                        document.getElementById('bg-particle-rejuve-1').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
+                        document.getElementById('bg-particle-rejuve-2').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
+                    }
+                    if (coinImages.chia) {
+                        document.getElementById('particle-xch').style.backgroundImage = `url(${coinImages.chia})`;
+                        document.getElementById('quote-particle-xch').style.backgroundImage = `url(${coinImages.chia})`;
+                        document.getElementById('bg-particle-xch-1').style.backgroundImage = `url(${coinImages.chia})`;
+                        document.getElementById('bg-particle-xch-2').style.backgroundImage = `url(${coinImages.chia})`;
+                    }
+                    if (coinImages.arbitrum) {
+                        document.getElementById('particle-arbitrum').style.backgroundImage = `url(${coinImages.arbitrum})`;
+                        document.getElementById('quote-particle-arbitrum').style.backgroundImage = `url(${coinImages.arbitrum})`;
+                        document.getElementById('bg-particle-arbitrum-1').style.backgroundImage = `url(${coinImages.arbitrum})`;
+                        document.getElementById('bg-particle-arbitrum-2').style.backgroundImage = `url(${coinImages.arbitrum})`;
+                    }
+                    if (coinImages.optimism) {
+                        document.getElementById('particle-optimism').style.backgroundImage = `url(${coinImages.optimism})`;
+                        document.getElementById('quote-particle-optimism').style.backgroundImage = `url(${coinImages.optimism})`;
+                        document.getElementById('bg-particle-optimism-1').style.backgroundImage = `url(${coinImages.optimism})`;
+                        document.getElementById('bg-particle-optimism-2').style.backgroundImage = `url(${coinImages.optimism})`;
+                    }
+                    if (coinImages.solana) {
+                        document.getElementById('particle-solana').style.backgroundImage = `url(${coinImages.solana})`;
+                        document.getElementById('quote-particle-solana').style.backgroundImage = `url(${coinImages.solana})`;
+                        document.getElementById('bg-particle-solana-1').style.backgroundImage = `url(${coinImages.solana})`;
+                        document.getElementById('bg-particle-solana-2').style.backgroundImage = `url(${coinImages.solana})`;
+                    }
 
                     renderCryptoTable();
                     
@@ -856,6 +876,9 @@
                         document.getElementById('top-gainer-info').innerHTML = 
                             `<div>${topGainer.name}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
                     }
+
+                    // Animate particles after setting images
+                    animateParticles();
                 } else {
                     document.getElementById('crypto-table-body').innerHTML = 
                         '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
