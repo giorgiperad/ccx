@@ -683,7 +683,7 @@
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
             'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
-            'mintlayer', 'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium', 'sui'
+            'mintlayer', 'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium'
         ];
 
         function displayRandomQuote() {
@@ -970,7 +970,7 @@
         });
 
         // Auto-refresh every 5 minutes
-        setInterval(fetchCryptoData, 60 * 1000);
+        setInterval(fetchCryptoData, 5 * 60 * 1000);
 
         // Refresh quote every 30 seconds
         setInterval(displayRandomQuote, 30 * 1000);
