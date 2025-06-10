@@ -481,26 +481,16 @@
 </head>
 <body>
     <div class="background-particles">
-        <div class="background-particle" id="bg-particle-bitcoin-1"></div>
-        <div class="background-particle" id="bg-particle-ethereum-1"></div>
-        <div class="background-particle" id="bg-particle-tether-1"></div>
-        <div class="background-particle" id="bg-particle-stellar-1"></div>
-        <div class="background-particle" id="bg-particle-sophiaverse-1"></div>
-        <div class="background-particle" id="bg-particle-rejuve-1"></div>
-        <div class="background-particle" id="bg-particle-xch-1"></div>
-        <div class="background-particle" id="bg-particle-arbitrum-1"></div>
-        <div class="background-particle" id="bg-particle-optimism-1"></div>
-        <div class="background-particle" id="bg-particle-solana-1"></div>
-        <div class="background-particle" id="bg-particle-bitcoin-2"></div>
-        <div class="background-particle" id="bg-particle-ethereum-2"></div>
-        <div class="background-particle" id="bg-particle-tether-2"></div>
-        <div class="background-particle" id="bg-particle-stellar-2"></div>
-        <div class="background-particle" id="bg-particle-sophiaverse-2"></div>
-        <div class="background-particle" id="bg-particle-rejuve-2"></div>
-        <div class="background-particle" id="bg-particle-xch-2"></div>
-        <div class="background-particle" id="bg-particle-arbitrum-2"></div>
-        <div class="background-particle" id="bg-particle-optimism-2"></div>
-        <div class="background-particle" id="bg-particle-solana-2"></div>
+        <div class="background-particle" id="bg-particle-bitcoin"></div>
+        <div class="background-particle" id="bg-particle-ethereum"></div>
+        <div class="background-particle" id="bg-particle-tether"></div>
+        <div class="background-particle" id="bg-particle-stellar"></div>
+        <div class="background-particle" id="bg-particle-sophiaverse"></div>
+        <div class="background-particle" id="bg-particle-rejuve"></div>
+        <div class="background-particle" id="bg-particle-xch"></div>
+        <div class="background-particle" id="bg-particle-arbitrum"></div>
+        <div class="background-particle" id="bg-particle-optimism"></div>
+        <div class="background-particle" id="bg-particle-solana"></div>
     </div>
 
     <header>
@@ -541,14 +531,14 @@
                     <div class="gauge-fill" id="gauge-fill"></div>
                     <div id="fear-greed-value" class="gauge-value">ჩატვირთვა...</div>
                 </div>
-                <div class="metric-label"></div>
+                <div class="metric-label">შიშისა და სიხარბის ინდექსი</div>
                 <div id="fear-greed-classification" class="classification-badge">ჩატვირთვა...</div>
             </div>
             <div class="metric-card">
                 <div class="gainer-avatar" id="top-gainer-avatar">
                     <img id="top-gainer-logo" src="" alt="" style="display: none;">
                 </div>
-                <div class="metric-label"></div>
+                <div class="metric-label">ტოპ მომგებიანი</div>
                 <div id="top-gainer-info" class="metric-value">ჩატვირთვა...</div>
             </div>
         </div>
@@ -592,7 +582,8 @@
     </div>
 
     <script>
-        // Register Service Worker (optional)
+        // Removed Service Worker registration as sw.js is not provided
+        /*
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -600,6 +591,7 @@
                     .catch(error => console.error('Service Worker registration failed:', error));
             });
         }
+        */
 
         const inspirationalQuotes = [
             { quote: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.", author: "გ.ხ" },
@@ -681,7 +673,7 @@
             'notcoin', 'polkadot', 'solana', 'singularity-finance', 'flare', 'redbelly-network-token',
             'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds', 'chainge',
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
-            'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
+            'cosmos', 'berachain-bera', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
             'mintlayer', 'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium'
         ];
@@ -693,6 +685,7 @@
         }
 
         function formatNumber(num) {
+            if (!num) return 'N/A';
             if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
             if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
             if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
@@ -701,30 +694,30 @@
         }
 
         function formatPrice(price) {
+            if (!price) return 'N/A';
             if (price >= 1) return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             return '$' + price.toFixed(6);
         }
 
         function animateParticles() {
             const particleClasses = ['background-particle', 'crypto-particle', 'quote-particle'];
+            const maxParticles = 5; // Limit to 5 particles per class for performance
             
             particleClasses.forEach(particleClass => {
-                const particles = document.querySelectorAll(`.${particleClass}`);
+                const particles = Array.from(document.querySelectorAll(`.${particleClass}`)).slice(0, maxParticles);
                 
                 particles.forEach(particle => {
-                    // Randomize initial position
-                    const startX = Math.random() * 100; // 0% to 100% of viewport width
-                    const startY = Math.random() * 100; // 0% to 100% of viewport height
+                    if (!particle.style.backgroundImage) return; // Skip if no image
+                    const startX = Math.random() * 100;
+                    const startY = Math.random() * 100;
                     particle.style.left = `${startX}%`;
                     particle.style.top = `${startY}%`;
 
-                    // Randomize animation properties
-                    const duration = 3 + Math.random() * 5; // 3 to 8 seconds
-                    const delay = Math.random() * 2; // 0 to 2 seconds delay
-                    const moveX = (Math.random() - 0.5) * 100; // Random horizontal movement (-50px to +50px)
-                    const moveY = (Math.random() - 0.5) * 100; // Random vertical movement (-50px to +50px)
+                    const duration = 3 + Math.random() * 5;
+                    const delay = Math.random() * 2;
+                    const moveX = (Math.random() - 0.5) * 50; // Reduced movement range
+                    const moveY = (Math.random() - 0.5) * 50;
 
-                    // Apply animation
                     particle.animate(
                         [
                             { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
@@ -742,25 +735,47 @@
             });
         }
 
+        async function fetchWithRetry(url, maxRetries = 3, delay = 2000) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`Attempt ${i + 1} failed for ${url}: ${error.message}`);
+                    if (i < maxRetries - 1) await new Promise(res => setTimeout(res, delay));
+                    else throw error;
+                }
+            }
+        }
+
         async function fetchCryptoData() {
+            const tbody = document.getElementById('crypto-table-body');
+            tbody.innerHTML = '<tr><td colspan="3" class="loading">ბაზრის მონაცემების ჩატვირთვა</td></tr>';
+
             try {
                 const [marketData, globalData, fngData] = await Promise.all([
-                    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`).then(res => res.json()),
-                    fetch('https://api.coingecko.com/api/v3/global').then(res => res.json()),
-                    fetch('https://api.alternative.me/fng/').then(res => res.json())
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`),
+                    fetchWithRetry('https://api.coingecko.com/api/v3/global'),
+                    fetchWithRetry('https://api.alternative.me/fng/')
                 ]);
 
                 // Update market stats
                 if (globalData?.data) {
-                    document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap.usd);
-                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
-                    document.getElementById('total-volume').textContent = '$' + formatNumber(globalData.data.total_volume.usd);
+                    document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap?.usd);
+                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage?.btc?.toFixed(1) + '%';
+                    document.getElementById('total-volume').textContent = '$' + formatNumber(globalData.data.total_volume?.usd);
+                } else {
+                    console.warn('Global data unavailable');
+                    document.getElementById('total-market-cap').textContent = 'N/A';
+                    document.getElementById('btc-dominance').textContent = 'N/A';
+                    document.getElementById('total-volume').textContent = 'N/A';
                 }
 
                 // Update Fear & Greed Index
                 if (fngData?.data?.[0]) {
                     const fng = fngData.data[0];
-                    document.getElementById('fear-greed-value').textContent = fng.value;
+                    document.getElementById('fear-greed-value').textContent = fng.value || 'N/A';
                     const translations = {
                         "Extreme Fear": "უკიდურესი შიში",
                         "Fear": "შიში",
@@ -768,10 +783,10 @@
                         "Greed": "სიხარბე",
                         "Extreme Greed": "უკიდურესი სიხარბე"
                     };
-                    document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
+                    document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification || 'N/A';
                     
                     const gaugeFill = document.getElementById('gauge-fill');
-                    const angle = (fng.value / 100) * 180;
+                    const angle = (parseInt(fng.value) / 100) * 180 || 0;
                     let color = '#FF4757';
                     if (fng.value > 25 && fng.value < 75) color = '#F59E0B';
                     if (fng.value >= 75) color = '#00FF88';
@@ -779,13 +794,17 @@
                     gaugeFill.style.background = color;
                     gaugeFill.style.transform = `rotate(${angle}deg)`;
                     document.querySelector('.gauge-background').style.borderColor = color;
+                } else {
+                    console.warn('Fear & Greed data unavailable');
+                    document.getElementById('fear-greed-value').textContent = 'N/A';
+                    document.getElementById('fear-greed-classification').textContent = 'N/A';
                 }
 
                 // Update crypto table and particle images
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
 
-                    // Set header, quote, and background particle images
+                    // Set particle images
                     const coinImages = {
                         'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
                         'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
@@ -799,95 +818,77 @@
                         'solana': marketData.find(coin => coin.id === 'solana')?.image
                     };
 
-                    if (coinImages.bitcoin) {
-                        document.getElementById('particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
-                        document.getElementById('quote-particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
-                        document.getElementById('bg-particle-bitcoin-1').style.backgroundImage = `url(${coinImages.bitcoin})`;
-                        document.getElementById('bg-particle-bitcoin-2').style.backgroundImage = `url(${coinImages.bitcoin})`;
-                    }
-                    if (coinImages.ethereum) {
-                        document.getElementById('particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
-                        document.getElementById('quote-particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
-                        document.getElementById('bg-particle-ethereum-1').style.backgroundImage = `url(${coinImages.ethereum})`;
-                        document.getElementById('bg-particle-ethereum-2').style.backgroundImage = `url(${coinImages.ethereum})`;
-                    }
-                    if (coinImages.tether) {
-                        document.getElementById('particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
-                        document.getElementById('quote-particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
-                        document.getElementById('bg-particle-tether-1').style.backgroundImage = `url(${coinImages.tether})`;
-                        document.getElementById('bg-particle-tether-2').style.backgroundImage = `url(${coinImages.tether})`;
-                    }
-                    if (coinImages.stellar) {
-                        document.getElementById('particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
-                        document.getElementById('quote-particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
-                        document.getElementById('bg-particle-stellar-1').style.backgroundImage = `url(${coinImages.stellar})`;
-                        document.getElementById('bg-particle-stellar-2').style.backgroundImage = `url(${coinImages.stellar})`;
-                    }
-                    if (coinImages.sophiaverse) {
-                        document.getElementById('particle-sophiaverse').style.backgroundImage = `url(${coinImages.sophiaverse})`;
-                        document.getElementById('quote-particle-sophiaverse').style.backgroundImage = `url(${coinImages.sophiaverse})`;
-                        document.getElementById('bg-particle-sophiaverse-1').style.backgroundImage = `url(${coinImages.sophiaverse})`;
-                        document.getElementById('bg-particle-sophiaverse-2').style.backgroundImage = `url(${coinImages.sophiaverse})`;
-                    }
-                    if (coinImages['rejuve-ai']) {
-                        document.getElementById('particle-rejuve').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
-                        document.getElementById('quote-particle-rejuve').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
-                        document.getElementById('bg-particle-rejuve-1').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
-                        document.getElementById('bg-particle-rejuve-2').style.backgroundImage = `url(${coinImages['rejuve-ai']})`;
-                    }
-                    if (coinImages.chia) {
-                        document.getElementById('particle-xch').style.backgroundImage = `url(${coinImages.chia})`;
-                        document.getElementById('quote-particle-xch').style.backgroundImage = `url(${coinImages.chia})`;
-                        document.getElementById('bg-particle-xch-1').style.backgroundImage = `url(${coinImages.chia})`;
-                        document.getElementById('bg-particle-xch-2').style.backgroundImage = `url(${coinImages.chia})`;
-                    }
-                    if (coinImages.arbitrum) {
-                        document.getElementById('particle-arbitrum').style.backgroundImage = `url(${coinImages.arbitrum})`;
-                        document.getElementById('quote-particle-arbitrum').style.backgroundImage = `url(${coinImages.arbitrum})`;
-                        document.getElementById('bg-particle-arbitrum-1').style.backgroundImage = `url(${coinImages.arbitrum})`;
-                        document.getElementById('bg-particle-arbitrum-2').style.backgroundImage = `url(${coinImages.arbitrum})`;
-                    }
-                    if (coinImages.optimism) {
-                        document.getElementById('particle-optimism').style.backgroundImage = `url(${coinImages.optimism})`;
-                        document.getElementById('quote-particle-optimism').style.backgroundImage = `url(${coinImages.optimism})`;
-                        document.getElementById('bg-particle-optimism-1').style.backgroundImage = `url(${coinImages.optimism})`;
-                        document.getElementById('bg-particle-optimism-2').style.backgroundImage = `url(${coinImages.optimism})`;
-                    }
-                    if (coinImages.solana) {
-                        document.getElementById('particle-solana').style.backgroundImage = `url(${coinImages.solana})`;
-                        document.getElementById('quote-particle-solana').style.backgroundImage = `url(${coinImages.solana})`;
-                        document.getElementById('bg-particle-solana-1').style.backgroundImage = `url(${coinImages.solana})`;
-                        document.getElementById('bg-particle-solana-2').style.backgroundImage = `url(${coinImages.solana})`;
-                    }
+                    const setParticleImage = (id, image) => {
+                        if (image) {
+                            document.getElementById(id)?.style.setProperty('background-image', `url(${image})`);
+                        } else {
+                            document.getElementById(id)?.style.setProperty('display', 'none');
+                        }
+                    };
+
+                    setParticleImage('particle-bitcoin', coinImages.bitcoin);
+                    setParticleImage('quote-particle-bitcoin', coinImages.bitcoin);
+                    setParticleImage('bg-particle-bitcoin', coinImages.bitcoin);
+                    setParticleImage('particle-ethereum', coinImages.ethereum);
+                    setParticleImage('quote-particle-ethereum', coinImages.ethereum);
+                    setParticleImage('bg-particle-ethereum', coinImages.ethereum);
+                    setParticleImage('particle-tether', coinImages.tether);
+                    setParticleImage('quote-particle-tether', coinImages.tether);
+                    setParticleImage('bg-particle-tether', coinImages.tether);
+                    setParticleImage('particle-stellar', coinImages.stellar);
+                    setParticleImage('quote-particle-stellar', coinImages.stellar);
+                    setParticleImage('bg-particle-stellar', coinImages.stellar);
+                    setParticleImage('particle-sophiaverse', coinImages.sophiaverse);
+                    setParticleImage('quote-particle-sophiaverse', coinImages.sophiaverse);
+                    setParticleImage('bg-particle-sophiaverse', coinImages.sophiaverse);
+                    setParticleImage('particle-rejuve', coinImages['rejuve-ai']);
+                    setParticleImage('quote-particle-rejuve', coinImages['rejuve-ai']);
+                    setParticleImage('bg-particle-rejuve', coinImages['rejuve-ai']);
+                    setParticleImage('particle-xch', coinImages.chia);
+                    setParticleImage('quote-particle-xch', coinImages.chia);
+                    setParticleImage('bg-particle-xch', coinImages.chia);
+                    setParticleImage('particle-arbitrum', coinImages.arbitrum);
+                    setParticleImage('quote-particle-arbitrum', coinImages.arbitrum);
+                    setParticleImage('bg-particle-arbitrum', coinImages.arbitrum);
+                    setParticleImage('particle-optimism', coinImages.optimism);
+                    setParticleImage('quote-particle-optimism', coinImages.optimism);
+                    setParticleImage('bg-particle-optimism', coinImages.optimism);
+                    setParticleImage('particle-solana', coinImages.solana);
+                    setParticleImage('quote-particle-solana', coinImages.solana);
+                    setParticleImage('bg-particle-solana', coinImages.solana);
 
                     renderCryptoTable();
                     
                     // Find top gainer
                     const topGainer = marketData.reduce((max, coin) => 
                         (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
-                    );
+                    , marketData[0]);
                     
                     if (topGainer) {
                         const logo = document.getElementById('top-gainer-logo');
-                        logo.src = topGainer.image;
-                        logo.style.display = 'block';
+                        logo.src = topGainer.image || '';
+                        logo.style.display = topGainer.image ? 'block' : 'none';
                         logo.onerror = () => logo.style.display = 'none';
                         
                         document.getElementById('top-gainer-info').innerHTML = 
-                            `<div>${topGainer.name}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
+                            `<div>${topGainer.name || 'N/A'}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${(topGainer.price_change_percentage_24h || 0).toFixed(2)}%</div>`;
                     }
 
                     // Animate particles after setting images
                     animateParticles();
                 } else {
-                    document.getElementById('crypto-table-body').innerHTML = 
-                        '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
+                    console.warn('No market data available');
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
                 }
 
             } catch (error) {
-                console.error('Error fetching crypto data:', error);
-                document.getElementById('crypto-table-body').innerHTML = 
-                    '<tr><td colspan="3" class="text-center text-red-400">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადეთ მოგვიანებით.</td></tr>';
+                console.error('Error fetching crypto data:', error.message);
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-red-400">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, შეამოწმეთ ინტერნეტ კავშირი ან სცადეთ მოგვიანებით.</td></tr>';
+                document.getElementById('total-market-cap').textContent = 'N/A';
+                document.getElementById('btc-dominance').textContent = 'N/A';
+                document.getElementById('total-volume').textContent = 'N/A';
+                document.getElementById('fear-greed-value').textContent = 'N/A';
+                document.getElementById('fear-greed-classification').textContent = 'N/A';
             }
         }
 
@@ -903,15 +904,15 @@
                 row.innerHTML = `
                     <td>
                         <div class="coin-info">
-                            <img src="${coin.image}" alt="${coin.name}" class="coin-icon" onerror="this.style.display='none'">
+                            <img src="${coin.image || ''}" alt="${coin.name || 'N/A'}" class="coin-icon" onerror="this.style.display='none'">
                             <div>
-                                <div class="coin-name">${coin.name}</div>
-                                <div class="coin-symbol">${coin.symbol.toUpperCase()}</div>
+                                <div class="coin-name">${coin.name || 'N/A'}</div>
+                                <div class="coin-symbol">${(coin.symbol || '').toUpperCase()}</div>
                             </div>
                         </div>
                     </td>
                     <td>${formatPrice(coin.current_price)}</td>
-                    <td class="${changeClass}">${changeSymbol}${coin.price_change_percentage_24h.toFixed(2)}%</td>
+                    <td class="${changeClass}">${changeSymbol}${(coin.price_change_percentage_24h || 0).toFixed(2)}%</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -930,12 +931,12 @@
                 let aVal, bVal;
                 switch(key) {
                     case 'name':
-                        aVal = a.name.toLowerCase();
-                        bVal = b.name.toLowerCase();
+                        aVal = a.name?.toLowerCase() || '';
+                        bVal = b.name?.toLowerCase() || '';
                         break;
                     case 'price':
-                        aVal = a.current_price;
-                        bVal = b.current_price;
+                        aVal = a.current_price || 0;
+                        bVal = b.current_price || 0;
                         break;
                     case 'change':
                         aVal = a.price_change_percentage_24h || 0;
@@ -953,14 +954,12 @@
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
-            // Apply zoom-spark effect to top gainer on load
             const gainerAvatar = document.getElementById('top-gainer-avatar');
             gainerAvatar.classList.add('zoom-spark');
             setTimeout(() => {
                 gainerAvatar.classList.remove('zoom-spark');
             }, 1000);
 
-            // Apply fade-in animations
             document.querySelectorAll('.fade-in').forEach((el, index) => {
                 el.style.animationDelay = `${index * 0.2}s`;
             });
