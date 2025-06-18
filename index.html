@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0A0A1F">
     <title>კრიპტო</title>
-    <!-- PWA Manifest and Icon -->
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link rel="icon" href="/favicon.ico">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
@@ -38,7 +36,17 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-            z-index: -1;
+            z-index: -2;
+        }
+
+        .quote-particle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-size: cover;
+            border-radius: 50%;
+            opacity: 0.2;
+            pointer-events: none;
         }
 
         header {
@@ -68,36 +76,6 @@
             z-index: 2;
         }
 
-        .crypto-particle {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-size: cover;
-            animation: cryptoFloat 3s infinite ease-in-out;
-            z-index: 1;
-            border-radius: 50%;
-        }
-
-        .crypto-particle:nth-child(1) { top: 80%; left: 10%; animation-delay: 0s; }
-        .crypto-particle:nth-child(2) { top: 80%; left: 30%; animation-delay: 0.8s; }
-        .crypto-particle:nth-child(3) { top: 80%; left: 60%; animation-delay: 1.6s; }
-        .crypto-particle:nth-child(4) { top: 80%; left: 80%; animation-delay: 2.4s; }
-
-        @keyframes cryptoFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateY(-30px) rotate(180deg);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-50px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         .container {
             background: rgba(20, 20, 40, 0.85);
             border-radius: 12px;
@@ -105,6 +83,8 @@
             margin-bottom: 16px;
             border: 1px solid rgba(0, 255, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 10;
         }
 
         .container:hover {
@@ -120,6 +100,7 @@
             margin-bottom: 16px;
             position: relative;
             animation: pulseGlow 3s infinite ease-in-out;
+            overflow: hidden;
         }
 
         @keyframes pulseGlow {
@@ -132,12 +113,16 @@
             font-style: italic;
             color: #E0E0E0;
             margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
         }
 
         .quote-author {
             font-size: 0.75rem;
             color: #00FFFF;
             font-weight: 500;
+            position: relative;
+            z-index: 2;
         }
 
         .refresh-quote {
@@ -150,6 +135,8 @@
             font-weight: 500;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .refresh-quote:hover {
@@ -271,18 +258,6 @@
             position: relative;
         }
 
-        .gainer-avatar.zoom-spark::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 10%, transparent 60%);
-            animation: sparkBurst 1s ease-out forwards;
-            z-index: -1;
-        }
-
         .gainer-avatar:hover {
             border-color: #FF00FF;
             transform: scale(1.1) rotateY(10deg);
@@ -311,15 +286,14 @@
             }
         }
 
-        @keyframes sparkBurst {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
+        .coin-confetti {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-size: cover;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
         }
 
         .crypto-table {
@@ -456,7 +430,7 @@
             margin-top: 4px;
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 384px) {
             body { font-size: 13px; }
             header h1 { font-size: 1.3rem; }
             .container { padding: 12px; }
@@ -465,7 +439,7 @@
             .gainer-avatar { width: 48px; height: 48px; }
             .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
             .market-stats { grid-template-columns: 1fr; }
-            .crypto-particle { width: 10px; height: 10px; }
+            .quote-particle { width: 32px; height: 32px; }
         }
 
         @keyframes fadeIn {
@@ -481,17 +455,23 @@
 <body>
     <header>
         <h1>CRYPTO COLLECTIVE X</h1>
-        <div class="crypto-particle" id="particle-bitcoin"></div>
-        <div class="crypto-particle" id="particle-ethereum"></div>
-        <div class="crypto-particle" id="particle-tether"></div>
-        <div class="crypto-particle" id="particle-stellar"></div>
     </header>
 
     <div class="container fade-in">
         <div class="quote-section">
             <div id="quote-display">"საუკეთესო დრო ხის დარგვისთვის 20 წლის წინ იყო. მეორე საუკეთესო დრო ახლაა."</div>
-            <div class="quote-author">- ჩინური ანდაზა</div>
+            <div class="quote-author"></div>
             <button class="refresh-quote" onclick="displayRandomQuote()">ახალი ციტატა</button>
+            <div class="quote-particle" id="quote-particle-bitcoin"></div>
+            <div class="quote-particle" id="quote-particle-ethereum"></div>
+            <div class="quote-particle" id="quote-particle-tether"></div>
+            <div class="quote-particle" id="quote-particle-stellar"></div>
+            <div class="quote-particle" id="quote-particle-sophiaverse"></div>
+            <div class="quote-particle" id="quote-particle-rejuve"></div>
+            <div class="quote-particle" id="quote-particle-xch"></div>
+            <div class="quote-particle" id="quote-particle-arbitrum"></div>
+            <div class="quote-particle" id="quote-particle-optimism"></div>
+            <div class="quote-particle" id="quote-particle-solana"></div>
         </div>
 
         <div class="metrics-grid">
@@ -501,14 +481,14 @@
                     <div class="gauge-fill" id="gauge-fill"></div>
                     <div id="fear-greed-value" class="gauge-value">ჩატვირთვა...</div>
                 </div>
-                <div class="metric-label">შიშისა და სიხარბის ინდექსი</div>
+                <div class="metric-label"></div>
                 <div id="fear-greed-classification" class="classification-badge">ჩატვირთვა...</div>
             </div>
             <div class="metric-card">
                 <div class="gainer-avatar" id="top-gainer-avatar">
                     <img id="top-gainer-logo" src="" alt="" style="display: none;">
                 </div>
-                <div class="metric-label">ტოპ მომგებიანი</div>
+                <div class="metric-label"></div>
                 <div id="top-gainer-info" class="metric-value">ჩატვირთვა...</div>
             </div>
         </div>
@@ -541,7 +521,7 @@
                         ფასი <span class="sort-indicator"></span>
                     </th>
                     <th onclick="sortTable('change')">
-                        24ს <span class="sort-indicator"></span>
+                        24ს % <span class="sort-indicator"></span>
                     </th>
                 </tr>
             </thead>
@@ -552,19 +532,75 @@
     </div>
 
     <script>
-        // Register Service Worker (optional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('Service Worker registered:', registration.scope))
-                    .catch(error => console.error('Service Worker registration failed:', error));
-            });
-        }
-
         const inspirationalQuotes = [
-            { quote: "პრაქტიკა არის გამოცდილება, რომელიც მივყავართ სრულყოფილებამდე.", author: "გ.ხ." },
-            { quote: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.", author: "უორენ ბაფეთი" },
-            { quote: "საუკეთესო დრო ხის დარგვისთვის 20 წლის წინ იყო. მეორე საუკეთესო დრო ახლაა.", author: "ჩინური ანდაზა" }
+            { quote: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.", author: "გ.ხ" },
+            { quote: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
+            { quote: "ყოველი დიდი მოგება პატარა ნაბიჯით იწყება." },
+            { quote: "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს." },
+            { quote: "წარმატება მოდის მათთან, ვინც მოქმედებას იწყებს." },
+            { quote: "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის." },
+            { quote: "ყოველი წარუმატებლობა ახალი დასაწყისია." },
+            { quote: "გონივრული რისკი დღეს, დიდი მოგება ხვალ." },
+            { quote: "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა." },
+            { quote: "ყველაზე დიდი რისკი არის არაფრის გარისკვა." },
+            { quote: "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება." },
+            { quote: "წარმატება დროისა და შრომის შედეგია." },
+            { quote: "ნუ ელოდები შანსს, შექმენი ის." },
+            { quote: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება." },
+            { quote: "შეცდომები გავითვალისწინოთ, რათა გონივრულად მოვიქცეთ." },
+            { quote: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა." },
+            { quote: "არავინ გამხდარა მდიდარი დაზოჯით, არამედ ინვესტირებით." },
+            { quote: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას." },
+            { quote: "წარმატება მოთმინების ჯილდოა." },
+            { quote: "რაც არ გცოდნია, ის გაკონტროლებს." },
+            { quote: "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას." },
+            { quote: "თუ არ გარისკავ, ვერ გაიზრდები." },
+            { quote: "ყოველი დღე ახალი შანსია ზრდისთვის." },
+            { quote: "ფულის ღირებულება მის გამოყენებაშია." },
+            { quote: "დიდი ოცნებები დიდი ნაბიჯებით იწყება." },
+            { quote: "წარსული გაკვეთილია, მომავალი — შენ ხელშია." },
+            { quote: "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ." },
+            { quote: "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ." },
+            { quote: "ფული მოდის მათთან, ვინც მას ეძებს." },
+            { quote: "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია." },
+            { quote: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო." },
+            { quote: "წარმატება არის შრომისა და რწმენის ნაზავი." },
+            { quote: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს." },
+            { quote: "ნუ ელოდები სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
+            { quote: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა." },
+            { quote: "თუ გჯერა, ყველაფერი შესაძლებელია." },
+            { quote: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება." },
+            { quote: "ფული არის იარაღი, გამოიყენე გონივრულად." },
+            { quote: "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც." },
+            { quote: "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს." },
+            { quote: "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის." },
+            { quote: "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში." },
+            { quote: "გააკეთე ის, რაც გაშინებს, და შიში გაქრება." },
+            { quote: "წარმატება არის გზა, რომელსაც თავად აგებ." },
+            { quote: "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად." },
+            { quote: "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო." },
+            { quote: "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს." },
+            { quote: "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით.", author: "უორენ ბაფეტი" },
+            { quote: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას.", author: "პიტერ ლინჩი" },
+            { quote: "შეცდომების აღიარება წარმატების გასაღებია.", author: "რეი დალიო" },
+            { quote: "დიდი ფული არა გონებაშია, არამედ მოთმინებაში.", author: "ჩარლი მანგერი" },
+            { quote: "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი.", author: "ბენჯამინ გრეჰემი" },
+            { quote: "დრო შენი მეგობარია, იმპულსი — მტერი.", author: "ჯონ ბოგლი" },
+            { quote: "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია.", author: "ფილიპ ფიშერი" },
+            { quote: "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა.", author: "ჯესი ლივერმორი" },
+            { quote: "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება.", author: "ჯიმ რიკარდსი" },
+            { quote: "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი.", author: "ჰოვარდ მარკსი" },
+            { quote: "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია.", author: "კარლ აიკანი" },
+            { quote: "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება.", author: "ჯონ ტემპლტონი" },
+            { quote: "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან.", author: "უორენ ბაფეტი" },
+            { quote: "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე.", author: "პოლ ტიუდორ ჯონსი" },
+            { quote: "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს.", author: "რობერტ კიოსაკი" },
+            { quote: "მონაცემები მეტყველებს, თუ მოუსმენ.", author: "ჯეიმს საიმონსი" },
+            { quote: "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ.", author: "ჯონ პოლსონი" },
+            { quote: "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს.", author: "უორენ ბაფეტი" },
+            { quote: "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ.", author: "უორენ ბაფეტი" },
+            { quote: "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება.", author: "უორენ ბაფეტი" },
+            { quote: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.", author: "უორენ ბაფეტი" }
         ];
 
         let cryptoData = [];
@@ -576,18 +612,19 @@
             'notcoin', 'polkadot', 'solana', 'singularity-finance', 'flare', 'redbelly-network-token',
             'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds', 'chainge',
             'befi-labs', 'hello-labs', 'masa', 'cardano', 'ripple', 'celo', 'osmosis',
-            'cosmos', 'berachain-bera', 'sui', 'beoble', 'dia', 'chainlink',
+            'cosmos', 'berachain-bera', 'beoble', 'dia', 'chainlink',
             'agridex-governance-token', 'kolz', 'kitten-haimer', 'troy', 'iota', 'worldcoin',
-            'mintlayer', 'ethereum', 'tether'
+            'mintlayer', 'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium'
         ];
 
         function displayRandomQuote() {
             const randomQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
             document.getElementById('quote-display').textContent = `"${randomQuote.quote}"`;
-            document.querySelector('.quote-author').textContent = `- ${randomQuote.author || 'ჩინური ანდაზა'}`;
+            document.querySelector('.quote-author').textContent = `- ${randomQuote.author || ''}`;
         }
 
         function formatNumber(num) {
+            if (!num) return 'N/A';
             if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
             if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
             if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
@@ -596,29 +633,127 @@
         }
 
         function formatPrice(price) {
+            if (!price) return 'N/A';
             if (price >= 1) return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             return '$' + price.toFixed(6);
         }
 
-        async function fetchCryptoData() {
-            try {
-                const [marketData, globalData, fngData] = await Promise.all([
-                    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`).then(res => res.json()),
-                    fetch('https://api.coingecko.com/api/v3/global').then(res => res.json()),
-                    fetch('https://api.alternative.me/fng/').then(res => res.json())
-                ]);
-
-                // Update market stats
-                if (globalData?.data) {
-                    document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap.usd);
-                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage.btc.toFixed(1) + '%';
-                    document.getElementById('total-volume').textContent = '$' + formatNumber(globalData.data.total_volume.usd);
+        function animateQuoteParticles() {
+            const particles = Array.from(document.querySelectorAll('.quote-particle'));
+            
+            particles.forEach(particle => {
+                // Skip if particle has no image or is explicitly hidden
+                if (!particle.style.backgroundImage || particle.style.display === 'none') {
+                    console.log(`Skipping particle ${particle.id} due to missing image or hidden state`);
+                    return;
                 }
 
-                // Update Fear & Greed Index
+                // Reset position and visibility
+                particle.style.display = 'block';
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                particle.style.left = `${startX}%`;
+                particle.style.top = `${startY}%`;
+
+                const duration = 3 + Math.random() * 5;
+                const delay = Math.random() * 2;
+                const moveX = (Math.random() - 0.5) * 50;
+                const moveY = (Math.random() - 0.5) * 50;
+
+                particle.animate(
+                    [
+                        { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
+                        { transform: `translate(${moveX}px, ${moveY}px) rotate(${Math.random() * 360}deg)`, opacity: 0.2 },
+                        { transform: `translate(${moveX * 1.5}px, ${moveY * 1.5}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ],
+                    {
+                        duration: duration * 1000,
+                        delay: delay * 1000,
+                        easing: 'ease-in-out',
+                        iterations: Infinity
+                    }
+                );
+            });
+        }
+
+        function triggerCoinConfetti(coinImage) {
+            const container = document.getElementById('top-gainer-avatar').parentElement;
+            const coinImages = [coinImage].filter(Boolean);
+            if (!coinImages.length) {
+                console.warn('No valid coin image for confetti');
+                return;
+            }
+
+            for (let i = 0; i < 10; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'coin-confetti';
+                confetti.style.backgroundImage = `url(${coinImages[Math.floor(Math.random() * coinImages.length)]})`;
+                
+                const startX = 50 + (Math.random() - 0.5) * 20;
+                const startY = 50;
+                confetti.style.left = `${startX}%`;
+                confetti.style.top = `${startY}%`;
+
+                container.appendChild(confetti);
+
+                const duration = 1000 + Math.random() * 500;
+                const moveX = (Math.random() - 0.5) * 100;
+                const moveY = -Math.random() * 100;
+                const rotate = (Math.random() - 0.5) * 360;
+
+                confetti.animate(
+                    [
+                        { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                        { transform: `translate(${moveX}px, ${moveY}px) rotate(${rotate}deg)`, opacity: 0 }
+                    ],
+                    {
+                        duration: duration,
+                        easing: 'ease-out',
+                        fill: 'forwards'
+                    }
+                ).onfinish = () => confetti.remove();
+            }
+        }
+
+        async function fetchWithRetry(url, maxRetries = 3, delay = 2000) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`Attempt ${i + 1} failed for ${url}: ${error.message}`);
+                    if (i < maxRetries - 1) await new Promise(res => setTimeout(res, delay));
+                    else throw error;
+                }
+            }
+        }
+
+        async function fetchCryptoData() {
+            const tbody = document.getElementById('crypto-table-body');
+            tbody.innerHTML = '<tr><td colspan="3" class="loading">ბაზრის მონაცემების ჩატვირთვა</td></tr>';
+
+            try {
+                const [marketData, globalData, fngData] = await Promise.all([
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`),
+                    fetchWithRetry('https://api.coingecko.com/api/v3/global'),
+                    fetchWithRetry('https://api.alternative.me/fng/')
+                ]);
+
+                if (globalData?.data) {
+                    document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap?.usd);
+                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage?.btc?.toFixed(1) + '%';
+                    document.getElementById('total-volume').textContent = '$' + formatNumber(globalData.data.total_volume?.usd);
+                } else {
+                    console.warn('Global data unavailable');
+                    document.getElementById('total-market-cap').textContent = 'N/A';
+                    document.getElementById('btc-dominance').textContent = 'N/A';
+                    document.getElementById('total-volume').textContent = 'N/A';
+                }
+
                 if (fngData?.data?.[0]) {
                     const fng = fngData.data[0];
-                    document.getElementById('fear-greed-value').textContent = fng.value;
+                    document.getElementById('fear-greed-value').textContent = fng.value || 'N/A';
                     const translations = {
                         "Extreme Fear": "უკიდურესი შიში",
                         "Fear": "შიში",
@@ -626,10 +761,10 @@
                         "Greed": "სიხარბე",
                         "Extreme Greed": "უკიდურესი სიხარბე"
                     };
-                    document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification;
+                    document.getElementById('fear-greed-classification').textContent = translations[fng.value_classification] || fng.value_classification || 'N/A';
                     
                     const gaugeFill = document.getElementById('gauge-fill');
-                    const angle = (fng.value / 100) * 180;
+                    const angle = (parseInt(fng.value) / 100) * 180 || 0;
                     let color = '#FF4757';
                     if (fng.value > 25 && fng.value < 75) color = '#F59E0B';
                     if (fng.value >= 75) color = '#00FF88';
@@ -637,50 +772,88 @@
                     gaugeFill.style.background = color;
                     gaugeFill.style.transform = `rotate(${angle}deg)`;
                     document.querySelector('.gauge-background').style.borderColor = color;
+                } else {
+                    console.warn('Fear & Greed data unavailable');
+                    document.getElementById('fear-greed-value').textContent = 'N/A';
+                    document.getElementById('fear-greed-classification').textContent = 'N/A';
                 }
 
-                // Update crypto table and particle images
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
 
-                    // Set particle images
                     const coinImages = {
                         'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
                         'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
                         'tether': marketData.find(coin => coin.id === 'tether')?.image,
-                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image
+                        'stellar': marketData.find(coin => coin.id === 'stellar')?.image,
+                        'sophiaverse': marketData.find(coin => coin.id === 'sophiaverse')?.image,
+                        'rejuve-ai': marketData.find(coin => coin.id === 'rejuve-ai')?.image,
+                        'chia': marketData.find(coin => coin.id === 'chia')?.image,
+                        'arbitrum': marketData.find(coin => coin.id === 'arbitrum')?.image,
+                        'optimism': marketData.find(coin => coin.id === 'optimism')?.image,
+                        'solana': marketData.find(coin => coin.id === 'solana')?.image
                     };
 
-                    if (coinImages.bitcoin) document.getElementById('particle-bitcoin').style.backgroundImage = `url(${coinImages.bitcoin})`;
-                    if (coinImages.ethereum) document.getElementById('particle-ethereum').style.backgroundImage = `url(${coinImages.ethereum})`;
-                    if (coinImages.tether) document.getElementById('particle-tether').style.backgroundImage = `url(${coinImages.tether})`;
-                    if (coinImages.stellar) document.getElementById('particle-stellar').style.backgroundImage = `url(${coinImages.stellar})`;
+                    const setParticleImage = (id, image) => {
+                        const element = document.getElementById(id);
+                        if (image && element) {
+                            element.style.backgroundImage = `url(${image})`;
+                            element.style.display = 'block';
+                            console.log(`Set image for ${id}: ${image}`);
+                        } else {
+                            if (element) {
+                                element.style.display = 'none';
+                                console.warn(`No image for ${id} or element not found`);
+                            }
+                        }
+                    };
+
+                    setParticleImage('quote-particle-bitcoin', coinImages.bitcoin);
+                    setParticleImage('quote-particle-ethereum', coinImages.ethereum);
+                    setParticleImage('quote-particle-tether', coinImages.tether);
+                    setParticleImage('quote-particle-stellar', coinImages.stellar);
+                    setParticleImage('quote-particle-sophiaverse', coinImages.sophiaverse);
+                    setParticleImage('quote-particle-rejuve', coinImages['rejuve-ai']);
+                    setParticleImage('quote-particle-xch', coinImages.chia);
+                    setParticleImage('quote-particle-arbitrum', coinImages.arbitrum);
+                    setParticleImage('quote-particle-optimism', coinImages.optimism);
+                    setParticleImage('quote-particle-solana', coinImages.solana);
 
                     renderCryptoTable();
                     
-                    // Find top gainer
                     const topGainer = marketData.reduce((max, coin) => 
                         (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
-                    );
+                    , marketData[0]);
                     
                     if (topGainer) {
                         const logo = document.getElementById('top-gainer-logo');
-                        logo.src = topGainer.image;
-                        logo.style.display = 'block';
-                        logo.onerror = () => logo.style.display = 'none';
+                        logo.src = topGainer.image || '';
+                        logo.style.display = topGainer.image ? 'block' : 'none';
+                        logo.onerror = () => {
+                            logo.style.display = 'none';
+                            console.warn(`Failed to load top gainer image: ${topGainer.image}`);
+                        };
                         
                         document.getElementById('top-gainer-info').innerHTML = 
-                            `<div>${topGainer.name}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${topGainer.price_change_percentage_24h.toFixed(2)}%</div>`;
+                            `<div>${topGainer.name || 'N/A'}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${(topGainer.price_change_percentage_24h || 0).toFixed(2)}%</div>`;
+                        
+                        triggerCoinConfetti(topGainer.image);
                     }
+
+                    animateQuoteParticles();
                 } else {
-                    document.getElementById('crypto-table-body').innerHTML = 
-                        '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
+                    console.warn('No market data available');
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
                 }
 
             } catch (error) {
-                console.error('Error fetching crypto data:', error);
-                document.getElementById('crypto-table-body').innerHTML = 
-                    '<tr><td colspan="3" class="text-center text-red-400">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადეთ მოგვიანებით.</td></tr>';
+                console.error('Error fetching crypto data:', error.message);
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-red-400">მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ, შეამოწმეთ ინტერნეტ კავშირი ან სცადეთ მოგვიანებით.</td></tr>';
+                document.getElementById('total-market-cap').textContent = 'N/A';
+                document.getElementById('btc-dominance').textContent = 'N/A';
+                document.getElementById('total-volume').textContent = 'N/A';
+                document.getElementById('fear-greed-value').textContent = 'N/A';
+                document.getElementById('fear-greed-classification').textContent = 'N/A';
             }
         }
 
@@ -696,15 +869,15 @@
                 row.innerHTML = `
                     <td>
                         <div class="coin-info">
-                            <img src="${coin.image}" alt="${coin.name}" class="coin-icon" onerror="this.style.display='none'">
+                            <img src="${coin.image || ''}" alt="${coin.name || 'N/A'}" class="coin-icon" onerror="this.style.display='none'">
                             <div>
-                                <div class="coin-name">${coin.name}</div>
-                                <div class="coin-symbol">${coin.symbol}</div>
+                                <div class="coin-name">${coin.name || 'N/A'}</div>
+                                <div class="coin-symbol">${(coin.symbol || '').toUpperCase()}</div>
                             </div>
                         </div>
                     </td>
                     <td>${formatPrice(coin.current_price)}</td>
-                    <td class="${changeClass}">${changeSymbol}${coin.price_change_percentage_24h.toFixed(2)}%</td>
+                    <td class="${changeClass}">${changeSymbol}${(coin.price_change_percentage_24h || 0).toFixed(2)}%</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -723,19 +896,17 @@
                 let aVal, bVal;
                 switch(key) {
                     case 'name':
-                        aVal = a.name.toLowerCase();
-                        bVal = b.name.toLowerCase();
+                        aVal = a.name?.toLowerCase() || '';
+                        bVal = b.name?.toLowerCase() || '';
                         break;
                     case 'price':
-                        aVal = a.current_price;
-                        bVal = b.current_price;
+                        aVal = a.current_price || 0;
+                        bVal = b.current_price || 0;
                         break;
                     case 'change':
                         aVal = a.price_change_percentage_24h || 0;
                         bVal = b.price_change_percentage_24h || 0;
                         break;
-                    default:
-                        return 0;
                 }
                 if (typeof aVal === 'string') {
                     return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
@@ -746,16 +917,13 @@
             renderCryptoTable();
         }
 
-        // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
-            // Apply zoom-spark effect to top gainer on load
             const gainerAvatar = document.getElementById('top-gainer-avatar');
             gainerAvatar.classList.add('zoom-spark');
             setTimeout(() => {
                 gainerAvatar.classList.remove('zoom-spark');
             }, 1000);
 
-            // Apply fade-in animations
             document.querySelectorAll('.fade-in').forEach((el, index) => {
                 el.style.animationDelay = `${index * 0.2}s`;
             });
@@ -764,10 +932,7 @@
             fetchCryptoData();
         });
 
-        // Auto-refresh every 5 minutes
         setInterval(fetchCryptoData, 5 * 60 * 1000);
-
-        // Refresh quote every 30 seconds
         setInterval(displayRandomQuote, 30 * 1000);
     </script>
 </body>
