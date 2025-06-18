@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0A0A1F">
     <title>კრიპტო</title>
-    <!-- PWA Manifest and Icon -->
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link rel="icon" href="/favicon.ico">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
@@ -41,18 +39,6 @@
             z-index: -2;
         }
 
-        .background-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .background-particle,
-        .crypto-particle,
         .quote-particle {
             position: absolute;
             width: 16px;
@@ -272,18 +258,6 @@
             position: relative;
         }
 
-        .gainer-avatar.zoom-spark::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 10%, transparent 60%);
-            animation: sparkBurst 1s ease-out forwards;
-            z-index: -1;
-        }
-
         .gainer-avatar:hover {
             border-color: #FF00FF;
             transform: scale(1.1) rotateY(10deg);
@@ -312,15 +286,14 @@
             }
         }
 
-        @keyframes sparkBurst {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
+        .coin-confetti {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-size: cover;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
         }
 
         .crypto-table {
@@ -466,7 +439,7 @@
             .gainer-avatar { width: 48px; height: 48px; }
             .crypto-table th, .crypto-table td { padding: 8px; font-size: 0.7rem; }
             .market-stats { grid-template-columns: 1fr; }
-            .crypto-particle, .quote-particle, .background-particle { width: 32px; height: 32px; }
+            .quote-particle { width: 32px; height: 32px; }
         }
 
         @keyframes fadeIn {
@@ -480,31 +453,8 @@
     </style>
 </head>
 <body>
-    <div class="background-particles">
-        <div class="background-particle" id="bg-particle-bitcoin"></div>
-        <div class="background-particle" id="bg-particle-ethereum"></div>
-        <div class="background-particle" id="bg-particle-tether"></div>
-        <div class="background-particle" id="bg-particle-stellar"></div>
-        <div class="background-particle" id="bg-particle-sophiaverse"></div>
-        <div class="background-particle" id="bg-particle-rejuve"></div>
-        <div class="background-particle" id="bg-particle-xch"></div>
-        <div class="background-particle" id="bg-particle-arbitrum"></div>
-        <div class="background-particle" id="bg-particle-optimism"></div>
-        <div class="background-particle" id="bg-particle-solana"></div>
-    </div>
-
     <header>
         <h1>CRYPTO COLLECTIVE X</h1>
-        <div class="crypto-particle" id="particle-bitcoin"></div>
-        <div class="crypto-particle" id="particle-ethereum"></div>
-        <div class="crypto-particle" id="particle-tether"></div>
-        <div class="crypto-particle" id="particle-stellar"></div>
-        <div class="crypto-particle" id="particle-sophiaverse"></div>
-        <div class="crypto-particle" id="particle-rejuve"></div>
-        <div class="crypto-particle" id="particle-xch"></div>
-        <div class="crypto-particle" id="particle-arbitrum"></div>
-        <div class="crypto-particle" id="particle-optimism"></div>
-        <div class="crypto-particle" id="particle-solana"></div>
     </header>
 
     <div class="container fade-in">
@@ -582,17 +532,6 @@
     </div>
 
     <script>
-        // Removed Service Worker registration as sw.js is not provided
-        /*
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('Service Worker registered:', registration.scope))
-                    .catch(error => console.error('Service Worker registration failed:', error));
-            });
-        }
-        */
-
         const inspirationalQuotes = [
             { quote: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.", author: "გ.ხ" },
             { quote: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
@@ -627,7 +566,7 @@
             { quote: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო." },
             { quote: "წარმატება არის შრომისა და რწმენის ნაზავი." },
             { quote: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს." },
-            { quote: "არ ეძებო სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
+            { quote: "ნუ ელოდები სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
             { quote: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა." },
             { quote: "თუ გჯერა, ყველაფერი შესაძლებელია." },
             { quote: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება." },
@@ -699,40 +638,81 @@
             return '$' + price.toFixed(6);
         }
 
-        function animateParticles() {
-            const particleClasses = ['background-particle', 'crypto-particle', 'quote-particle'];
-            const maxParticles = 5; // Limit to 5 particles per class for performance
+        function animateQuoteParticles() {
+            const particles = Array.from(document.querySelectorAll('.quote-particle'));
             
-            particleClasses.forEach(particleClass => {
-                const particles = Array.from(document.querySelectorAll(`.${particleClass}`)).slice(0, maxParticles);
-                
-                particles.forEach(particle => {
-                    if (!particle.style.backgroundImage) return; // Skip if no image
-                    const startX = Math.random() * 100;
-                    const startY = Math.random() * 100;
-                    particle.style.left = `${startX}%`;
-                    particle.style.top = `${startY}%`;
+            particles.forEach(particle => {
+                // Skip if particle has no image or is explicitly hidden
+                if (!particle.style.backgroundImage || particle.style.display === 'none') {
+                    console.log(`Skipping particle ${particle.id} due to missing image or hidden state`);
+                    return;
+                }
 
-                    const duration = 3 + Math.random() * 5;
-                    const delay = Math.random() * 2;
-                    const moveX = (Math.random() - 0.5) * 50; // Reduced movement range
-                    const moveY = (Math.random() - 0.5) * 50;
+                // Reset position and visibility
+                particle.style.display = 'block';
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                particle.style.left = `${startX}%`;
+                particle.style.top = `${startY}%`;
 
-                    particle.animate(
-                        [
-                            { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
-                            { transform: `translate(${moveX}px, ${moveY}px) rotate(${Math.random() * 360}deg)`, opacity: 0.2 },
-                            { transform: `translate(${moveX * 1.5}px, ${moveY * 1.5}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-                        ],
-                        {
-                            duration: duration * 1000,
-                            delay: delay * 1000,
-                            easing: 'ease-in-out',
-                            iterations: Infinity
-                        }
-                    );
-                });
+                const duration = 3 + Math.random() * 5;
+                const delay = Math.random() * 2;
+                const moveX = (Math.random() - 0.5) * 50;
+                const moveY = (Math.random() - 0.5) * 50;
+
+                particle.animate(
+                    [
+                        { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
+                        { transform: `translate(${moveX}px, ${moveY}px) rotate(${Math.random() * 360}deg)`, opacity: 0.2 },
+                        { transform: `translate(${moveX * 1.5}px, ${moveY * 1.5}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ],
+                    {
+                        duration: duration * 1000,
+                        delay: delay * 1000,
+                        easing: 'ease-in-out',
+                        iterations: Infinity
+                    }
+                );
             });
+        }
+
+        function triggerCoinConfetti(coinImage) {
+            const container = document.getElementById('top-gainer-avatar').parentElement;
+            const coinImages = [coinImage].filter(Boolean);
+            if (!coinImages.length) {
+                console.warn('No valid coin image for confetti');
+                return;
+            }
+
+            for (let i = 0; i < 10; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'coin-confetti';
+                confetti.style.backgroundImage = `url(${coinImages[Math.floor(Math.random() * coinImages.length)]})`;
+                
+                const startX = 50 + (Math.random() - 0.5) * 20;
+                const startY = 50;
+                confetti.style.left = `${startX}%`;
+                confetti.style.top = `${startY}%`;
+
+                container.appendChild(confetti);
+
+                const duration = 1000 + Math.random() * 500;
+                const moveX = (Math.random() - 0.5) * 100;
+                const moveY = -Math.random() * 100;
+                const rotate = (Math.random() - 0.5) * 360;
+
+                confetti.animate(
+                    [
+                        { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                        { transform: `translate(${moveX}px, ${moveY}px) rotate(${rotate}deg)`, opacity: 0 }
+                    ],
+                    {
+                        duration: duration,
+                        easing: 'ease-out',
+                        fill: 'forwards'
+                    }
+                ).onfinish = () => confetti.remove();
+            }
         }
 
         async function fetchWithRetry(url, maxRetries = 3, delay = 2000) {
@@ -760,7 +740,6 @@
                     fetchWithRetry('https://api.alternative.me/fng/')
                 ]);
 
-                // Update market stats
                 if (globalData?.data) {
                     document.getElementById('total-market-cap').textContent = '$' + formatNumber(globalData.data.total_market_cap?.usd);
                     document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage?.btc?.toFixed(1) + '%';
@@ -772,7 +751,6 @@
                     document.getElementById('total-volume').textContent = 'N/A';
                 }
 
-                // Update Fear & Greed Index
                 if (fngData?.data?.[0]) {
                     const fng = fngData.data[0];
                     document.getElementById('fear-greed-value').textContent = fng.value || 'N/A';
@@ -800,11 +778,9 @@
                     document.getElementById('fear-greed-classification').textContent = 'N/A';
                 }
 
-                // Update crypto table and particle images
                 if (marketData?.length > 0) {
                     cryptoData = marketData;
 
-                    // Set particle images
                     const coinImages = {
                         'bitcoin': marketData.find(coin => coin.id === 'bitcoin')?.image,
                         'ethereum': marketData.find(coin => coin.id === 'ethereum')?.image,
@@ -819,47 +795,32 @@
                     };
 
                     const setParticleImage = (id, image) => {
-                        if (image) {
-                            document.getElementById(id)?.style.setProperty('background-image', `url(${image})`);
+                        const element = document.getElementById(id);
+                        if (image && element) {
+                            element.style.backgroundImage = `url(${image})`;
+                            element.style.display = 'block';
+                            console.log(`Set image for ${id}: ${image}`);
                         } else {
-                            document.getElementById(id)?.style.setProperty('display', 'none');
+                            if (element) {
+                                element.style.display = 'none';
+                                console.warn(`No image for ${id} or element not found`);
+                            }
                         }
                     };
 
-                    setParticleImage('particle-bitcoin', coinImages.bitcoin);
                     setParticleImage('quote-particle-bitcoin', coinImages.bitcoin);
-                    setParticleImage('bg-particle-bitcoin', coinImages.bitcoin);
-                    setParticleImage('particle-ethereum', coinImages.ethereum);
                     setParticleImage('quote-particle-ethereum', coinImages.ethereum);
-                    setParticleImage('bg-particle-ethereum', coinImages.ethereum);
-                    setParticleImage('particle-tether', coinImages.tether);
                     setParticleImage('quote-particle-tether', coinImages.tether);
-                    setParticleImage('bg-particle-tether', coinImages.tether);
-                    setParticleImage('particle-stellar', coinImages.stellar);
                     setParticleImage('quote-particle-stellar', coinImages.stellar);
-                    setParticleImage('bg-particle-stellar', coinImages.stellar);
-                    setParticleImage('particle-sophiaverse', coinImages.sophiaverse);
                     setParticleImage('quote-particle-sophiaverse', coinImages.sophiaverse);
-                    setParticleImage('bg-particle-sophiaverse', coinImages.sophiaverse);
-                    setParticleImage('particle-rejuve', coinImages['rejuve-ai']);
                     setParticleImage('quote-particle-rejuve', coinImages['rejuve-ai']);
-                    setParticleImage('bg-particle-rejuve', coinImages['rejuve-ai']);
-                    setParticleImage('particle-xch', coinImages.chia);
                     setParticleImage('quote-particle-xch', coinImages.chia);
-                    setParticleImage('bg-particle-xch', coinImages.chia);
-                    setParticleImage('particle-arbitrum', coinImages.arbitrum);
                     setParticleImage('quote-particle-arbitrum', coinImages.arbitrum);
-                    setParticleImage('bg-particle-arbitrum', coinImages.arbitrum);
-                    setParticleImage('particle-optimism', coinImages.optimism);
                     setParticleImage('quote-particle-optimism', coinImages.optimism);
-                    setParticleImage('bg-particle-optimism', coinImages.optimism);
-                    setParticleImage('particle-solana', coinImages.solana);
                     setParticleImage('quote-particle-solana', coinImages.solana);
-                    setParticleImage('bg-particle-solana', coinImages.solana);
 
                     renderCryptoTable();
                     
-                    // Find top gainer
                     const topGainer = marketData.reduce((max, coin) => 
                         (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
                     , marketData[0]);
@@ -868,14 +829,18 @@
                         const logo = document.getElementById('top-gainer-logo');
                         logo.src = topGainer.image || '';
                         logo.style.display = topGainer.image ? 'block' : 'none';
-                        logo.onerror = () => logo.style.display = 'none';
+                        logo.onerror = () => {
+                            logo.style.display = 'none';
+                            console.warn(`Failed to load top gainer image: ${topGainer.image}`);
+                        };
                         
                         document.getElementById('top-gainer-info').innerHTML = 
                             `<div>${topGainer.name || 'N/A'}</div><div class="${topGainer.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}">${(topGainer.price_change_percentage_24h || 0).toFixed(2)}%</div>`;
+                        
+                        triggerCoinConfetti(topGainer.image);
                     }
 
-                    // Animate particles after setting images
-                    animateParticles();
+                    animateQuoteParticles();
                 } else {
                     console.warn('No market data available');
                     tbody.innerHTML = '<tr><td colspan="3" class="text-center text-red-400">მონაცემები ხელმისაწვდომი არაა ზოგიერთი მონეტისთვის.</td></tr>';
@@ -952,7 +917,6 @@
             renderCryptoTable();
         }
 
-        // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
             const gainerAvatar = document.getElementById('top-gainer-avatar');
             gainerAvatar.classList.add('zoom-spark');
@@ -968,10 +932,7 @@
             fetchCryptoData();
         });
 
-        // Auto-refresh every 5 minutes
         setInterval(fetchCryptoData, 5 * 60 * 1000);
-
-        // Refresh quote every 30 seconds
         setInterval(displayRandomQuote, 30 * 1000);
     </script>
 </body>
