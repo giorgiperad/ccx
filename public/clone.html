@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO COLLECTIVE X</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0b0d;
+            --bg-secondary: #111318;
+            --bg-tertiary: #1a1d24;
+            --bg-glass: rgba(17, 19, 24, 0.8);
+            --border-primary: rgba(255, 255, 255, 0.1);
+            --border-secondary: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a3a8;
+            --text-muted: #6b7280;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 400;
+        }
+
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover, .glass-card:active {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .quote-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-text {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            color: var(--accent-primary);
+            font-weight: 500;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
+            margin-bottom: 16px;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        .refresh-btn:hover, .refresh-btn:active {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover, .metric-card:active {
+            border-color: var(--border-primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .fear-greed-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .fear-greed-gauge {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .gauge-background {
+            width: 100%;
+            height: 100%;
+            border: 6px solid var(--border-secondary);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .gauge-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid transparent;
+            transition: all 1s ease;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .top-gainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gainer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-primary);
+            margin-bottom: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            background: var(--bg-tertiary);
+        }
+
+        .gainer-avatar:hover, .gainer-avatar:active {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .gainer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gainer-info {
+            text-align: center;
+        }
+
+        .gainer-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .gainer-change {
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .crypto-table {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .table-header {
+            background: var(--bg-secondary);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-secondary);
+        }
+
+        .table-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sort-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-secondary);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .sort-btn:hover, .sort-btn:active, .sort-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .table-content {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .crypto-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .crypto-row:hover, .crypto-row:active {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .crypto-row:last-child {
+            border-bottom: none;
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .coin-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-primary);
+            flex-shrink: 0;
+        }
+
+        .coin-details {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .coin-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .coin-symbol {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .coin-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: right;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+
+        .coin-change {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: right;
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-primary);
+            border-top: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover, .stat-card:active {
+            border-color: var(--border-primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: clamp(1.2rem, 3vw, 1.3rem);
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: clamp(0.75rem, 2vw, 0.8rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header {
+                margin-bottom: 24px;
+            }
+
+            .glass-card {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .crypto-row {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+            }
+
+            .coin-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .coin-price, .coin-change {
+                text-align: right;
+                min-width: 80px;
+                font-size: 0.85rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 12px;
+            }
+
+            .fear-greed-gauge {
+                width: 80px;
+                height: 80px;
+            }
+
+            .gauge-background, .gauge-progress {
+                border-width: 5px;
+            }
+
+            .gauge-value {
+                font-size: 1rem;
+            }
+
+            .gainer-avatar {
+                width: 50px;
+                height: 50px;
+            }
+
+            .table-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .table-controls {
+                gap: 6px;
+            }
+
+            .sort-btn {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 10px;
+            }
+
+            .stat-value {
+                font-size: 1.1rem;
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+            }
+
+            .crypto-row {
+                flex-wrap: wrap;
+            }
+
+            .coin-price, .coin-change {
+                min-width: 60px;
+                font-size: 0.8rem;
+            }
+
+            .coin-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .coin-name {
+                font-size: 0.85rem;
+            }
+
+            .coin-symbol {
+                font-size: 0.7rem;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>CRYPTO COLLECTIVE X</h1>
+            <p></p>
+        </header>
+
+        <div class="glass-card quote-section">
+            <div class="floating-particles" id="particles"></div>
+            <div class="quote-text" id="quote-text">"The best time to plant a tree was 20 years ago. The second best time is now."</div>
+            <div class="quote-author" id="quote-author">- Chinese Proverb</div>
+            <button class="refresh-btn" onclick="displayRandomQuote()">New Quote</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="total-market-cap">$0</div>
+                <div class="stat-label">Total Market Cap</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="btc-dominance">0%</div>
+                <div class="stat-label">BTC Dominance</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-volume">$0</div>
+                <div class="stat-label">24h Volume</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Fear & Greed Index</div>
+                <div class="fear-greed-container">
+                    <div class="fear-greed-gauge">
+                        <div class="gauge-background"></div>
+                        <div class="gauge-progress" id="gauge-progress"></div>
+                        <div class="gauge-value" id="fear-greed-value">--</div>
+                    </div>
+                </div>
+                <div id="fear-greed-classification" class="metric-label">Loading...</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-label">Top Gainer</div>
+                <div class="top-gainer">
+                    <div class="gainer-avatar" id="top-gainer-avatar">
+                        <img id="top-gainer-logo" src="" alt="" style="display: none;">
+                    </div>
+                    <div class="gainer-info">
+                        <div class="gainer-name" id="gainer-name">Loading...</div>
+                        <div class="gainer-change" id="gainer-change">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="crypto-table">
+            <div class="table-header">
+                <h2>Portfolio Tracker</h2>
+                <div class="table-controls">
+                    <button class="sort-btn active" onclick="sortTable('name')">Name</button>
+                    <button class="sort-btn" onclick="sortTable('price')">Price</button>
+                    <button class="sort-btn" onclick="sortTable('change')">24h Change</button>
+                </div>
+            </div>
+            <div class="table-content" id="crypto-table-content">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading market data...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const inspirationalQuotes = [
+            { quote: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.", author: "გ.ხ" },
+            { quote: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
+            { quote: "პატერნი დასრულებულ მოძრაობაზე მიგვითითებს, შემდგომი განვითრება მთლიან სტრუქტურაზეა დამოკიდებული" },
+            { quote: "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს." },
+            { quote: "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.მხოლოდ არსებობა არ არის ადამიანის დანიშნულება. " },
+            { quote: "ყოველი წარუმატებლობა ახალი დასაწყისია." },
+            { quote: "გონივრული რისკი დღეს, დიდი მოგება ხვალ." },
+            { quote: "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა." },
+            { quote: "ყველაზე დიდი რისკი არის არაფრის გარისკვა." },
+            { quote: "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება." },
+            { quote: "წარმატება დროისა და შრომის შედეგია." },
+            { quote: "ნუ ელოდები შანსს, შექმენი ის." },
+            { quote: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება." },
+            { quote: "რაც უფრო დიდ კაპიტალს ფლობ მით უფრო სწრაფად კოტრდები. გ.ხ" },
+            { quote: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა." },
+            { quote: "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით." },
+            { quote: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას." },
+            { quote: "წარმატება მოთმინების ჯილდოა." },
+            { quote: "რაც უფრო პატარა ადამიანი ხარ მით უფრო იხილავ გლობალურ საკითხებს. გ.ხ" },
+            { quote: "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას." },
+            { quote: "თუ არ გარისკავ, ვერ გაიზრდები." },
+            { quote: "ყოველი დღე ახალი შანსია ზრდისთვის." },
+            { quote: "ფულის ღირებულება მის გამოყენებაშია." },
+            { quote: "რაც უფრო მეტი დრო გადის მით უფრო ვრწმუნდები რომ არაფერი ვიცი." },
+            { quote: "წარსული გაკვეთილია, მომავალი — შენ ხელშია." },
+            { quote: "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ." },
+            { quote: "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ." },
+            { quote: "ფული მოდის მათთან, ვინც მას ეძებს." },
+            { quote: "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია." },
+            { quote: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო." },
+            { quote: "წარმატება არის შრომისა და რწმენის ნაზავი." },
+            { quote: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს." },
+            { quote: "ნუ ელოდები სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
+            { quote: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა." },
+            { quote: "თუ გჯერა, ყველაფერი შესაძლებელია." },
+            { quote: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება." },
+            { quote: "ფული არის იარაღი, გამოიყენე გონივრულად." },
+            { quote: "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც." },
+            { quote: "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს." },
+            { quote: "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის." },
+            { quote: "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში." },
+            { quote: "გააკეთე ის, რაც გაშინებს, და შიში გაქრება." },
+            { quote: "წარმატება არის გზა, რომელსაც თავად აგებ." },
+            { quote: "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად." },
+            { quote: "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო." },
+            { quote: "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს." },
+            { quote: "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით.", author: "უორენ ბაფეტი" },
+            { quote: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას.", author: "პიტერ ლინჩი" },
+            { quote: "შეცდომების აღიარება წარმატების გასაღებია.", author: "რეი დალიო" },
+            { quote: "დიდი ფული არა გონებაშია, არამედ მოთმინებაში.", author: "ჩარლი მანგერი" },
+            { quote: "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი.", author: "ბენჯამინ გრეჰემი" },
+            { quote: "დრო შენი მეგობარია, იმპულსი — მტერი.", author: "ჯონ ბოგლი" },
+            { quote: "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია.", author: "ფილიპ ფიშერი" },
+            { quote: "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა.", author: "ჯესი ლივერმორი" },
+            { quote: "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება.", author: "ჯიმ რიკარდსი" },
+            { quote: "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი.", author: "ჰოვარდ მარკსი" },
+            { quote: "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია.", author: "კარლ აიკანი" },
+            { quote: "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება.", author: "ჯონ ტემპლტონი" },
+            { quote: "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან.", author: "უორენ ბაფეტი" },
+            { quote: "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე.", author: "პოლ ტიუდორ ჯონსი" },
+            { quote: "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს.", author: "რობერტ კიოსაკი" },
+            { quote: "მონაცემები მეტყველებს, თუ მოუსმენ.", author: "ჯეიმს საიმონსი" },
+            { quote: "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ.", author: "ჯონ პოლსონი" },
+            { quote: "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს.", author: "უორენ ბაფეტი" },
+            { quote: "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ.", author: "უორენ ბაფეტი" },
+            { quote: "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება.", author: "უორენ ბაფეტი" },
+            { quote: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.", author: "უორენ ბაფეტი" }
+        ];
+
+        let cryptoData = [];
+        let sortConfig = { key: 'name', direction: 'asc' };
+
+        const coinIds = [
+            'bitcoin', 'rejuve-ai', 'sophiaverse', 'chia', 'stellar', 'kava', 'decentraland',
+            'zksync', 'starknet', 'arbitrum', 'optimism', 'dforce-token', 'band-protocol',
+            'notcoin', 'polkadot', 'solana', 'singularity-finance', 'flare', 'redbelly-network-token',
+            'songbird', 'vestate', 'coin98', 'hypercycle', 'alien-worlds', 'chainge',
+            'befi-labs',  'masa', 'cardano', 'ripple', 'celo', 'osmosis',
+            'cosmos', 'berachain-bera',  'chainlink', 'plume','foxy','paribus', 'katana-inu', 'linea', 
+             'ethereum', 'nunet', 'xai-blockchain', 'twin-protocol', 'status', 'gamium'
+        ];
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                
+                const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(0)', opacity: 0 },
+                    { transform: `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px) scale(1)`, opacity: 0.8 },
+                    { transform: `translate(${(Math.random() - 0.5) * 400}px, ${(Math.random() - 0.5) * 400}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 6000 + Math.random() * 4000,
+                    iterations: Infinity,
+                    delay: Math.random() * 2000
+                });
+            }
+        }
+
+        function displayRandomQuote() {
+            const randomQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+            document.getElementById('quote-text').textContent = `"${randomQuote.quote}"`;
+            document.getElementById('quote-author').textContent = `- ${randomQuote.author}`;
+        }
+
+        function formatNumber(num) {
+            if (!num) return 'N/A';
+            if (num >= 1e12) return '$' + (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return '$' + (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return '$' + (num / 1e3).toFixed(2) + 'K';
+            return '$' + num.toFixed(2);
+        }
+
+        function formatPrice(price) {
+            if (!price) return 'N/A';
+            if (price >= 1) return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (price >= 0.01) return '$' + price.toFixed(4);
+            return '$' + price.toFixed(8);
+        }
+
+        async function fetchWithRetry(url, maxRetries = 3, delay = 2000) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`Attempt ${i + 1} failed for ${url}: ${error.message}`);
+                    if (i < maxRetries - 1) await new Promise(res => setTimeout(res, delay));
+                    else throw error;
+                }
+            }
+        }
+
+        function updateFearGreedGauge(value) {
+            const gaugeProgress = document.getElementById('gauge-progress');
+            const gaugeValue = document.getElementById('fear-greed-value');
+            
+            const percentage = value / 100;
+            const circumference = 2 * Math.PI * 50;
+            const offset = circumference - (percentage * circumference);
+            
+            let color = '#ef4444';
+            if (value > 25 && value < 75) color = '#f59e0b';
+            if (value >= 75) color = '#10b981';
+            
+            gaugeProgress.style.background = `conic-gradient(${color} ${percentage * 360}deg, var(--border-secondary) 0deg)`;
+            gaugeValue.textContent = value;
+        }
+
+        async function fetchCryptoData() {
+            const tableContent = document.getElementById('crypto-table-content');
+            
+            try {
+                const [marketData, globalData, fngData] = await Promise.all([
+                    fetchWithRetry(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds.join(',')}&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`),
+                    fetchWithRetry('https://api.coingecko.com/api/v3/global'),
+                    fetchWithRetry('https://api.alternative.me/fng/')
+                ]);
+
+                if (globalData?.data) {
+                    document.getElementById('total-market-cap').textContent = formatNumber(globalData.data.total_market_cap?.usd);
+                    document.getElementById('btc-dominance').textContent = globalData.data.market_cap_percentage?.btc?.toFixed(1) + '%';
+                    document.getElementById('total-volume').textContent = formatNumber(globalData.data.total_volume?.usd);
+                }
+
+                if (fngData?.data?.[0]) {
+                    const fng = fngData.data[0];
+                    updateFearGreedGauge(parseInt(fng.value));
+                    document.getElementById('fear-greed-classification').textContent = fng.value_classification || 'N/A';
+                }
+
+                if (marketData?.length > 0) {
+                    cryptoData = marketData;
+                    
+                    const topGainer = marketData.reduce((max, coin) => 
+                        (coin.price_change_percentage_24h || 0) > (max.price_change_percentage_24h || 0) ? coin : max
+                    , marketData[0]);
+                    
+                    if (topGainer) {
+                        const logo = document.getElementById('top-gainer-logo');
+                        logo.src = topGainer.image || '';
+                        logo.style.display = topGainer.image ? 'block' : 'none';
+                        
+                        document.getElementById('gainer-name').textContent = topGainer.name || 'N/A';
+                        const change = topGainer.price_change_percentage_24h || 0;
+                        document.getElementById('gainer-change').textContent = `+${change.toFixed(2)}%`;
+                        document.getElementById('gainer-change').className = change >= 0 ? 'gainer-change positive' : 'gainer-change negative';
+                    }
+
+                    renderCryptoTable();
+                }
+
+            } catch (error) {
+                console.error('Error fetching crypto data:', error);
+                tableContent.innerHTML = `
+                    <div class="loading">
+                        <div style="color: var(--danger);">Failed to load market data. Please check your connection.</div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderCryptoTable() {
+            const tableContent = document.getElementById('crypto-table-content');
+            tableContent.innerHTML = '';
+
+            cryptoData.forEach(coin => {
+                const changeClass = coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative';
+                const changeSymbol = coin.price_change_percentage_24h >= 0 ? '+' : '';
+                
+                const row = document.createElement('div');
+                row.className = 'crypto-row fade-in';
+                row.innerHTML = `
+                    <div class="coin-info">
+                        <img src="${coin.image || ''}" alt="${coin.name || 'N/A'}" class="coin-icon" onerror="this.style.display='none'">
+                        <div class="coin-details">
+                            <div class="coin-name">${coin.name || 'N/A'}</div>
+                            <div class="coin-symbol">${(coin.symbol || '').toUpperCase()}</div>
+                        </div>
+                    </div>
+                    <div class="coin-price">${formatPrice(coin.current_price)}</div>
+                    <div class="coin-change ${changeClass}">${changeSymbol}${(coin.price_change_percentage_24h || 0).toFixed(2)}%</div>
+                `;
+                tableContent.appendChild(row);
+            });
+        }
+
+        function sortTable(key) {
+            const direction = sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc';
+            sortConfig = { key, direction };
+
+            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cryptoData.sort((a, b) => {
+                let aVal, bVal;
+                switch(key) {
+                    case 'name':
+                        aVal = a.name?.toLowerCase() || '';
+                        bVal = b.name?.toLowerCase() || '';
+                        break;
+                    case 'price':
+                        aVal = a.current_price || 0;
+                        bVal = b.current_price || 0;
+                        break;
+                    case 'change':
+                        aVal = a.price_change_percentage_24h || 0;
+                        bVal = b.price_change_percentage_24h || 0;
+                        break;
+                }
+                if (typeof aVal === 'string') {
+                    return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                }
+                return direction === 'asc' ? aVal - bVal : bVal - aVal;
+            });
+
+            renderCryptoTable();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            displayRandomQuote();
+            fetchCryptoData();
+            
+            document.querySelectorAll('.glass-card, .stat-card, .metric-card').forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+                el.classList.add('fade-in');
+            });
+        });
+
+        setInterval(fetchCryptoData, 5 * 60 * 1000);
+        setInterval(displayRandomQuote, 30 * 1000);
+
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card, .metric-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                    card.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(59, 130, 246, 0.1)`;
+                }
+            });
+        });
+
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.glass-card, .metric-card');
+            cards.forEach(card => {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+</html>
