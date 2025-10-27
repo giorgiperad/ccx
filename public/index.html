@@ -123,6 +123,13 @@
             text-shadow: 0 0 20px rgba(129, 140, 248, 0.6);
         }
 
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.6));
+        }
+
         .top-gainer {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%);
             border-radius: 24px;
@@ -229,6 +236,25 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .table-header-text:hover {
+            color: #818cf8;
+        }
+
+        .sort-arrow {
+            display: inline-block;
+            margin-left: 4px;
+            opacity: 0.3;
+            font-size: 10px;
+        }
+
+        .sort-arrow.active {
+            opacity: 1;
+            color: #818cf8;
         }
 
         .token-grid {
@@ -357,9 +383,8 @@
 </head>
 <body>
     <div class="header">
-        <h2>CRYPTO COLLECTIVE X</h2>
-                <div class="last-update" id="lastUpdate">Loading...</div>
-
+        <h1>CRYPTO COLLECTIVE X</h1>
+        <div class="last-update" id="lastUpdate">Loading...</div>
     </div>
 
     <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
@@ -378,9 +403,15 @@
     
     <div class="table-header">
         <div></div>
-        <div class="table-header-text">Token</div>
-        <div class="table-header-text" style="text-align: right;">Price</div>
-        <div class="table-header-text" style="text-align: right;">24h Change</div>
+        <div class="table-header-text" onclick="sortBy('name')">
+            Token <span class="sort-arrow" id="sortName">⬍</span>
+        </div>
+        <div class="table-header-text" style="text-align: right;" onclick="sortBy('price')">
+            Price <span class="sort-arrow" id="sortPrice">⬍</span>
+        </div>
+        <div class="table-header-text" style="text-align: right;" onclick="sortBy('change')">
+            24h Change <span class="sort-arrow active" id="sortChange">▼</span>
+        </div>
     </div>
     
     <div id="tokenGrid" class="token-grid"></div>
@@ -655,7 +686,6 @@
     text: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.",
     author: "— უორენ ბაფეტი"
 }
-
         ];
 
         let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
@@ -685,6 +715,10 @@
 
         let cryptoData = [];
         let globalData = null;
+        let fearGreedData = null;
+        let goldPrice = null;
+        let sortColumn = 'change';
+        let sortDirection = 'desc';
 
         async function fetchCryptoData() {
             try {
@@ -697,10 +731,33 @@
                 
                 cryptoData = await response.json();
                 
+                // Fetch global data
                 const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
                 if (globalResponse.ok) {
                     const globalJson = await globalResponse.json();
                     globalData = globalJson.data;
+                }
+
+                // Fetch Fear & Greed Index
+                try {
+                    const fgResponse = await fetch('https://api.alternative.me/fng/');
+                    if (fgResponse.ok) {
+                        const fgJson = await fgResponse.json();
+                        fearGreedData = fgJson.data[0];
+                    }
+                } catch (e) {
+                    console.log('Fear & Greed fetch failed:', e);
+                }
+
+                // Fetch Tether Gold Price (XAUT)
+                try {
+                    const goldResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether-gold&vs_currencies=usd');
+                    if (goldResponse.ok) {
+                        const goldJson = await goldResponse.json();
+                        goldPrice = goldJson['tether-gold']?.usd;
+                    }
+                } catch (e) {
+                    console.log('Gold price fetch failed:', e);
                 }
                 
                 renderDashboard();
@@ -730,9 +787,30 @@
             return `$${value.toFixed(0)}`;
         }
 
+        function getFearGreedIcon(value) {
+            const svg = `<svg class="stat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                ${value >= 50 
+                    ? '<path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' 
+                    : '<path d="M8 16C8 16 9.5 14 12 14C14.5 14 16 16 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'}
+                <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+                <circle cx="15" cy="9" r="1.5" fill="currentColor"/>
+            </svg>`;
+            return svg;
+        }
+
+        function getGoldIcon() {
+            return `<svg class="stat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255, 193, 7, 0.2)"/>
+            </svg>`;
+        }
+
         function renderDashboard() {
+            // Render market stats
+            let statsHTML = '';
+            
             if (globalData) {
-                document.getElementById('marketStats').innerHTML = `
+                statsHTML += `
                     <div class="stat-card">
                         <div class="stat-label">BTC დომინაცია</div>
                         <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
@@ -744,6 +822,32 @@
                 `;
             }
 
+            // Fear & Greed Index
+            if (fearGreedData) {
+                const value = parseInt(fearGreedData.value);
+                statsHTML += `
+                    <div class="stat-card">
+                        ${getFearGreedIcon(value)}
+                        <div class="stat-label">Fear & Greed</div>
+                        <div class="stat-value">${value}</div>
+                    </div>
+                `;
+            }
+
+            // Gold Price
+            if (goldPrice) {
+                statsHTML += `
+                    <div class="stat-card">
+                        ${getGoldIcon()}
+                        <div class="stat-label">Gold (XAU)</div>
+                        <div class="stat-value">${formatPrice(goldPrice)}</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('marketStats').innerHTML = statsHTML;
+
+            // Top Gainer
             const sortedByChange = [...cryptoData].sort((a, b) => 
                 (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
             );
@@ -771,6 +875,53 @@
                         </div>
                     </div>
                 `;
+            }
+
+            renderTokenList();
+        }
+
+        function sortBy(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = column === 'name' ? 'asc' : 'desc';
+            }
+
+            cryptoData.sort((a, b) => {
+                let aVal, bVal;
+                
+                if (column === 'name') {
+                    aVal = a.name.toLowerCase();
+                    bVal = b.name.toLowerCase();
+                } else if (column === 'price') {
+                    aVal = a.current_price || 0;
+                    bVal = b.current_price || 0;
+                } else if (column === 'change') {
+                    aVal = a.price_change_percentage_24h || 0;
+                    bVal = b.price_change_percentage_24h || 0;
+                }
+
+                if (sortDirection === 'asc') {
+                    return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+                } else {
+                    return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+                }
+            });
+
+            renderTokenList();
+        }
+
+        function renderTokenList() {
+            // Update sort indicators
+            document.getElementById('sortName').className = 'sort-arrow';
+            document.getElementById('sortPrice').className = 'sort-arrow';
+            document.getElementById('sortChange').className = 'sort-arrow';
+            
+            const activeArrow = document.getElementById('sort' + sortColumn.charAt(0).toUpperCase() + sortColumn.slice(1));
+            if (activeArrow) {
+                activeArrow.className = 'sort-arrow active';
+                activeArrow.textContent = sortDirection === 'asc' ? '▲' : '▼';
             }
 
             const tokenHTML = cryptoData.map(token => {
