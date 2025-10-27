@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRYPTO COLLECTIVE X</title>
-    <!-- PWA Manifest Link -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkNyeXB0byBDb2xsZWN0aXZlIFgiLAogICJzaG9ydF9uYW1lIjogIkNyeXB0b0MiLAogICJkZXNjcmlwdGlvbiI6ICJDcnlwdG8gRGFzaGJvYXJkIiwKICAic2NvcGUiOiAiLyIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGEwZTI3IiwKICAidGhlbWVfY29sb3IiOiAiIzgxOGNmOCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUE9TVElOR0VOT1JFRCxzdmc8c3ZnIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxyZWN0IHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIGZpbGw9IiM4MThjZjgiLz48cGF0aCBkPSJNNTEyIDBMMTAyNCAxMDI0SDB6IiBmaWxsPSIjYTA4NGZjIi8+PC9zdmc+IiIsCiAgICAgICJzaXplcyI6ICIxMDI0eDEwMjQiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmciCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUE9TVElOR0VOT1JFRCxzdmc8c3ZnIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzgxOGNmOCIvPjxwYXRoIGQ9Ik0yNTYgMEw1MTIgNTEyIDAgNTIweiIgZmlsbD0iI2EwODRmYyIvPjwvc3ZnPiIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnIgogICAgfQogIF0sCiAgIm9yaWVudGF0aW9ucyI6IFsKICAgICJwb3J0cmFpdCIKICBdCn0=">
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#818cf8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="CryptoCo">
-    <!-- Add to homescreen for iOS -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiM4MThjZjgiLz48cGF0aCBkPSJNNjQgMEwxMjggMTkyIDAgMTkyWiIgZmlsbD0iI2EwODRmYyIvPjwvc3ZnPg==">
     <style>
         * {
             margin: 0;
@@ -450,46 +441,6 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             height: 60px;
         }
-
-        /* PWA Install Prompt Styles */
-        .pwa-install-toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            border-radius: 16px;
-            padding: 16px 24px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1000;
-            max-width: 90vw;
-            text-align: center;
-        }
-
-        .pwa-install-toast button {
-            background: linear-gradient(135deg, #818cf8, #c084fc);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            padding: 8px 16px;
-            margin: 0 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .pwa-install-toast button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 16px rgba(129, 140, 248, 0.4);
-        }
-
-        .pwa-install-toast button.dismiss {
-            background: rgba(148, 163, 184, 0.2);
-            color: #94a3b8;
-        }
     </style>
 </head>
 <body>
@@ -543,13 +494,6 @@
         <div class="skeleton-token"></div>
     </div>
 
-    <!-- PWA Install Toast -->
-    <div id="pwaToast" class="pwa-install-toast">
-        <p>Install Crypto Collective X as an app on your device?</p>
-        <button id="installBtn">Install</button>
-        <button id="dismissBtn" class="dismiss">No thanks</button>
-    </div>
-
     <script>
         const quotes = [
             {
@@ -581,7 +525,7 @@
     author: "— Unknown"
 },
 {
-    text: "არ ეძებო უსაფრთხოება, ეძებე შესაძლებლობა.",
+    text: "არ ეძებო უსაფრთხოება, ეძება შესაძლებლობა.",
     author: "— Unknown"
 },
 {
@@ -1193,55 +1137,6 @@
 
             document.getElementById('tokenGrid').innerHTML = tokenHTML;
         }
-
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('data:text/javascript;base64,Ly8gU2VydmljZSBXb3JrZXIgZm9yIE9mZmxpbmUgQ2FjaGluZwpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZXZlbnQgPT4gewogIGNvbnN0IHVybCA9IGV2ZW50LnJlcXVlc3QudXJsOwoKICAvLyBDYWNoZSBhbGwgcmVxdWVzdHMgd2l0aCBhbmQgYnVzdCB0aGUgZGVmYXVsdCBjYWNoZSBzdHJhdGVneQoKICBldmVudC5yZXNwb25kV2l0aChyZXRyaWV2ZUFmZmVyZWQgcmVzcG9uc2UgPT4gewogICAgcmV0dXJuIGZlbmNoKGV2ZW50LnJlcXVlc3QpLnRoZW4ocmVzcG9uc2UgPT4gewogICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7CiAgICAgICAgcmV0dXJuIGZldGNoKGV2ZW50LnJlcXVlc3QpOwogICAgICB9CiAgICAgIHJldHVybiByZXNwb25zZTsKICAgIH0pOwogIH0pOwp9KTsKLy8gUHJlLWNhY2hlIHRoZSBhcHAgc2hlbGwKY2xhaW1zLmFkZEFsTCgnaW5zdGFsbCcsIGFzZXluYyAoKSA9PiB7CiAgY29uc3Qga2V5cyA9IFsKICAgICcvJywKICAgICcvP3Y9MSIKICBdOwogIGZvciAoY29uc3Qga2V5IG9mIGtleXMpIHsKICAgIGNhY2hlcy5vcGVuKCdjcnlwdG9jby12MScpLnRoZW4oKGNhY2hlKSA9PiB7CiAgICAgIGNhY2hlLmFkZEFsbChrZXkpOwogICAgfSk7CiAgfQp9KTs=').then(registration => {
-                    console.log('SW registered: ', registration);
-                }).catch(registrationError => {
-                    console.log('SW registration failed: ', registrationError);
-                });
-            });
-        }
-
-        // PWA Install Prompt
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
-        const dismissBtn = document.getElementById('dismissBtn');
-        const pwaToast = document.getElementById('pwaToast');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
-            e.preventDefault();
-            // Stash the event so it can be triggered later
-            deferredPrompt = e;
-            // Show the install prompt toast
-            pwaToast.style.display = 'block';
-        });
-
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
-                deferredPrompt = null;
-                pwaToast.style.display = 'none';
-            }
-        });
-
-        dismissBtn.addEventListener('click', () => {
-            pwaToast.style.display = 'none';
-            deferredPrompt = null;
-        });
-
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            pwaToast.style.display = 'none';
-            deferredPrompt = null;
-        });
 
         // Initial load: Render skeleton, check cache, render if available, then fetch
         displayQuote();
