@@ -1179,17 +1179,7 @@
             return `${value.toFixed(0)}`;
         }
 
-        function getFearGreedIcon(value) {
-            const svg = `<svg class="stat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                ${value >= 50 
-                    ? '<path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' 
-                    : '<path d="M8 16C8 16 9.5 14 12 14C14.5 14 16 16 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'}
-                <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
-                <circle cx="15" cy="9" r="1.5" fill="currentColor"/>
-            </svg>`;
-            return svg;
-        }
+        
 
         function renderDashboard() {
             let statsHTML = '';
@@ -1214,7 +1204,6 @@
                 const value = parseInt(fearGreedData.value);
                 statsHTML += `
                     <div class="stat-card">
-                        ${getFearGreedIcon(value)}
                         <div class="stat-label">Fear & Greed</div>
                         <div class="stat-value">${value}</div>
                     </div>
