@@ -395,6 +395,62 @@
             color: #fca5a5;
             box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2);
         }
+
+        .partial-error {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+            color: #f59e0b;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+        }
+
+        .skeleton {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 20px;
+            margin: 8px 0;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .skeleton-stat {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+        }
+
+        .skeleton-gainer, .skeleton-xaut {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+        }
+
+        .skeleton-token {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            display: grid;
+            grid-template-columns: 40px 1fr 100px 90px;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            height: 60px;
+        }
     </style>
 </head>
 <body>
@@ -404,19 +460,23 @@
     </div>
 
     <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
-        <div class="quote-icon"></div>
+        <div class="quote-icon">💎</div>
         <div class="quote-text" id="quoteText"></div>
         <div class="quote-author" id="quoteAuthor"></div>
     </div>
 
-    <div id="marketStats" class="market-stats"></div>
-    <div id="topGainer"></div>
-    <div id="xautBlock"></div>
-    <div id="loading" class="loading">
+    <div id="marketStats" class="market-stats">
+        <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
+        <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
+    </div>
+    <div id="topGainer" class="skeleton-gainer"></div>
+    <div id="xautBlock" class="skeleton-xaut"></div>
+    <div id="loading" class="loading" style="display: none;">
         <div class="spinner"></div>
-        <div>Loading crypto data...</div>
+        <div>Updating data...</div>
     </div>
     <div id="error"></div>
+    <div id="partialError" class="partial-error" style="display: none;"></div>
     
     <div class="table-header">
         <div></div>
@@ -431,11 +491,22 @@
         </div>
     </div>
     
-    <div id="tokenGrid" class="token-grid"></div>
+    <div id="tokenGrid" class="token-grid">
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+        <div class="skeleton-token"></div>
+    </div>
 
     <script>
         const quotes = [
-             {
+            {
     text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.",
     author: "— გ.ხ"
 },
@@ -703,7 +774,6 @@
     text: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.",
     author: "— უორენ ბაფეტი"
 }
- 
         ];
 
         let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
@@ -717,6 +787,25 @@
         function rotateQuote() {
             currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
             displayQuote();
+        }
+
+        const CACHE_KEY = 'cryptoDataCache';
+        const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes
+        const FETCH_TIMEOUT = 10000; // 10s timeout per fetch
+
+        function getCachedData() {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (!cached) return null;
+            const { data, timestamp } = JSON.parse(cached);
+            if (Date.now() - timestamp > CACHE_EXPIRY) {
+                localStorage.removeItem(CACHE_KEY);
+                return null;
+            }
+            return data;
+        }
+
+        function setCachedData(data) {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
         }
 
         const tokens = [
@@ -736,56 +825,113 @@
         let goldPrice = null;
         let sortColumn = 'change';
         let sortDirection = 'desc';
+        let isInitialLoad = true;
+
+        async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { ...options, signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timed out');
+                }
+                throw error;
+            }
+        }
 
         async function fetchWithRetry(url, options = {}, maxRetries = 3) {
             for (let attempt = 0; attempt <= maxRetries; attempt++) {
                 try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    return response;
+                    return await fetchWithTimeout(url, options);
                 } catch (error) {
                     if (attempt === maxRetries) throw error;
                     console.warn(`Fetch attempt ${attempt + 1} failed for ${url}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
-                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt))); // Exponential backoff
+                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
                 }
             }
         }
 
-        async function fetchCryptoData() {
-            try {
-                const idsParam = tokens.join(',');
-                const response = await fetchWithRetry(
-                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
-                );
-                
-                cryptoData = await response.json();
-                
-                // Fetch global data
-                const globalResponse = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
-                const globalJson = await globalResponse.json();
-                globalData = globalJson.data;
+        async function fetchCryptoData(isBackground = false) {
+            let hasPartialError = false;
+            const errorEl = document.getElementById('error');
+            const partialEl = document.getElementById('partialError');
+            errorEl.innerHTML = '';
+            partialEl.style.display = 'none';
+            const loadingEl = document.getElementById('loading');
+            if (!isBackground && isInitialLoad) {
+                loadingEl.style.display = 'block';
+            }
 
-                // Fetch Fear & Greed Index
-                try {
-                    const fgResponse = await fetchWithRetry('https://api.alternative.me/fng/');
-                    const fgJson = await fgResponse.json();
-                    fearGreedData = fgJson.data[0];
-                } catch (e) {
-                    console.log('Fear & Greed fetch failed:', e);
+            try {
+                // Parallel fetches for speed
+                const idsParam = tokens.join(',');
+                const [mainResponse, globalResponse, fgResponse] = await Promise.allSettled([
+                    fetchWithRetry(
+                        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
+                    ),
+                    fetchWithRetry('https://api.coingecko.com/api/v3/global').catch(() => null),
+                    fetchWithRetry('https://api.alternative.me/fng/').catch(() => null)
+                ]);
+
+                if (mainResponse.status === 'fulfilled') {
+                    cryptoData = await mainResponse.value.json();
+                    setCachedData(cryptoData);
+                } else {
+                    throw mainResponse.reason;
                 }
-                
-                renderDashboard();
+
+                if (globalResponse.status === 'fulfilled' && globalResponse.value) {
+                    const globalJson = await globalResponse.value.json();
+                    globalData = globalJson.data;
+                } else {
+                    hasPartialError = true;
+                    globalData = null;
+                }
+
+                if (fgResponse.status === 'fulfilled' && fgResponse.value) {
+                    const fgJson = await fgResponse.value.json();
+                    fearGreedData = fgJson.data[0];
+                } else {
+                    fearGreedData = null;
+                }
+
+                renderDashboard(true); // true = seamless update
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('error').innerHTML = `
-                    <div class="error">
-                        ⚠️ Error loading data. Please refresh the page.
-                    </div>
-                `;
+                console.error('Main fetch error:', error);
+                const cachedData = getCachedData();
+                if (cachedData && cachedData.length > 0) {
+                    console.log('Using cached data');
+                    cryptoData = cachedData;
+                    renderDashboard(true);
+                    const ageMins = Math.floor((Date.now() - JSON.parse(localStorage.getItem(CACHE_KEY)).timestamp) / 60000);
+                    partialEl.innerHTML = `
+                        <div>⚠️ Using cached token data (${ageMins} mins old). Fetching fresh in background...</div>
+                    `;
+                    partialEl.style.display = 'block';
+                    hasPartialError = true;
+                } else {
+                    errorEl.innerHTML = `
+                        <div class="error">
+                            ⚠️ Error loading data. Please refresh the page. (Details: ${error.message})
+                        </div>
+                    `;
+                }
             } finally {
-                document.getElementById('loading').style.display = 'none';
+                loadingEl.style.display = 'none';
+                if (isInitialLoad) {
+                    isInitialLoad = false;
+                }
+            }
+
+            if (hasPartialError) {
+                renderDashboard(true);
             }
         }
 
@@ -815,7 +961,7 @@
             return svg;
         }
 
-        function renderDashboard() {
+        function renderDashboard(seamless = false) {
             // Render market stats
             let statsHTML = '';
             
@@ -826,6 +972,13 @@
                         <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
                     </div>
                 `;
+            } else {
+                statsHTML += `
+                    <div class="stat-card">
+                        <div class="stat-label">BTC დომინაცია</div>
+                        <div class="stat-value">--</div>
+                    </div>
+                `;
             }
 
             // Fear & Greed Index
@@ -834,8 +987,16 @@
                 statsHTML += `
                     <div class="stat-card">
                         ${getFearGreedIcon(value)}
-                        <div class="stat-label">შიში & სიხარბე</div>
+                        <div class="stat-label">Fear & Greed</div>
                         <div class="stat-value">${value}</div>
+                    </div>
+                `;
+            } else {
+                statsHTML += `
+                    <div class="stat-card">
+                        <div class="stat-icon">😟</div>
+                        <div class="stat-label">Fear & Greed</div>
+                        <div class="stat-value">--</div>
                     </div>
                 `;
             }
@@ -893,7 +1054,7 @@
 
                 document.getElementById('xautBlock').innerHTML = `
                     <div class="${blockClass}">
-                        <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24h</div>
+                        <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 XAUT 24h</div>
                         <div class="gainer-content">
                             <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 2px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
                             <div class="gainer-info">
@@ -909,10 +1070,13 @@
                         </div>
                     </div>
                 `;
-                goldPrice = goldToken.current_price; // Keep for any other uses, if needed
+                goldPrice = goldToken.current_price;
             }
 
             renderTokenList();
+            if (!seamless) {
+                document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+            }
         }
 
         function sortBy(column) {
@@ -982,12 +1146,25 @@
             }).join('');
 
             document.getElementById('tokenGrid').innerHTML = tokenHTML;
-            document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
         }
 
+        // Initial load: Render skeleton, check cache, render if available, then fetch
         displayQuote();
-        fetchCryptoData();
-        setInterval(fetchCryptoData, 60000);
+        const cachedData = getCachedData();
+        if (cachedData && cachedData.length > 0) {
+            cryptoData = cachedData;
+            renderDashboard();
+            const ageMins = Math.floor((Date.now() - JSON.parse(localStorage.getItem(CACHE_KEY)).timestamp) / 60000);
+            document.getElementById('partialError').innerHTML = `
+                <div>📊 Loaded from cache (${ageMins} mins old). Updating with fresh data...</div>
+            `;
+            document.getElementById('partialError').style.display = 'block';
+        }
+        // Start background fetch immediately
+        fetchCryptoData(true).then(() => {
+            document.getElementById('partialError').style.display = 'none';
+        });
+        setInterval(() => fetchCryptoData(true), 90000); // 90s background updates
     </script>
 </body>
 </html>
