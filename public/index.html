@@ -11,76 +11,185 @@
             box-sizing: border-box;
         }
 
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(129, 140, 248, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(129, 140, 248, 0.6); }
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a0e27;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1b3e 50%, #0f172a 100%);
             color: #ffffff;
             padding: 16px;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fff, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s infinite;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 24px;
-            padding: 20px;
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+            margin-bottom: 32px;
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-radius: 32px;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 80px rgba(99, 102, 241, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(129, 140, 248, 0.1),
+                transparent
+            );
+            animation: shimmer 3s infinite;
         }
 
         .header h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            font-size: 36px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #818cf8 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(129, 140, 248, 0.5);
-            font-weight: 700;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: 2px;
+            position: relative;
+            animation: shimmer 3s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(129, 140, 248, 0.8));
         }
 
         .last-update {
-            font-size: 12px;
-            color: #94a3b8;
+            font-size: 13px;
+            color: #c7d2fe;
             font-weight: 500;
+            opacity: 0.8;
         }
 
         .quote-block {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 32px;
             border: 1px solid rgba(129, 140, 248, 0.3);
             backdrop-filter: blur(20px);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 10px 40px rgba(99, 102, 241, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .quote-block:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 60px rgba(99, 102, 241, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(129, 140, 248, 0.5);
+        }
+
+        .quote-block:hover::before {
+            left: 100%;
         }
 
         .quote-block:active {
-            transform: scale(0.98);
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
         }
 
         .quote-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.6));
+            font-size: 40px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.8));
+            animation: float 3s ease-in-out infinite;
         }
 
         .quote-text {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 16px;
+            line-height: 1.8;
             color: #e2e8f0;
             font-style: italic;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .quote-author {
-            font-size: 13px;
-            color: #a5b4fc;
+            font-size: 14px;
+            color: #c7d2fe;
             font-weight: 600;
             text-align: right;
         }
@@ -88,97 +197,150 @@
         .market-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card:active {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.25);
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.2), transparent);
+            border-radius: 50%;
+            transition: all 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 60px rgba(99, 102, 241, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(129, 140, 248, 0.4);
+        }
+
+        .stat-card:hover::before {
+            top: -25%;
+            right: -25%;
+            width: 150px;
+            height: 150px;
         }
 
         .stat-label {
             font-size: 11px;
-            color: #94a3b8;
-            margin-bottom: 10px;
+            color: #c7d2fe;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-weight: 700;
         }
 
         .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #818cf8;
-            text-shadow: 0 0 20px rgba(129, 140, 248, 0.6);
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(129, 140, 248, 0.6));
         }
 
         .stat-icon {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.6));
+            width: 32px;
+            height: 32px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 10px rgba(129, 140, 248, 0.6));
+        }
+
+        .top-gainer, .xaut-block {
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(40px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .top-gainer {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
             border: 1px solid rgba(52, 211, 153, 0.4);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .top-gainer::after {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 32px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
         }
 
         .xaut-block {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.15) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.5);
         }
 
         .xaut-block.negative {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.15) 100%);
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25), inset 0 1px 0 rgba(239, 68, 68, 0.1);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(248, 113, 113, 0.5);
+        }
+
+        .top-gainer:hover, .xaut-block:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
         }
 
         .gainer-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #6ee7b7;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(110, 231, 183, 0.6);
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(110, 231, 183, 0.8);
         }
 
         .gainer-content {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .gainer-icon {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(52, 211, 153, 0.5);
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+            border: 3px solid rgba(52, 211, 153, 0.6);
+            box-shadow: 
+                0 0 30px rgba(52, 211, 153, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+        }
+
+        .gainer-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 40px rgba(52, 211, 153, 0.8);
         }
 
         .gainer-info {
@@ -186,125 +348,160 @@
         }
 
         .gainer-name {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
             color: #f0fdfa;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .gainer-price {
-            font-size: 18px;
+            font-size: 20px;
             color: #6ee7b7;
-            font-weight: 600;
-            text-shadow: 0 0 10px rgba(110, 231, 183, 0.4);
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
         }
 
         .gainer-gauge {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 16px;
+            gap: 16px;
+            margin-top: 20px;
         }
 
         .gauge-bar {
             flex: 1;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
         }
 
         .gauge-fill {
             height: 100%;
-            background: linear-gradient(90deg, #10b981, #059669);
-            border-radius: 5px;
-            transition: width 1s ease;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+            background: linear-gradient(90deg, #10b981, #059669, #10b981);
+            background-size: 200% auto;
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+            animation: shimmer 2s linear infinite;
         }
 
         .gauge-value {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: #6ee7b7;
-            text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
-            min-width: 70px;
+            text-shadow: 0 0 20px rgba(110, 231, 183, 0.8);
+            min-width: 80px;
             text-align: right;
         }
 
         .table-header {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             display: grid;
             grid-template-columns: 56px 1fr 100px 90px;
             gap: 12px;
             align-items: center;
+            backdrop-filter: blur(40px);
         }
 
         .table-header-text {
             font-size: 11px;
-            color: #94a3b8;
+            color: #c7d2fe;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             font-weight: 700;
             cursor: pointer;
             user-select: none;
-            transition: color 0.2s ease;
+            transition: all 0.3s;
         }
 
         .table-header-text:hover {
             color: #818cf8;
+            transform: translateY(-1px);
         }
 
         .sort-arrow {
             display: inline-block;
-            margin-left: 4px;
-            opacity: 0.3;
+            margin-left: 6px;
+            opacity: 0.4;
             font-size: 10px;
+            transition: all 0.3s;
         }
 
         .sort-arrow.active {
             opacity: 1;
             color: #818cf8;
+            filter: drop-shadow(0 0 8px rgba(129, 140, 248, 0.8));
         }
 
         .token-grid {
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         .token-card {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 16px;
-            padding: 16px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.15);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.3) 100%);
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(129, 140, 248, 0.15);
             display: grid;
-            grid-template-columns: 40px 1fr 100px 90px;
+            grid-template-columns: 48px 1fr 100px 90px;
             gap: 12px;
             align-items: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s;
+        }
+
+        .token-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(129, 140, 248, 0.4);
+            box-shadow: 
+                0 12px 40px rgba(99, 102, 241, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .token-card:hover::before {
+            left: 100%;
         }
 
         .token-card:active {
             transform: translateY(-2px);
-            border-color: rgba(129, 140, 248, 0.4);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
         }
 
         .token-icon {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+            border: 2px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            transition: all 0.4s;
+        }
+
+        .token-card:hover .token-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
         }
 
         .token-info {
@@ -312,26 +509,26 @@
         }
 
         .token-name {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #e2e8f0;
+            color: #f1f5f9;
         }
 
         .token-symbol {
             font-size: 12px;
             color: #94a3b8;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .token-price {
-            font-size: 15px;
-            font-weight: 600;
-            color: #a5b4fc;
+            font-size: 16px;
+            font-weight: 700;
+            color: #c7d2fe;
             text-align: right;
         }
 
@@ -341,44 +538,49 @@
 
         .token-change {
             font-size: 14px;
-            font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 8px;
+            font-weight: 800;
+            padding: 8px 12px;
+            border-radius: 12px;
             display: inline-block;
             min-width: 75px;
             text-align: center;
+            transition: all 0.3s;
         }
 
         .positive {
             color: #6ee7b7;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
 
         .negative {
             color: #fca5a5;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(248, 113, 113, 0.3);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .token-card:hover .token-change {
+            transform: scale(1.05);
         }
 
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 60px;
             font-size: 16px;
-            color: #94a3b8;
+            color: #c7d2fe;
         }
 
         .spinner {
-            border: 3px solid rgba(99, 102, 241, 0.1);
-            border-top: 3px solid #818cf8;
+            border: 4px solid rgba(129, 140, 248, 0.2);
+            border-top: 4px solid #818cf8;
             border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-            box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
+            width: 56px;
+            height: 56px;
+            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(129, 140, 248, 0.6);
         }
 
         @keyframes spin {
@@ -386,115 +588,138 @@
             100% { transform: rotate(360deg); }
         }
 
+        .error, .partial-error {
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(40px);
+            font-weight: 600;
+        }
+
         .error {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(248, 113, 113, 0.3);
-            border-radius: 16px;
-            padding: 16px;
-            margin: 16px 0;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(248, 113, 113, 0.4);
             color: #fca5a5;
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2);
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
         }
 
         .partial-error {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 16px;
-            padding: 16px;
-            margin: 16px 0;
-            color: #f59e0b;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.15) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
         }
 
         .skeleton {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            height: 20px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            border-radius: 12px;
+            height: 24px;
             margin: 8px 0;
-            animation: pulse 1.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { opacity: 0.4; }
-            to { opacity: 1; }
+            animation: shimmer 2s infinite;
         }
 
         .skeleton-stat {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
         .skeleton-token {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 16px;
-            padding: 16px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(99, 102, 241, 0.15);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.3) 100%);
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(129, 140, 248, 0.15);
             display: grid;
-            grid-template-columns: 40px 1fr 100px 90px;
+            grid-template-columns: 48px 1fr 100px 90px;
             gap: 12px;
             align-items: center;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-            height: 60px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            height: 68px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .market-stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>CRYPTO COLLECTIVE X</h2>
-        <div class="last-update" id="lastUpdate">Loading...</div>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h2>CRYPTO COLLECTIVE X</h2>
+            <div class="last-update" id="lastUpdate">Loading...</div>
+        </div>
 
-    <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
-        <div class="quote-icon"></div>
-        <div class="quote-text" id="quoteText"></div>
-        <div class="quote-author" id="quoteAuthor"></div>
-    </div>
+        <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
+            <div class="quote-icon"></div>
+            <div class="quote-text" id="quoteText"></div>
+            <div class="quote-author" id="quoteAuthor"></div>
+        </div>
 
-    <div id="marketStats" class="market-stats">
-        <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
-        <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
-    </div>
-    <div id="topGainer"></div>
-    <div id="xautBlock"></div>
-    <div id="loading" class="loading" style="display: none;">
-        <div class="spinner"></div>
-        <div>Updating data...</div>
-    </div>
-    <div id="error"></div>
-    <div id="partialError" class="partial-error" style="display: none;"></div>
-    
-    <div class="table-header">
-        <div></div>
-        <div class="table-header-text" onclick="sortBy('name')">
-            Token <span class="sort-arrow" id="sortName">⬍</span>
+        <div id="marketStats" class="market-stats">
+            <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
+            <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
         </div>
-        <div class="table-header-text" style="text-align: right;" onclick="sortBy('price')">
-            Price <span class="sort-arrow" id="sortPrice">⬍</span>
+        <div id="topGainer"></div>
+        <div id="xautBlock"></div>
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <div>Updating data...</div>
         </div>
-        <div class="table-header-text" style="text-align: right;" onclick="sortBy('change')">
-            24h Change <span class="sort-arrow active" id="sortChange">▼</span>
+        <div id="error"></div>
+        <div id="partialError" class="partial-error" style="display: none;"></div>
+        
+        <div class="table-header">
+            <div></div>
+            <div class="table-header-text" onclick="sortBy('name')">
+                Token <span class="sort-arrow" id="sortName">⬍</span>
+            </div>
+            <div class="table-header-text" style="text-align: right;" onclick="sortBy('price')">
+                Price <span class="sort-arrow" id="sortPrice">⬍</span>
+            </div>
+            <div class="table-header-text" style="text-align: right;" onclick="sortBy('change')">
+                24h Change <span class="sort-arrow active" id="sortChange">▼</span>
+            </div>
         </div>
-    </div>
-    
-    <div id="tokenGrid" class="token-grid">
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
-        <div class="skeleton-token"></div>
+        
+        <div id="tokenGrid" class="token-grid">
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+        </div>
     </div>
 
     <script>
+        // Create sparkles
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
+        createSparkles();
+
         const quotes = [
             {
     text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.",
@@ -779,23 +1004,25 @@
             displayQuote();
         }
 
-        const CACHE_KEY = 'cryptoDataCache';
+        // Use in-memory cache instead of localStorage
+        let memoryCache = {
+            data: null,
+            timestamp: null
+        };
         const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes
         const FETCH_TIMEOUT = 10000; // 10s timeout per fetch
 
         function getCachedData() {
-            const cached = localStorage.getItem(CACHE_KEY);
-            if (!cached) return null;
-            const { data, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp > CACHE_EXPIRY) {
-                localStorage.removeItem(CACHE_KEY);
+            if (!memoryCache.data || !memoryCache.timestamp) return null;
+            if (Date.now() - memoryCache.timestamp > CACHE_EXPIRY) {
+                memoryCache = { data: null, timestamp: null };
                 return null;
             }
-            return data;
+            return memoryCache.data;
         }
 
         function setCachedData(data) {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
+            memoryCache = { data, timestamp: Date.now() };
         }
 
         const tokens = [
@@ -849,7 +1076,6 @@
         }
 
         async function fetchCryptoData(isBackground = false) {
-            let hasPartialError = false;
             const errorEl = document.getElementById('error');
             const partialEl = document.getElementById('partialError');
             errorEl.innerHTML = '';
@@ -860,7 +1086,6 @@
             }
 
             try {
-                // Parallel fetches for speed
                 const idsParam = tokens.join(',');
                 const [mainResponse, globalResponse, fgResponse] = await Promise.allSettled([
                     fetchWithRetry(
@@ -881,7 +1106,6 @@
                     const globalJson = await globalResponse.value.json();
                     globalData = globalJson.data;
                 } else {
-                    hasPartialError = true;
                     globalData = null;
                 }
 
@@ -892,20 +1116,21 @@
                     fearGreedData = null;
                 }
 
-                renderDashboard(true); // true = seamless update
+                renderDashboard();
+                document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
             } catch (error) {
                 console.error('Main fetch error:', error);
                 const cachedData = getCachedData();
                 if (cachedData && cachedData.length > 0) {
                     console.log('Using cached data');
                     cryptoData = cachedData;
-                    renderDashboard(true);
-                    const ageMins = Math.floor((Date.now() - JSON.parse(localStorage.getItem(CACHE_KEY)).timestamp) / 60000);
-                    partialEl.innerHTML = `
-                        <div>⚠️ Using cached token data (${ageMins} mins old). Fetching fresh in background...</div>
-                    `;
+                    renderDashboard();
+                    const ageMins = Math.floor((Date.now() - memoryCache.timestamp) / 60000);
+                    partialEl.innerHTML = `⚠️ Using cached data (${ageMins} min${ageMins !== 1 ? 's' : ''} old). Retrying...`;
                     partialEl.style.display = 'block';
-                    hasPartialError = true;
+                    
+                    // Retry after 30 seconds
+                    setTimeout(() => fetchCryptoData(true), 30000);
                 } else {
                     errorEl.innerHTML = `
                         <div class="error">
@@ -919,24 +1144,20 @@
                     isInitialLoad = false;
                 }
             }
-
-            if (hasPartialError) {
-                renderDashboard(true);
-            }
         }
 
         function formatPrice(price) {
-            if (price >= 1000) return `$${price.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
-            if (price >= 1) return `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            if (price >= 0.01) return `$${price.toFixed(4)}`;
-            return `$${price.toFixed(6)}`;
+            if (price >= 1000) return `${price.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+            if (price >= 1) return `${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            if (price >= 0.01) return `${price.toFixed(4)}`;
+            return `${price.toFixed(6)}`;
         }
 
         function formatMarketCap(value) {
-            if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
-            if (value >= 1e9) return `$${(value / 1e9).toFixed(2)}B`;
-            if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
-            return `$${value.toFixed(0)}`;
+            if (value >= 1e12) return `${(value / 1e12).toFixed(2)}T`;
+            if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+            if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+            return `${value.toFixed(0)}`;
         }
 
         function getFearGreedIcon(value) {
@@ -951,8 +1172,7 @@
             return svg;
         }
 
-        function renderDashboard(seamless = false) {
-            // Render market stats
+        function renderDashboard() {
             let statsHTML = '';
             
             if (globalData) {
@@ -971,7 +1191,6 @@
                 `;
             }
 
-            // Fear & Greed Index
             if (fearGreedData) {
                 const value = parseInt(fearGreedData.value);
                 statsHTML += `
@@ -993,7 +1212,6 @@
 
             document.getElementById('marketStats').innerHTML = statsHTML;
 
-            // Top Gainer
             const sortedByChange = [...cryptoData].sort((a, b) => 
                 (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
             );
@@ -1023,7 +1241,6 @@
                 `;
             }
 
-            // XAUT Block
             const goldToken = cryptoData.find(token => token.id === 'tether-gold');
             if (goldToken) {
                 const changePercent = goldToken.price_change_percentage_24h || 0;
@@ -1034,7 +1251,7 @@
                 const nameColor = isNegative ? '#fee2e2' : '#fef3c7';
                 const priceColor = labelColor;
                 const valueColor = isNegative ? '#ef4444' : '#f59e0b';
-                const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626)' : 'linear-gradient(90deg, #f59e0b, #d97706)';
+                const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)' : 'linear-gradient(90deg, #f59e0b, #d97706, #f59e0b)';
                 const labelShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
                 const priceShadow = isNegative ? 'rgba(248, 113, 113, 0.4)' : 'rgba(255, 215, 0, 0.4)';
                 const valueShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
@@ -1046,7 +1263,7 @@
                     <div class="${blockClass}">
                         <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24ს</div>
                         <div class="gainer-content">
-                            <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 2px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
+                            <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 3px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
                             <div class="gainer-info">
                                 <div class="gainer-name" style="color: ${nameColor}; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">${goldToken.name}</div>
                                 <div class="gainer-price" style="color: ${priceColor}; text-shadow: 0 0 10px ${priceShadow};">${formatPrice(goldToken.current_price)}</div>
@@ -1054,7 +1271,7 @@
                         </div>
                         <div class="gainer-gauge">
                             <div class="gauge-bar">
-                                <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
+                                <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; background-size: 200% auto; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
                             </div>
                             <div class="gauge-value" style="color: ${valueColor}; text-shadow: 0 0 15px ${valueShadow};">${sign}${Math.abs(changePercent).toFixed(1)}%</div>
                         </div>
@@ -1064,9 +1281,6 @@
             }
 
             renderTokenList();
-            if (!seamless) {
-                document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-            }
         }
 
         function sortBy(column) {
@@ -1102,7 +1316,6 @@
         }
 
         function renderTokenList() {
-            // Update sort indicators
             document.getElementById('sortName').className = 'sort-arrow';
             document.getElementById('sortPrice').className = 'sort-arrow';
             document.getElementById('sortChange').className = 'sort-arrow';
@@ -1138,23 +1351,14 @@
             document.getElementById('tokenGrid').innerHTML = tokenHTML;
         }
 
-        // Initial load: Render skeleton, check cache, render if available, then fetch
         displayQuote();
         const cachedData = getCachedData();
         if (cachedData && cachedData.length > 0) {
             cryptoData = cachedData;
             renderDashboard();
-            const ageMins = Math.floor((Date.now() - JSON.parse(localStorage.getItem(CACHE_KEY)).timestamp) / 60000);
-            document.getElementById('partialError').innerHTML = `
-                <div>📊 Loaded from cache (${ageMins} mins old). Updating with fresh data...</div>
-            `;
-            document.getElementById('partialError').style.display = 'block';
         }
-        // Start background fetch immediately
-        fetchCryptoData(true).then(() => {
-            document.getElementById('partialError').style.display = 'none';
-        });
-        setInterval(() => fetchCryptoData(true), 90000); // 90s background updates
+        fetchCryptoData(false);
+        setInterval(() => fetchCryptoData(true), 90000);
     </script>
 </body>
 </html>
