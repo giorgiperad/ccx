@@ -140,6 +140,22 @@
             box-shadow: 0 8px 32px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
+        .xaut-block {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .xaut-block.negative {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.25), inset 0 1px 0 rgba(239, 68, 68, 0.1);
+        }
+
         .gainer-label {
             font-size: 12px;
             color: #6ee7b7;
@@ -388,13 +404,14 @@
     </div>
 
     <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
-        <div class="quote-icon"></div>
+        <div class="quote-icon">💎</div>
         <div class="quote-text" id="quoteText"></div>
         <div class="quote-author" id="quoteAuthor"></div>
     </div>
 
     <div id="marketStats" class="market-stats"></div>
     <div id="topGainer"></div>
+    <div id="xautBlock"></div>
     <div id="loading" class="loading">
         <div class="spinner"></div>
         <div>Loading crypto data...</div>
@@ -418,7 +435,7 @@
 
     <script>
         const quotes = [
-            {
+             {
     text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.",
     author: "— გ.ხ"
 },
@@ -686,6 +703,7 @@
     text: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.",
     author: "— უორენ ბაფეტი"
 }
+ 
         ];
 
         let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
@@ -704,13 +722,12 @@
         const tokens = [
             'bitcoin', 'ethereum', 'solana', 'cardano', 'ripple', 'polkadot',
             'chainlink', 'cosmos', 'stellar', 'celo', 'osmosis',
-            'rejuve-ai', 'sophiaverse', 'singularity-finance', 'nunet', 'hypercycle',
+            'sophiaverse', 'nunet', 'hypercycle',
             'chia', 'kava', 'decentraland', 'alien-worlds', 'gamium',
             'zksync', 'starknet', 'arbitrum', 'optimism', 'linea', 'berachain-bera',
             'dforce-token', 'band-protocol', 'notcoin', 'flare', 'songbird',
-            'redbelly-network-token', 'vestate', 'coin98', 'chainge', 'befi-labs',
-            'masa', 'foxy', 'paribus', 'katana-inu', 'plume', 'xai-blockchain',
-            'twin-protocol', 'status'
+            'vestate', 'coin98', 'chainge', 'masa', 'foxy', 'paribus', 'katana-inu', 'plume', 'xai',
+            'status', 'tether-gold'
         ];
 
         let cryptoData = [];
@@ -720,44 +737,43 @@
         let sortColumn = 'change';
         let sortDirection = 'desc';
 
+        async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response;
+                } catch (error) {
+                    if (attempt === maxRetries) throw error;
+                    console.warn(`Fetch attempt ${attempt + 1} failed for ${url}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
+                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt))); // Exponential backoff
+                }
+            }
+        }
+
         async function fetchCryptoData() {
             try {
                 const idsParam = tokens.join(',');
-                const response = await fetch(
+                const response = await fetchWithRetry(
                     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
                 );
-                
-                if (!response.ok) throw new Error('Failed to fetch data');
                 
                 cryptoData = await response.json();
                 
                 // Fetch global data
-                const globalResponse = await fetch('https://api.coingecko.com/api/v3/global');
-                if (globalResponse.ok) {
-                    const globalJson = await globalResponse.json();
-                    globalData = globalJson.data;
-                }
+                const globalResponse = await fetchWithRetry('https://api.coingecko.com/api/v3/global');
+                const globalJson = await globalResponse.json();
+                globalData = globalJson.data;
 
                 // Fetch Fear & Greed Index
                 try {
-                    const fgResponse = await fetch('https://api.alternative.me/fng/');
-                    if (fgResponse.ok) {
-                        const fgJson = await fgResponse.json();
-                        fearGreedData = fgJson.data[0];
-                    }
+                    const fgResponse = await fetchWithRetry('https://api.alternative.me/fng/');
+                    const fgJson = await fgResponse.json();
+                    fearGreedData = fgJson.data[0];
                 } catch (e) {
                     console.log('Fear & Greed fetch failed:', e);
-                }
-
-                // Fetch Tether Gold Price (XAUT)
-                try {
-                    const goldResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether-gold&vs_currencies=usd');
-                    if (goldResponse.ok) {
-                        const goldJson = await goldResponse.json();
-                        goldPrice = goldJson['tether-gold']?.usd;
-                    }
-                } catch (e) {
-                    console.log('Gold price fetch failed:', e);
                 }
                 
                 renderDashboard();
@@ -799,12 +815,6 @@
             return svg;
         }
 
-        function getGoldIcon() {
-            return `<svg class="stat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(255, 193, 7, 0.2)"/>
-            </svg>`;
-        }
-
         function renderDashboard() {
             // Render market stats
             let statsHTML = '';
@@ -815,10 +825,6 @@
                         <div class="stat-label">BTC დომინაცია</div>
                         <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">კაპიტალიზაცია</div>
-                        <div class="stat-value">${formatMarketCap(globalData.total_market_cap.usd)}</div>
-                    </div>
                 `;
             }
 
@@ -828,19 +834,8 @@
                 statsHTML += `
                     <div class="stat-card">
                         ${getFearGreedIcon(value)}
-                        <div class="stat-label">Fear & Greed</div>
+                        <div class="stat-label">შიში & სიხარბე</div>
                         <div class="stat-value">${value}</div>
-                    </div>
-                `;
-            }
-
-            // Gold Price
-            if (goldPrice) {
-                statsHTML += `
-                    <div class="stat-card">
-                        ${getGoldIcon()}
-                        <div class="stat-label">Gold (XAU)</div>
-                        <div class="stat-value">${formatPrice(goldPrice)}</div>
                     </div>
                 `;
             }
@@ -875,6 +870,46 @@
                         </div>
                     </div>
                 `;
+            }
+
+            // XAUT Block
+            const goldToken = cryptoData.find(token => token.id === 'tether-gold');
+            if (goldToken) {
+                const changePercent = goldToken.price_change_percentage_24h || 0;
+                const isNegative = changePercent < 0;
+                const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
+                const sign = isNegative ? '-' : '+';
+                const labelColor = isNegative ? '#fca5a5' : '#fbbf24';
+                const nameColor = isNegative ? '#fee2e2' : '#fef3c7';
+                const priceColor = labelColor;
+                const valueColor = isNegative ? '#ef4444' : '#f59e0b';
+                const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626)' : 'linear-gradient(90deg, #f59e0b, #d97706)';
+                const labelShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+                const priceShadow = isNegative ? 'rgba(248, 113, 113, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+                const valueShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+                const iconBorder = isNegative ? 'rgba(248, 113, 113, 0.5)' : 'rgba(255, 215, 0, 0.5)';
+                const iconShadow = isNegative ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+                const blockClass = isNegative ? 'xaut-block negative' : 'xaut-block';
+
+                document.getElementById('xautBlock').innerHTML = `
+                    <div class="${blockClass}">
+                        <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24h</div>
+                        <div class="gainer-content">
+                            <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 2px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
+                            <div class="gainer-info">
+                                <div class="gainer-name" style="color: ${nameColor}; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">${goldToken.name}</div>
+                                <div class="gainer-price" style="color: ${priceColor}; text-shadow: 0 0 10px ${priceShadow};">${formatPrice(goldToken.current_price)}</div>
+                            </div>
+                        </div>
+                        <div class="gainer-gauge">
+                            <div class="gauge-bar">
+                                <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
+                            </div>
+                            <div class="gauge-value" style="color: ${valueColor}; text-shadow: 0 0 15px ${valueShadow};">${sign}${Math.abs(changePercent).toFixed(1)}%</div>
+                        </div>
+                    </div>
+                `;
+                goldPrice = goldToken.current_price; // Keep for any other uses, if needed
             }
 
             renderTokenList();
