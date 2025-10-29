@@ -1,0 +1,15 @@
+{
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {"key": "Access-Control-Allow-Origin", "value": "*"}
+      ]
+    }
+  ]
+}
