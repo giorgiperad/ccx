@@ -1,24 +1,22 @@
 {
   "name": "კრიპტო კოლექტივი X",
-  "short_name": "CryptoX",
+  "short_name": "კრიპტო კოლექტივი X",
   "description": "A beautiful crypto dashboard with motivational quotes and real-time market data.",
   "start_url": "https://ccxportfolio.vercel.app/",
   "display": "standalone",
-  "background_color": "#0a0e27",
-  "theme_color": "#818cf8",
-  "orientation": "portrait-primary",
+  "background_color": "#1A1A2E",
+  "theme_color": "#1A1A2E",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://ta3bviqjtxy1kv7x.public.blob.vercel-storage.com/bgc-wAyOl9axJJUu4bUqug06dN3eSLPzt4.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
     },
     {
       "src": "https://ta3bviqjtxy1kv7x.public.blob.vercel-storage.com/bgc-wAyOl9axJJUu4bUqug06dN3eSLPzt4.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
     }
   ],
   "categories": ["finance", "productivity"]
