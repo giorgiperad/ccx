@@ -734,598 +734,463 @@
     </div>
 
     <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+
+    // Create sparkles
+    function createSparkles() {
+        for (let i = 0; i < 20; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
         }
+    }
+    createSparkles();
 
-        // Create sparkles
-        function createSparkles() {
-            for (let i = 0; i < 20; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(sparkle);
-            }
-        }
-        createSparkles();
+    const quotes = [
+        { text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე." },
+        { text: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
+        { text: "პატერნი დასრულებულ მოძრაობაზე მიგვითითებს, შემდგომი განვითრება მთლიან სტრუქტურაზეა დამოკიდებული" },
+        { text: "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს." },
+        { text: "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.მხოლოდ არსებობა არ არის ადამიანის დანიშნულება." },
+        { text: "ყოველი წარუმატებლობა ახალი დასაწყისია." },
+        { text: "გონივრული რისკი დღეს, დიდი მოგება ხვალ." },
+        { text: "არ ეძებო უსაფრთხოება, ეძება შესაძლებლობა." },
+        { text: "ყველაზე დიდი რისკი არის არაფრის გარისკვა." },
+        { text: "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება." },
+        { text: "წარმატება დროისა და შრომის შედეგია." },
+        { text: "ნუ ელოდები შანსს, შექმენი ის." },
+        { text: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება." },
+        { text: "რაც უფრო დიდ კაპიტალს ფლობ მით უფრო სწრაფად კოტრდები." },
+        { text: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა." },
+        { text: "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით." },
+        { text: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას." },
+        { text: "წარმატება მოთმინების ჯილდოა." },
+        { text: "რაც უფრო პატარა ადამიანი ხარ მით უფრო იხილავ გლობალურ საკითხებს." },
+        { text: "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას." },
+        { text: "თუ არ გარისკავ, ვერ გაიზრდები." },
+        { text: "ყოველი დღე ახალი შანსია ზრდისთვის." },
+        { text: "ფულის ღირებულება მის გამოყენებაშია." },
+        { text: "რაც უფრო მეტი დრო გადის მით უფრო ვრწმუნდები რომ არაფერი ვიცი." },
+        { text: "წარსული გაკვეთილია, მომავალი — შენ ხელშია." },
+        { text: "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ." },
+        { text: "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ." },
+        { text: "ფული მოდის მათთან, ვინც მას ეძებს." },
+        { text: "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია." },
+        { text: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო." },
+        { text: "წარმატება არის შრომისა და რწმენის ნაზავი." },
+        { text: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს." },
+        { text: "ნუ ელოდები სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი." },
+        { text: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა." },
+        { text: "თუ გჯერა, ყველაფერი შესაძლებელია." },
+        { text: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება." },
+        { text: "ფული არის იარაღი, გამოიყენე გონივრულად." },
+        { text: "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც." },
+        { text: "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს." },
+        { text: "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის." },
+        { text: "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში." },
+        { text: "გააკეთე ის, რაც გაშინებს, და შიში გაქრება." },
+        { text: "წარმატება არის გზა, რომელსაც თავად აგებ." },
+        { text: "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად." },
+        { text: "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო." },
+        { text: "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს." },
+        { text: "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით." },
+        { text: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას." },
+        { text: "შეცდომების აღიარება წარმატების გასაღებია." },
+        { text: "დიდი ფული არა გონებაშია, არამედ მოთმინებაში." },
+        { text: "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი." },
+        { text: "დრო შენი მეგობარია, იმპულსი — მტერი." },
+        { text: "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია." },
+        { text: "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა." },
+        { text: "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება." },
+        { text: "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი." },
+        { text: "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია." },
+        { text: "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება." },
+        { text: "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან." },
+        { text: "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე." },
+        { text: "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს." },
+        { text: "მონაცემები მეტყველებს, თუ მოუსმენ." },
+        { text: "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ." },
+        { text: "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს." },
+        { text: "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ." },
+        { text: "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება." },
+        { text: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს." }
+    ];
 
-        const quotes = [
-            {
-    text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე.",
-},
-{
-    text: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა.",
-},
-{
-    text: "პატერნი დასრულებულ მოძრაობაზე მიგვითითებს, შემდგომი განვითრება მთლიან სტრუქტურაზეა დამოკიდებული",
-},
-{
-    text: "დარგე თესლი დღეს, რომ ხვალ ხე გაიზარდოს.",
-},
-{
-    text: "ნუ გეშინია ნელი წინსვლის, გეშინოდეს უმოქმედობის.მხოლოდ არსებობა არ არის ადამიანის დანიშნულება.",
-},
-{
-    text: "ყოველი წარუმატებლობა ახალი დასაწყისია.",
-},
-{
-    text: "გონივრული რისკი დღეს, დიდი მოგება ხვალ.",
-},
-{
-    text: "არ ეძებო უსაფრთხოება, ეძება შესაძლებლობა.",
-},
-{
-    text: "ყველაზე დიდი რისკი არის არაფრის გარისკვა.",
-},
-{
-    text: "გააკეთე ის, რისიც გჯერა, და ფული მოგყვება.",
-},
-{
-    text: "წარმატება დროისა და შრომის შედეგია.",
-},
-{
-    text: "ნუ ელოდები შანსს, შექმენი ის.",
-},
-{
-    text: "ფინანსური თავისუფლება გადაწყვეტილებებით იწყება.",
-},
-{
-    text: "რაც უფრო დიდ კაპიტალს ფლობ მით უფრო სწრაფად კოტრდები.",
-},
-{
-    text: "დღევანდელი მცირე ნაბიჯი ხვალ დიდ გამარჯვებად იქცევა.",
-},
-{
-    text: "არავინ გამხდარა მდიდარი დაზოგვით, არამედ ინვესტირებით.",
-},
-{
-    text: "გონება, რომელიც ფიქრობს, ყოველთვის პოულობს გზას.",
-},
-{
-    text: "წარმატება მოთმინების ჯილდოა.",
-},
-{
-    text: "რაც უფრო პატარა ადამიანი ხარ მით უფრო იხილავ გლობალურ საკითხებს.",
-},
-{
-    text: "შექმენი შენი მომავალი, სანამ სხვა გააკეთებს ამას.",
-},
-{
-    text: "თუ არ გარისკავ, ვერ გაიზრდები.",
-},
-{
-    text: "ყოველი დღე ახალი შანსია ზრდისთვის.",
-},
-{
-    text: "ფულის ღირებულება მის გამოყენებაშია.",
-},
-{
-    text: "რაც უფრო მეტი დრო გადის მით უფრო ვრწმუნდები რომ არაფერი ვიცი.",
-},
-{
-    text: "წარსული გაკვეთილია, მომავალი — შენ ხელშია.",
-},
-{
-    text: "ინვესტირება არის ნდობა საკუთარი ხედვის მიმართ.",
-},
-{
-    text: "არ გაჩერდე, როცა დაიღალე, გაჩერდი, როცა მიაღწევ.",
-},
-{
-    text: "ფული მოდის მათთან, ვინც მას ეძებს.",
-},
-{
-    text: "ყოველი გადაწყვეტილება შენი მომავლის ნაწილია.",
-},
-{
-    text: "გარისკე, რომ გაიზარდო, მაგრამ გაიზარდე, რომ გაიმარჯვო.",
-},
-{
-    text: "წარმატება არის შრომისა და რწმენის ნაზავი.",
-},
-{
-    text: "დღეს გაკეთებული საქმე ხვალ შენს მადლიერებას დაიმსახურებს.",
-},
-{
-    text: "ნუ ელოდები სრულყოფილ მომენტს, გახადე მომენტი სრულყოფილი.",
-},
-{
-    text: "ფინანსური დამოუკიდებლობა არჩევანია, არა შემთხვევა.",
-},
-{
-    text: "თუ გჯერა, ყველაფერი შესაძლებელია.",
-},
-{
-    text: "დიდი შედეგები მცირე თანმიმდევრულობით იბადება.",
-},
-{
-    text: "ფული არის იარაღი, გამოიყენე გონივრულად.",
-},
-{
-    text: "შეცვალე აზროვნება, შეიცვლება შენი სამყაროც.",
-},
-{
-    text: "მომავალი მათ ეკუთვნით, ვინც დღეს მუშაობს.",
-},
-{
-    text: "არ შეგეშინდეს დაცემის, შეგეშინდეს ადგომის შეწყვეტის.",
-},
-{
-    text: "ინვესტიცია დროში ისევე მნიშვნელოვანია, როგორც ფულში.",
-},
-{
-    text: "გააკეთე ის, რაც გაშინებს, და შიში გაქრება.",
-},
-{
-    text: "წარმატება არის გზა, რომელსაც თავად აგებ.",
-},
-{
-    text: "ფული მაშინ მოდის, როცა შენ მზად ხარ მის მისაღებად.",
-},
-{
-    text: "ყოველი ნაბიჯი მიგიყვანს იქ, სადაც გინდა იყო.",
-},
-{
-    text: "დაიწყე იქ, სადაც ხარ, გამოიყენე ის, რაც გაქვს.",
-},
-{
-    text: "იყიდე მხოლოდ ის, რისი დაკარგვაც სიამოვნებით შეგიძლია 10 წლით.",
-},
-{
-    text: "იცოდე, რას ფლობ, და იცოდე, რატომ ფლობ ამას.",
-},
-{
-    text: "შეცდომების აღიარება წარმატების გასაღებია.",
-},
-{
-    text: "დიდი ფული არა გონებაშია, არამედ მოთმინებაში.",
-},
-{
-    text: "ბაზარი მოკლევადიან პერსპექტივაში ხმის მიმცემი მანქანაა, გრძელვადიანში — სასწორი.",
-},
-{
-    text: "დრო შენი მეგობარია, იმპულსი — მტერი.",
-},
-{
-    text: "ბაზარი სავსეა ხმაურით, მაგრამ წარმატება მშვიდ ფიქრშია.",
-},
-{
-    text: "მთავარია არა ფულის გამომუშავება, არამედ მისი შენარჩუნებაა.",
-},
-{
-    text: "ინვესტირება არის რისკის მართვა, და არა მისი თავიდან აცილება.",
-},
-{
-    text: "რაც უფრო ნაკლებია შენი მოლოდინი, მით უკეთესია შედეგი.",
-},
-{
-    text: "ნუ იყიდი იმიტომ, რომ იაფია, იყიდე, რადგან ღირებულია.",
-},
-{
-    text: "ყველაზე დიდი შესაძლებლობები მაქსიმალური პესიმიზმის დროს ჩნდება.",
-},
-{
-    text: "იყავი შეშინებული, როცა სხვები თავდაჯერებულნი არიან, და თავდაჯერებული, როცა სხვები შეშინებულნი არიან.",
-},
-{
-    text: "ნუ ფოკუსირდები მოგებაზე, ფოკუსირდი კაპიტალის დაცვაზე.",
-},
-{
-    text: "მდიდრები ყიდულობენ აქტივებს, ღარიბები — პასივებს.",
-},
-{
-    text: "მონაცემები მეტყველებს, თუ მოუსმენ.",
-},
-{
-    text: "ყველაზე დიდი მოგება მოდის იქ, სადაც სხვები ვერ ხედავენ.",
-},
-{
-    text: "ყოველთვის იცხოვრე ისე, რომ შენი შემოსავალი აღემატებოდეს ხარჯებს.",
-},
-{
-    text: "ფასი ისაა, რასაც იხდი, ღირებულება — რასაც იღებ.",
-},
-{
-    text: "საუკეთესო ინვესტიცია ისაა, რაც შენს გონებაში ხდება.",
-},
-{
-    text: "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.",
-}
+    let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
 
-        ];
+    function displayQuote() {
+        const quote = quotes[currentQuoteIndex];
+        document.getElementById('quoteText').textContent = quote.text;
+        document.getElementById('quoteAuthor').textContent = ''; // No authors provided, so leave empty
+    }
 
-        let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
-
-        function displayQuote() {
-            const quote = quotes[currentQuoteIndex];
-            document.getElementById('quoteText').textContent = quote.text;
-            document.getElementById('quoteAuthor').textContent = ''; // No authors provided, so leave empty
-        }
-
-        function rotateQuote() {
-            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-            displayQuote();
-        }
-
-        // Use in-memory cache instead of localStorage
-        let memoryCache = {
-            data: null,
-            timestamp: null
-        };
-        const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes
-        const FETCH_TIMEOUT = 10000; // 10s timeout per fetch
-
-        function getCachedData() {
-            if (!memoryCache.data || !memoryCache.timestamp) return null;
-            if (Date.now() - memoryCache.timestamp > CACHE_EXPIRY) {
-                memoryCache = { data: null, timestamp: null };
-                return null;
-            }
-            return memoryCache.data;
-        }
-
-        function setCachedData(data) {
-            memoryCache = { data, timestamp: Date.now() };
-        }
-
-        const tokens = [
-            'bitcoin', 'ethereum', 'solana', 'cardano', 'ripple', 'polkadot',
-            'chainlink', 'cosmos', 'stellar', 'celo', 'osmosis',
-            'sophiaverse', 'nunet', 'hypercycle',
-            'chia', 'kava', 'decentraland', 'alien-worlds', 'gamium',
-            'zksync', 'starknet', 'arbitrum', 'optimism', 'linea', 'berachain-bera',
-            'dforce-token', 'band-protocol', 'notcoin', 'flare', 'songbird',
-            'coin98', 'chainge', 'masa', 'foxy', 'paribus', 'katana-inu', 'plume', 'xai',
-            'status', 'tether-gold'
-        ];
-
-        let cryptoData = [];
-        let globalData = null;
-        let fearGreedData = null;
-        let goldPrice = null;
-        let sortColumn = 'change';
-        let sortDirection = 'desc';
-        let isInitialLoad = true;
-
-        async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), timeout);
-            try {
-                const response = await fetch(url, { ...options, signal: controller.signal });
-                clearTimeout(timeoutId);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                return response;
-            } catch (error) {
-                clearTimeout(timeoutId);
-                if (error.name === 'AbortError') {
-                    throw new Error('Request timed out');
-                }
-                throw error;
-            }
-        }
-
-        async function fetchWithRetry(url, options = {}, maxRetries = 3) {
-            for (let attempt = 0; attempt <= maxRetries; attempt++) {
-                try {
-                    return await fetchWithTimeout(url, options);
-                } catch (error) {
-                    if (attempt === maxRetries) throw error;
-                    console.warn(`Fetch attempt ${attempt + 1} failed for ${url}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
-                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
-                }
-            }
-        }
-
-        async function fetchCryptoData(isBackground = false) {
-            const errorEl = document.getElementById('error');
-            const partialEl = document.getElementById('partialError');
-            errorEl.innerHTML = '';
-            partialEl.style.display = 'none';
-            const loadingEl = document.getElementById('loading');
-            if (!isBackground && isInitialLoad) {
-                loadingEl.style.display = 'block';
-            }
-
-            try {
-                const idsParam = tokens.join(',');
-                const [mainResponse, globalResponse, fgResponse] = await Promise.allSettled([
-                    fetchWithRetry(
-                        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
-                    ),
-                    fetchWithRetry('https://api.coingecko.com/api/v3/global').catch(() => null),
-                    fetchWithRetry('https://api.alternative.me/fng/').catch(() => null)
-                ]);
-
-                if (mainResponse.status === 'fulfilled') {
-                    cryptoData = await mainResponse.value.json();
-                    setCachedData(cryptoData);
-                } else {
-                    throw mainResponse.reason;
-                }
-
-                if (globalResponse.status === 'fulfilled' && globalResponse.value) {
-                    const globalJson = await globalResponse.value.json();
-                    globalData = globalJson.data;
-                } else {
-                    globalData = null;
-                }
-
-                if (fgResponse.status === 'fulfilled' && fgResponse.value) {
-                    const fgJson = await fgResponse.value.json();
-                    fearGreedData = fgJson.data[0];
-                } else {
-                    fearGreedData = null;
-                }
-
-                renderDashboard();
-                document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()}`;
-            } catch (error) {
-                console.error('Main fetch error:', error);
-                const cachedData = getCachedData();
-                if (cachedData && cachedData.length > 0) {
-                    console.log('Using cached data');
-                    cryptoData = cachedData;
-                    renderDashboard();
-                    const ageMins = Math.floor((Date.now() - memoryCache.timestamp) / 60000);
-                    partialEl.innerHTML = `⚠️ Using cached data (${ageMins} min${ageMins !== 1 ? 's' : ''} old). Retrying...`;
-                    partialEl.style.display = 'block';
-                    
-                    // Retry after 30 seconds
-                    setTimeout(() => fetchCryptoData(true), 30000);
-                } else {
-                    errorEl.innerHTML = `
-                        <div class="error">
-                            ⚠️ შეცდომა მონაცემების ჩატვირთვისას. გთხოვთ გადატვირთოთ გვერდი. (დეტალები: ${error.message})
-                        </div>
-                    `;
-                }
-            } finally {
-                loadingEl.style.display = 'none';
-                if (isInitialLoad) {
-                    isInitialLoad = false;
-                }
-            }
-        }
-
-        function formatPrice(price) {
-            if (price >= 1000) return `${price.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
-            if (price >= 1) return `${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            if (price >= 0.01) return `${price.toFixed(4)}`;
-            return `${price.toFixed(6)}`;
-        }
-
-        function formatMarketCap(value) {
-            if (value >= 1e12) return `${(value / 1e12).toFixed(2)}T`;
-            if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
-            if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
-            return `${value.toFixed(0)}`;
-        }
-
-        
-
-        function renderDashboard() {
-            let statsHTML = '';
-            
-            if (globalData) {
-                statsHTML += `
-                    <div class="stat-card">
-                        <div class="stat-label">BTC დომინაცია</div>
-                        <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
-                    </div>
-                `;
-            } else {
-                statsHTML += `
-                    <div class="stat-card">
-                        <div class="stat-label">BTC დომინაცია</div>
-                        <div class="stat-value">--</div>
-                    </div>
-                `;
-            }
-
-            if (fearGreedData) {
-                const value = parseInt(fearGreedData.value);
-                statsHTML += `
-                    <div class="stat-card">
-                        <div class="stat-label">შიში & სიხარბე</div>
-                        <div class="stat-value">${value}</div>
-                    </div>
-                `;
-            } else {
-                statsHTML += `
-                    <div class="stat-card">
-                        <div class="stat-label">შიში & სიხარბე</div>
-                        <div class="stat-value">--</div>
-                    </div>
-                `;
-            }
-
-            document.getElementById('marketStats').innerHTML = statsHTML;
-
-            const sortedByChange = [...cryptoData].sort((a, b) => 
-                (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
-            );
-            const topGainer = sortedByChange[0];
-
-            if (topGainer) {
-                const changePercent = topGainer.price_change_percentage_24h || 0;
-                const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
-                
-                document.getElementById('topGainer').innerHTML = `
-                    <div class="top-gainer">
-                        <div class="gainer-label">🏆 Top Gainer (24h)</div>
-                        <div class="gainer-content">
-                            <img src="${topGainer.image}" alt="${topGainer.name}" class="gainer-icon">
-                            <div class="gainer-info">
-                                <div class="gainer-name">${topGainer.name}</div>
-                                <div class="gainer-price">${formatPrice(topGainer.current_price)}</div>
-                            </div>
-                        </div>
-                        <div class="gainer-gauge">
-                            <div class="gauge-bar">
-                                <div class="gauge-fill" style="width: ${gaugeWidth}%"></div>
-                            </div>
-                            <div class="gauge-value">+${changePercent.toFixed(1)}%</div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            const goldToken = cryptoData.find(token => token.id === 'tether-gold');
-            if (goldToken) {
-                const changePercent = goldToken.price_change_percentage_24h || 0;
-                const isNegative = changePercent < 0;
-                const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
-                const sign = isNegative ? '-' : '+';
-                const labelColor = isNegative ? '#fca5a5' : '#fbbf24';
-                const nameColor = isNegative ? '#fee2e2' : '#fef3c7';
-                const priceColor = labelColor;
-                const valueColor = isNegative ? '#ef4444' : '#f59e0b';
-                const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)' : 'linear-gradient(90deg, #f59e0b, #d97706, #f59e0b)';
-                const labelShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
-                const priceShadow = isNegative ? 'rgba(248, 113, 113, 0.4)' : 'rgba(255, 215, 0, 0.4)';
-                const valueShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
-                const iconBorder = isNegative ? 'rgba(248, 113, 113, 0.5)' : 'rgba(255, 215, 0, 0.5)';
-                const iconShadow = isNegative ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 215, 0, 0.4)';
-                const blockClass = isNegative ? 'xaut-block negative' : 'xaut-block';
-
-                document.getElementById('xautBlock').innerHTML = `
-                    <div class="${blockClass}">
-                        <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24ს</div>
-                        <div class="gainer-content">
-                            <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 3px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
-                            <div class="gainer-info">
-                                <div class="gainer-name" style="color: ${nameColor}; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">${goldToken.name}</div>
-                                <div class="gainer-price" style="color: ${priceColor}; text-shadow: 0 0 10px ${priceShadow};">${formatPrice(goldToken.current_price)}</div>
-                            </div>
-                        </div>
-                        <div class="gainer-gauge">
-                            <div class="gauge-bar">
-                                <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; background-size: 200% auto; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
-                            </div>
-                            <div class="gauge-value" style="color: ${valueColor}; text-shadow: 0 0 15px ${valueShadow};">${sign}${Math.abs(changePercent).toFixed(1)}%</div>
-                        </div>
-                    </div>
-                `;
-                goldPrice = goldToken.current_price;
-            }
-
-            renderTokenList();
-        }
-
-        function sortBy(column) {
-            if (sortColumn === column) {
-                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                sortColumn = column;
-                sortDirection = column === 'name' ? 'asc' : 'desc';
-            }
-
-            cryptoData.sort((a, b) => {
-                let aVal, bVal;
-                
-                if (column === 'name') {
-                    aVal = a.name.toLowerCase();
-                    bVal = b.name.toLowerCase();
-                } else if (column === 'price') {
-                    aVal = a.current_price || 0;
-                    bVal = b.current_price || 0;
-                } else if (column === 'change') {
-                    aVal = a.price_change_percentage_24h || 0;
-                    bVal = b.price_change_percentage_24h || 0;
-                }
-
-                if (sortDirection === 'asc') {
-                    return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
-                } else {
-                    return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
-                }
-            });
-
-            renderTokenList();
-        }
-
-        function renderTokenList() {
-            // Safely handle missing elements
-            const sortNameEl = document.getElementById('sortName');
-            const sortPriceEl = document.getElementById('sortPrice');
-            const sortChangeEl = document.getElementById('sortChange');
-            
-            if (sortNameEl) sortNameEl.className = 'sort-arrow';
-            if (sortPriceEl) sortPriceEl.className = 'sort-arrow';
-            if (sortChangeEl) sortChangeEl.className = 'sort-arrow';
-            
-            const activeArrow = document.getElementById('sort' + sortColumn.charAt(0).toUpperCase() + sortColumn.slice(1));
-            if (activeArrow) {
-                activeArrow.className = 'sort-arrow active';
-                activeArrow.textContent = sortDirection === 'asc' ? '▲' : '▼';
-            }
-
-            const tokenHTML = cryptoData.map(token => {
-                const change = token.price_change_percentage_24h || 0;
-                const changeClass = change >= 0 ? 'positive' : 'negative';
-                const changeSymbol = change >= 0 ? '▲' : '▼';
-                
-                return `
-                    <div class="token-card">
-                        <img src="${token.image}" alt="${token.name}" class="token-icon">
-                        <div class="token-info">
-                            <div class="token-name">${token.name}</div>
-                            <div class="token-symbol">${token.symbol}</div>
-                        </div>
-                        <div class="token-price">${formatPrice(token.current_price)}</div>
-                        <div class="token-change-wrapper">
-                            <div class="token-change ${changeClass}">
-                                ${changeSymbol} ${Math.abs(change).toFixed(1)}%
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('tokenGrid').innerHTML = tokenHTML;
-        }
-
+    function rotateQuote() {
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
         displayQuote();
-        const cachedData = getCachedData();
-        if (cachedData && cachedData.length > 0) {
-            cryptoData = cachedData;
-            renderDashboard();
+    }
+
+    // Use in-memory cache instead of localStorage
+    let memoryCache = {
+        data: null,
+        timestamp: null
+    };
+    const CACHE_EXPIRY = 5 * 60 * 1000; // 5 minutes
+    const FETCH_TIMEOUT = 10000; // 10s timeout per fetch
+
+    function getCachedData() {
+        if (!memoryCache.data || !memoryCache.timestamp) return null;
+        if (Date.now() - memoryCache.timestamp > CACHE_EXPIRY) {
+            memoryCache = { data: null, timestamp: null };
+            return null;
         }
-        fetchCryptoData(false);
-        setInterval(() => fetchCryptoData(true), 90000);
-    </script>
+        return memoryCache.data;
+    }
+
+    function setCachedData(data) {
+        memoryCache = { data, timestamp: Date.now() };
+    }
+
+    const tokens = [
+        'bitcoin', 'ethereum', 'solana', 'cardano', 'ripple', 'polkadot',
+        'chainlink', 'cosmos', 'stellar', 'celo', 'osmosis',
+        'sophiaverse', 'nunet', 'hypercycle',
+        'chia', 'kava', 'decentraland', 'alien-worlds', 'gamium',
+        'zksync', 'starknet', 'arbitrum', 'optimism', 'linea', 'berachain',  // Fixed: was 'berachain-bera'
+        'dforce-token', 'band-protocol', 'notcoin', 'flare', 'songbird',
+        'coin98', 'chainge', 'masa', 'foxy', 'paribus', 'katana-inu', 'plume', 'xai',
+        'status', 'tether-gold'
+    ];
+
+    let cryptoData = [];
+    let globalData = null;
+    let fearGreedData = null;
+    let goldPrice = null;
+    let sortColumn = 'change';
+    let sortDirection = 'desc';
+    let isInitialLoad = true;
+
+    async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { ...options, signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                throw new Error('Request timed out');
+            }
+            throw error;
+        }
+    }
+
+    async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+                return await fetchWithTimeout(url, options);
+            } catch (error) {
+                if (attempt === maxRetries) throw error;
+                console.warn(`Fetch attempt ${attempt + 1} failed for ${url}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
+                await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
+            }
+        }
+    }
+
+    async function fetchCryptoData(isBackground = false) {
+        const errorEl = document.getElementById('error');
+        const partialEl = document.getElementById('partialError');
+        errorEl.innerHTML = '';
+        partialEl.style.display = 'none';
+        const loadingEl = document.getElementById('loading');
+        if (!isBackground && isInitialLoad) {
+            loadingEl.style.display = 'block';
+        }
+
+        try {
+            const idsParam = tokens.join(',');
+            const [mainResponse, globalResponse, fgResponse] = await Promise.allSettled([
+                fetchWithRetry(
+                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
+                ),
+                fetchWithRetry('https://api.coingecko.com/api/v3/global').catch(() => null),
+                fetchWithRetry('https://api.alternative.me/fng/').catch(() => null)
+            ]);
+
+            if (mainResponse.status === 'fulfilled') {
+                cryptoData = await mainResponse.value.json();
+                setCachedData(cryptoData);
+            } else {
+                throw mainResponse.reason;
+            }
+
+            if (globalResponse.status === 'fulfilled' && globalResponse.value) {
+                const globalJson = await globalResponse.value.json();
+                globalData = globalJson.data;
+            } else {
+                globalData = null;
+            }
+
+            if (fgResponse.status === 'fulfilled' && fgResponse.value) {
+                const fgJson = await fgResponse.value.json();
+                fearGreedData = fgJson.data[0];
+            } else {
+                fearGreedData = null;
+            }
+
+            renderDashboard();
+            document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()}`;
+        } catch (error) {
+            console.error('Main fetch error:', error);
+            const cachedData = getCachedData();
+            if (cachedData && cachedData.length > 0) {
+                console.log('Using cached data');
+                cryptoData = cachedData;
+                renderDashboard();
+                document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()} (cache-დან)`;
+                const ageMins = Math.floor((Date.now() - memoryCache.timestamp) / 60000);
+                partialEl.innerHTML = `⚠️ Cache-დან მონაცემები (${ageMins} წთ.${ageMins !== 1 ? '' : ''} ძველი). ხელახლა ცდა...`;
+                partialEl.style.display = 'block';
+                
+                // Retry after 30 seconds
+                setTimeout(() => fetchCryptoData(true), 30000);
+            } else {
+                errorEl.innerHTML = `
+                    <div class="error">
+                        ⚠️ შეცდომა მონაცემების ჩატვირთვისას. გთხოვთ გადატვირთოთ გვერდი. (დეტალები: ${error.message})
+                    </div>
+                `;
+                document.getElementById('lastUpdate').textContent = `შეცდომა: ${new Date().toLocaleTimeString()}`;
+            }
+        } finally {
+            loadingEl.style.display = 'none';
+            if (isInitialLoad) {
+                isInitialLoad = false;
+            }
+        }
+    }
+
+    function formatPrice(price) {
+        if (price >= 1000) return `${price.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+        if (price >= 1) return `${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (price >= 0.01) return `${price.toFixed(4)}`;
+        return `${price.toFixed(6)}`;
+    }
+
+    function formatMarketCap(value) {
+        if (value >= 1e12) return `${(value / 1e12).toFixed(2)}T`;
+        if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+        if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+        return `${value.toFixed(0)}`;
+    }
+
+    function renderDashboard() {
+        let statsHTML = '';
+        
+        if (globalData) {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">BTC დომინაცია</div>
+                    <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
+                </div>
+            `;
+        } else {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">BTC დომინაცია</div>
+                    <div class="stat-value">--</div>
+                </div>
+            `;
+        }
+
+        if (fearGreedData) {
+            const value = parseInt(fearGreedData.value);
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">შიში & სიხარბე</div>
+                    <div class="stat-value">${value}</div>
+                </div>
+            `;
+        } else {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">შიში & სიხარბე</div>
+                    <div class="stat-value">--</div>
+                </div>
+            `;
+        }
+
+        document.getElementById('marketStats').innerHTML = statsHTML;
+
+        const sortedByChange = [...cryptoData].sort((a, b) => 
+            (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
+        );
+        const topGainer = sortedByChange[0];
+
+        if (topGainer) {
+            const changePercent = topGainer.price_change_percentage_24h || 0;
+            const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
+            
+            document.getElementById('topGainer').innerHTML = `
+                <div class="top-gainer">
+                    <div class="gainer-label">🏆 Top Gainer (24h)</div>
+                    <div class="gainer-content">
+                        <img src="${topGainer.image}" alt="${topGainer.name}" class="gainer-icon">
+                        <div class="gainer-info">
+                            <div class="gainer-name">${topGainer.name}</div>
+                            <div class="gainer-price">${formatPrice(topGainer.current_price)}</div>
+                        </div>
+                    </div>
+                    <div class="gainer-gauge">
+                        <div class="gauge-bar">
+                            <div class="gauge-fill" style="width: ${gaugeWidth}%"></div>
+                        </div>
+                        <div class="gauge-value">+${changePercent.toFixed(1)}%</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const goldToken = cryptoData.find(token => token.id === 'tether-gold');
+        if (goldToken) {
+            const changePercent = goldToken.price_change_percentage_24h || 0;
+            const isNegative = changePercent < 0;
+            const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
+            const sign = isNegative ? '-' : '+';
+            const labelColor = isNegative ? '#fca5a5' : '#fbbf24';
+            const nameColor = isNegative ? '#fee2e2' : '#fef3c7';
+            const priceColor = labelColor;
+            const valueColor = isNegative ? '#ef4444' : '#f59e0b';
+            const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)' : 'linear-gradient(90deg, #f59e0b, #d97706, #f59e0b)';
+            const labelShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+            const priceShadow = isNegative ? 'rgba(248, 113, 113, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+            const valueShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+            const iconBorder = isNegative ? 'rgba(248, 113, 113, 0.5)' : 'rgba(255, 215, 0, 0.5)';
+            const iconShadow = isNegative ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+            const blockClass = isNegative ? 'xaut-block negative' : 'xaut-block';
+
+            document.getElementById('xautBlock').innerHTML = `
+                <div class="${blockClass}">
+                    <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24ს</div>
+                    <div class="gainer-content">
+                        <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 3px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
+                        <div class="gainer-info">
+                            <div class="gainer-name" style="color: ${nameColor}; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">${goldToken.name}</div>
+                            <div class="gainer-price" style="color: ${priceColor}; text-shadow: 0 0 10px ${priceShadow};">${formatPrice(goldToken.current_price)}</div>
+                        </div>
+                    </div>
+                    <div class="gainer-gauge">
+                        <div class="gauge-bar">
+                            <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; background-size: 200% auto; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
+                        </div>
+                        <div class="gauge-value" style="color: ${valueColor}; text-shadow: 0 0 15px ${valueShadow};">${sign}${Math.abs(changePercent).toFixed(1)}%</div>
+                    </div>
+                </div>
+            `;
+            goldPrice = goldToken.current_price;
+        }
+
+        renderTokenList();
+    }
+
+    function sortBy(column) {
+        if (sortColumn === column) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortColumn = column;
+            sortDirection = column === 'name' ? 'asc' : 'desc';
+        }
+
+        cryptoData.sort((a, b) => {
+            let aVal, bVal;
+            
+            if (column === 'name') {
+                aVal = a.name.toLowerCase();
+                bVal = b.name.toLowerCase();
+            } else if (column === 'price') {
+                aVal = a.current_price || 0;
+                bVal = b.current_price || 0;
+            } else if (column === 'change') {
+                aVal = a.price_change_percentage_24h || 0;
+                bVal = b.price_change_percentage_24h || 0;
+            }
+
+            if (sortDirection === 'asc') {
+                return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+            } else {
+                return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+            }
+        });
+
+        renderTokenList();
+    }
+
+    function renderTokenList() {
+        // Safely handle missing elements
+        const sortNameEl = document.getElementById('sortName');
+        const sortPriceEl = document.getElementById('sortPrice');
+        const sortChangeEl = document.getElementById('sortChange');
+        
+        if (sortNameEl) sortNameEl.className = 'sort-arrow';
+        if (sortPriceEl) sortPriceEl.className = 'sort-arrow';
+        if (sortChangeEl) sortChangeEl.className = 'sort-arrow';
+        
+        const activeArrow = document.getElementById('sort' + sortColumn.charAt(0).toUpperCase() + sortColumn.slice(1));
+        if (activeArrow) {
+            activeArrow.className = 'sort-arrow active';
+            activeArrow.textContent = sortDirection === 'asc' ? '▲' : '▼';
+        }
+
+        const tokenHTML = cryptoData.map(token => {
+            const change = token.price_change_percentage_24h || 0;
+            const changeClass = change >= 0 ? 'positive' : 'negative';
+            const changeSymbol = change >= 0 ? '▲' : '▼';
+            
+            return `
+                <div class="token-card">
+                    <img src="${token.image}" alt="${token.name}" class="token-icon">
+                    <div class="token-info">
+                        <div class="token-name">${token.name}</div>
+                        <div class="token-symbol">${token.symbol}</div>
+                    </div>
+                    <div class="token-price">${formatPrice(token.current_price)}</div>
+                    <div class="token-change-wrapper">
+                        <div class="token-change ${changeClass}">
+                            ${changeSymbol} ${Math.abs(change).toFixed(1)}%
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('tokenGrid').innerHTML = tokenHTML || '<div class="loading">მონაცემები მალე ჩაიტვირთება...</div>';  // Fallback if empty
+    }
+
+    displayQuote();
+    const cachedData = getCachedData();
+    if (cachedData && cachedData.length > 0) {
+        cryptoData = cachedData;
+        renderDashboard();
+    }
+    fetchCryptoData(false);
+    setInterval(() => fetchCryptoData(true), 90000);
+</script>
 </body>
 </html>
