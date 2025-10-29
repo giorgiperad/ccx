@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRYPTO COLLECTIVE X</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Theme color for PWA -->
+    <meta name="theme-color" content="#818cf8">
+    <!-- Apple Touch Icon (for iOS PWA) -->
+    <link rel="apple-touch-icon" href="/icon-192.png">
     <style>
         * {
             margin: 0;
@@ -675,7 +681,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>CRYPTO COLLECTIVE X</h2>
+            <h1>CRYPTO COLLECTIVE X</h1>
             <div class="last-update" id="lastUpdate">Loading...</div>
         </div>
 
@@ -726,6 +732,19 @@
     </div>
 
     <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
         // Create sparkles
         function createSparkles() {
             for (let i = 0; i < 20; i++) {
