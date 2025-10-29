@@ -683,7 +683,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>CRYPTO COLLECTIVE X</h2>
+            <h1>CRYPTO COLLECTIVE X</h1>
             <div class="last-update" id="lastUpdate">იტვირთება...</div>
         </div>
 
@@ -708,13 +708,13 @@
         
         <div class="table-header">
             <div></div>
-            <div class="table-header-text" style="text-align: left;"onclick="sortBy('name')">
-                აქტივი 
+            <div class="table-header-text" style="text-align: left" onclick="sortBy('name')">
+                აქტივი <span class="sort-arrow" id="sortName"></span>
             </div>
-            <div class="table-header-text" style="text-align: right;" onclick="sortBy('price')">
+            <div class="table-header-text" style="text-align: right" onclick="sortBy('price')">
                 ფასი <span class="sort-arrow" id="sortPrice">⬍</span>
             </div>
-            <div class="table-header-text" style="text-align: right;" onclick="sortBy('change')">
+            <div class="table-header-text" style="text-align: right" onclick="sortBy('change')">
                 24h ცვლილება <span class="sort-arrow active" id="sortChange">▼</span>
             </div>
         </div>
@@ -970,7 +970,7 @@
         function displayQuote() {
             const quote = quotes[currentQuoteIndex];
             document.getElementById('quoteText').textContent = quote.text;
-            document.getElementById('quoteAuthor').textContent = quote.author;
+            document.getElementById('quoteAuthor').textContent = ''; // No authors provided, so leave empty
         }
 
         function rotateQuote() {
@@ -1278,9 +1278,14 @@
         }
 
         function renderTokenList() {
-            document.getElementById('sortName').className = 'sort-arrow';
-            document.getElementById('sortPrice').className = 'sort-arrow';
-            document.getElementById('sortChange').className = 'sort-arrow';
+            // Safely handle missing elements
+            const sortNameEl = document.getElementById('sortName');
+            const sortPriceEl = document.getElementById('sortPrice');
+            const sortChangeEl = document.getElementById('sortChange');
+            
+            if (sortNameEl) sortNameEl.className = 'sort-arrow';
+            if (sortPriceEl) sortPriceEl.className = 'sort-arrow';
+            if (sortChangeEl) sortChangeEl.className = 'sort-arrow';
             
             const activeArrow = document.getElementById('sort' + sortColumn.charAt(0).toUpperCase() + sortColumn.slice(1));
             if (activeArrow) {
