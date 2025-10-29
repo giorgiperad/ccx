@@ -1,45 +1,78 @@
-const CACHE_NAME = 'crypto-collective-x-v1';
+const CACHE_NAME = 'crypto-collective-v1';
 const urlsToCache = [
-    '/index.html',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
-    'https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js'
+  '/',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
-    );
+// Install event: Cache core files
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
-            .catch(() => {
-                return caches.match('/index.html');
-            })
-    );
+// Fetch event: Serve from cache if offline, otherwise fetch fresh
+self.addEventListener('fetch', (event) => {
+  // Ignore non-GET requests (e.g., API POSTs)
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        // Return cached version if available
+        if (response) {
+          return response;
+        }
+
+        // Clone the request for API calls (CoinGecko etc.)
+        return fetch(event.request).then((fetchResponse) => {
+          // Check if it's a successful response
+          if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+            return fetchResponse;
+          }
+
+          // Clone and cache the response for future offline use
+          const responseToCache = fetchResponse.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+
+          return fetchResponse;
+        }).catch(() => {
+          // Offline fallback: Show a custom offline message for API routes
+          if (event.request.url.includes('coingecko.com') || event.request.url.includes('alternative.me')) {
+            return new Response('Offline: Market data unavailable. Please check your connection.', {
+              status: 503,
+              statusText: 'Service Unavailable'
+            });
+          }
+          // For other assets, return cached or empty
+          return caches.match(event.request) || new Response('Offline');
+        });
+      })
+  );
 });
 
-self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (!cacheWhitelist.includes(cacheName)) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
+// Activate event: Clean up old caches
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
         })
-    );
+      );
+    })
+  );
 });
