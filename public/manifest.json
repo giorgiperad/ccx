@@ -6,7 +6,7 @@
   "display": "standalone",
   "background_color": "#1A1A2E",
   "theme_color": "#1A1A2E",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "https://ta3bviqjtxy1kv7x.public.blob.vercel-storage.com/bgc-wAyOl9axJJUu4bUqug06dN3eSLPzt4.png",
