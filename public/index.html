@@ -683,7 +683,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>CRYPTO COLLECTIVE X</h1>
+            <h2>CRYPTO COLLECTIVE X</h2>
             <div class="last-update" id="lastUpdate">Loading...</div>
         </div>
 
@@ -701,7 +701,7 @@
         <div id="xautBlock"></div>
         <div id="loading" class="loading" style="display: none;">
             <div class="spinner"></div>
-            <div>Updating data...</div>
+            <div>მონაცემების განახლება...</div>
         </div>
         <div id="error"></div>
         <div id="partialError" class="partial-error" style="display: none;"></div>
@@ -709,13 +709,13 @@
         <div class="table-header">
             <div></div>
             <div class="table-header-text" onclick="sortBy('name')">
-                Token <span class="sort-arrow" id="sortName">⬍</span>
+                აქტივი <span class="sort-arrow" id="sortName">⬍</span>
             </div>
             <div class="table-header-text" style="text-align: right;" onclick="sortBy('price')">
-                Price <span class="sort-arrow" id="sortPrice">⬍</span>
+                ფასი <span class="sort-arrow" id="sortPrice">⬍</span>
             </div>
             <div class="table-header-text" style="text-align: right;" onclick="sortBy('change')">
-                24h Change <span class="sort-arrow active" id="sortChange">▼</span>
+                24h ცვლილება <span class="sort-arrow active" id="sortChange">▼</span>
             </div>
         </div>
         
@@ -1091,7 +1091,7 @@
                 }
 
                 renderDashboard();
-                document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()}`;
             } catch (error) {
                 console.error('Main fetch error:', error);
                 const cachedData = getCachedData();
@@ -1108,7 +1108,7 @@
                 } else {
                     errorEl.innerHTML = `
                         <div class="error">
-                            ⚠️ Error loading data. Please refresh the page. (Details: ${error.message})
+                            ⚠️ შეცდომა მონაცემების ჩატვირთვისას. გთხოვთ გადატვირთოთ გვერდი. (დეტალები: ${error.message})
                         </div>
                     `;
                 }
