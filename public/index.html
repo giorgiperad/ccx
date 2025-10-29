@@ -902,17 +902,21 @@
         }
     }
 
-    async function fetchWithRetry(url, options = {}, maxRetries = 3) {
-        for (let attempt = 0; attempt <= maxRetries; attempt++) {
-            try {
-                return await fetchWithTimeout(url, options);
-            } catch (error) {
-                if (attempt === maxRetries) throw error;
-                console.warn(`Fetch attempt ${attempt + 1} failed for ${url}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
-                await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
-            }
+    //  fetchWithRetry – 
+async function fetchWithRetry(originalUrl, options = {}, maxRetries = 3) {
+    const proxyUrl = `/api/crypto?url=${encodeURIComponent(originalUrl)}`; // პროქსი Vercel-ზე
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+            return await fetchWithTimeout(proxyUrl, options);
+        } catch (error) {
+            console.warn(`Proxy fetch attempt ${attempt + 1} failed for ${originalUrl}: ${error.message}. Retrying in ${Math.pow(2, attempt)}s...`);
+            if (attempt === maxRetries) throw error;
+            await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
         }
     }
+}
+
+// fetchCryptoData-
 
     async function fetchCryptoData(isBackground = false) {
         const errorEl = document.getElementById('error');
