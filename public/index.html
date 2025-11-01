@@ -979,9 +979,13 @@ function toggleMusic() {
     cryptoData = [...newData];
     setCachedData(cryptoData);
     console.log('New data fetched:', cryptoData.length, 'tokens');
-            } else {
-                throw mainResponse.reason;
-            }
+    
+    // Check CoinGecko data age
+    const oldestUpdate = Math.min(...cryptoData.map(t => t.last_updated ? new Date(t.last_updated).getTime() : Date.now()));
+    console.log('CoinGecko data age:', Math.floor((Date.now() - oldestUpdate) / 60000), 'minutes old');
+} else {
+    throw mainResponse.reason;
+}
 
             if (globalResponse.status === 'fulfilled' && globalResponse.value) {
                 const globalJson = await globalResponse.value.json();
