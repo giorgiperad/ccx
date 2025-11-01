@@ -52,10 +52,14 @@ self.addEventListener('fetch', (event) => {
             return fetchResponse;
           }
           const responseToCache = fetchResponse.clone();
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+caches.open(CACHE_NAME)
+    .then((cache) => {
+        // Only cache http/https requests
+        if (event.request.url.startsWith('http')) {
+            cache.put(event.request, responseToCache);
+        }
+    })
+    .catch((err) => console.log('Cache error:', err));
           return fetchResponse;
         });
       })
