@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     });
     
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`); // ← FIXED HERE
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`); // ✅ FIXED
     }
     
     const data = await response.json();
