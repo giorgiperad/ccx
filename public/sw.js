@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crypto-collective-v1';
+const CACHE_NAME = 'crypto-collective-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -17,46 +17,46 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Fetch event: Serve from cache if offline, otherwise fetch fresh
+// Fetch event: Network first for API calls, cache first for static assets
 self.addEventListener('fetch', (event) => {
-  // Ignore non-GET requests (e.g., API POSTs)
+  // Ignore non-GET requests
   if (event.request.method !== 'GET') {
     return;
   }
 
+  // For API calls (CoinGecko, alternative.me, Vercel proxy): Always fetch fresh (Network First)
+  if (event.request.url.includes('coingecko.com') || 
+      event.request.url.includes('alternative.me') ||
+      event.request.url.includes('/api/crypto')) {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          return new Response('Offline: Market data unavailable.', {
+            status: 503,
+            statusText: 'Service Unavailable'
+          });
+        })
+    );
+    return;
+  }
+
+  // For static assets (HTML, CSS, images): Cache First
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version if available
         if (response) {
           return response;
         }
-
-        // Clone the request for API calls (CoinGecko etc.)
         return fetch(event.request).then((fetchResponse) => {
-          // Check if it's a successful response
-          if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+          if (!fetchResponse || fetchResponse.status !== 200) {
             return fetchResponse;
           }
-
-          // Clone and cache the response for future offline use
           const responseToCache = fetchResponse.clone();
           caches.open(CACHE_NAME)
             .then((cache) => {
               cache.put(event.request, responseToCache);
             });
-
           return fetchResponse;
-        }).catch(() => {
-          // Offline fallback: Show a custom offline message for API routes
-          if (event.request.url.includes('coingecko.com') || event.request.url.includes('alternative.me')) {
-            return new Response('Offline: Market data unavailable. Please check your connection.', {
-              status: 503,
-              statusText: 'Service Unavailable'
-            });
-          }
-          // For other assets, return cached or empty
-          return caches.match(event.request) || new Response('Offline');
         });
       })
   );
@@ -69,10 +69,13 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     })
   );
+  // Take control immediately
+  return self.clients.claim();
 });
