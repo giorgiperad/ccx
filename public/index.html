@@ -10,7 +10,16 @@
     <meta name="theme-color" content="#818cf8">
     <!-- Apple Touch Icon (for iOS PWA) -->
     <link rel="apple-touch-icon" href="/icon-192.png">
-<a href="calendar.html" style="position: fixed; bottom: 24px; right: 24px; font-size: 48px; text-decoration: none; animation: float 3s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.8)); z-index: 1000; cursor: pointer; transition: transform 0.3s;">📅</a>    <style>
+<a href="calendar.html" style="position: fixed; bottom: 24px; right: 24px; font-size: 48px; text-decoration: none; animation: float 3s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.8)); z-index: 1000; cursor: pointer; transition: transform 0.3s;">📅</a>    
+    <!-- Music Player -->
+<audio id="bgMusic" loop>
+    <source src="https://ta3bviqjtxy1kv7x.public.blob.vercel-storage.com/1.%20Inception.wav" type="audio/wav">
+</audio>
+
+<button id="musicToggle" style="position: fixed; bottom: 4px; left: 4px; width: 0px; height: 0px; border-radius: 50%; background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3)); backdrop-filter: blur(20px); border: 2px solid rgba(129, 140, 248, 0.5); color: white; font-size: 28px; cursor: pointer; z-index: 1000; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4); animation: float 3s ease-in-out infinite; animation-delay: 0.5s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onclick="toggleMusic()">
+    🔇
+</button>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -759,7 +768,29 @@
         }
     }
     createSparkles();
+// Music control
+let isMusicPlaying = false;
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
 
+// Set initial volume
+bgMusic.volume = 0.3;
+
+function toggleMusic() {
+    if (isMusicPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = '🔇';
+        musicToggle.style.background = 'linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3))';
+        isMusicPlaying = false;
+    } else {
+        bgMusic.play().catch(err => {
+            console.log('Audio play failed:', err);
+        });
+        musicToggle.textContent = '🔊';
+        musicToggle.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(5, 150, 105, 0.4))';
+        isMusicPlaying = true;
+    }
+}
     const quotes = [
         { text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე." },
         { text: "საუკეთესო დრო ინვესტიციის დასაწყებად გუშინ იყო, მეორე საუკეთესო დრო კი დღესაა." },
