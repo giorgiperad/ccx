@@ -974,8 +974,11 @@ function toggleMusic() {
             ]);
 
             if (mainResponse.status === 'fulfilled') {
-                cryptoData = await mainResponse.value.json();
-                setCachedData(cryptoData);
+    const newData = await mainResponse.value.json();
+    // Force update by creating a new array reference
+    cryptoData = [...newData];
+    setCachedData(cryptoData);
+    console.log('New data fetched:', cryptoData.length, 'tokens');
             } else {
                 throw mainResponse.reason;
             }
@@ -1041,7 +1044,9 @@ function toggleMusic() {
     }
 
     function renderDashboard() {
-        let statsHTML = '';
+    console.log('Rendering dashboard with', cryptoData.length, 'tokens');
+    
+    let statsHTML = '';
         
         if (globalData) {
             statsHTML += `
@@ -1144,10 +1149,32 @@ function toggleMusic() {
                 </div>
             `;
             goldPrice = goldToken.current_price;
+    }
+
+    // Sort data according to current sort settings before rendering
+    cryptoData.sort((a, b) => {
+        let aVal, bVal;
+        
+        if (sortColumn === 'name') {
+            aVal = a.name.toLowerCase();
+            bVal = b.name.toLowerCase();
+        } else if (sortColumn === 'price') {
+            aVal = a.current_price || 0;
+            bVal = b.current_price || 0;
+        } else if (sortColumn === 'change') {
+            aVal = a.price_change_percentage_24h || 0;
+            bVal = b.price_change_percentage_24h || 0;
         }
 
-        renderTokenList();
-    }
+        if (sortDirection === 'asc') {
+            return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+        } else {
+            return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+        }
+    });
+
+    renderTokenList();
+}
 
     function sortBy(column) {
         if (sortColumn === column) {
