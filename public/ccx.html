@@ -74,14 +74,29 @@
         .logo-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
-            animation: floatBounce 3s ease-in-out infinite;
+            font-size: 28px;
+            box-shadow: 0 2px 24px rgba(139, 92, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { 
+                box-shadow: 0 8px 24px rgba(139, 92, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
+            }
+            50% { 
+                box-shadow: 0 8px 32px rgba(139, 92, 246, 0.8), 0 0 60px rgba(139, 92, 246, 0.6), 0 0 80px rgba(236, 72, 153, 0.4);
+            }
         }
 
         .logo-text {
@@ -711,10 +726,12 @@
 
     <div class="navbar">
         <div class="logo-section">
-            <div class="logo-icon">₿</div>
+            <div class="logo-icon">
+                <img src="https://ta3bviqjtxy1kv7x.public.blob.vercel-storage.com/sticker.webp" alt="Crypto Logo">
+            </div>
             <div class="logo-text">
                 <div class="logo-title">CRYPTO COLLECTIVE X</div>
-                <div class="logo-subtitle">Desktop Pro Edition</div>
+                <div class="logo-subtitle"></div>
             </div>
         </div>
         <div class="nav-right">
@@ -730,9 +747,8 @@
         <div class="hero-section">
             <div class="hero-content">
                 <div class="hero-left">
-                    <h1>Real-Time Market Intelligence</h1>
                     <div class="hero-quote" id="heroQuote" onclick="rotateQuote()">
-                        ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.
+                        Loading...
                     </div>
                 </div>
                 <div class="hero-stats" id="heroStats"></div>
@@ -777,14 +793,33 @@
             "ბაზარზე გრძელი თამაში მოითხოვს მოთმინებას, და არა ემოციებს.",
             "წარმატება მოდის იმათთან, ვინც დარჩა, როცა სხვები წავიდნენ.",
             "ბაზარი არის მასწავლებელი მათ, ვინც მზად არიან ისწავლონ.",
-            "რისკის მართვა აქვს უფრო მეტი მნიშვნელობა, ვიდრე მოგების პროგნოზს."
+            "რისკის მართვა აქვს უფრო მეტი მნიშვნელობა, ვიდრე მოგების პროგნოზს.",
+            "The market rewards patience and punishes panic.",
+            "Buy the dip, but only with conviction.",
+            "HODL is not just a strategy, it's a mindset.",
+            "In crypto, timing the market is less important than time in the market.",
+            "Fear creates opportunity for the prepared investor.",
+            "Volatility is the price you pay for returns.",
+            "Smart money accumulates when others capitulate.",
+            "The best trades often feel uncomfortable at first.",
+            "Knowledge compounds faster than capital.",
+            "Market cycles repeat, but never in the same way.",
+            "Diversification is protection against ignorance."
         ];
-        let currentQuoteIndex = 0;
+        let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
 
         function rotateQuote() {
-            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            const newIndex = Math.floor(Math.random() * quotes.length);
+            if (newIndex !== currentQuoteIndex) {
+                currentQuoteIndex = newIndex;
+            } else {
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            }
             document.getElementById('heroQuote').textContent = quotes[currentQuoteIndex];
         }
+
+        // Display random quote on load
+        document.getElementById('heroQuote').textContent = quotes[currentQuoteIndex];
 
         function updateTime() {
             const now = new Date();
