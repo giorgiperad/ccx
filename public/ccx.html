@@ -26,10 +26,15 @@
             100% { transform: translateX(100%); }
         }
 
-        @keyframes floatBounce {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes hoverFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes neonGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px #00ffff); }
+  50% { filter: drop-shadow(0 0 20px #00ffff); }
+}
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -80,7 +85,7 @@
             justify-content: center;
             font-size: 28px;
             box-shadow: 0 8px 24px rgba(139, 92, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
-            animation: floatBounce 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite;
+            animation: hoverFloat 6s ease-in-out infinite, neonGlow 3s linear infinite;
             overflow: hidden;
             position: relative;
             background: linear-gradient(135deg, #8b5cf6, #ec4899);
