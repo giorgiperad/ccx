@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crypto-collective-v2';
+const CACHE_NAME = 'crypto-collective-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
