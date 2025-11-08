@@ -1,5 +1,5 @@
 // sw.js
-const CACHE_NAME = 'crypto-collective-v4'; // Keep this, but we'll force update
+const CACHE_NAME = 'crypto-collective-v5'; // Keep this, but we'll force update
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
