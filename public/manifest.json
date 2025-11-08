@@ -2,7 +2,7 @@
   "name": "CRYPTO COLLECTIVE X",
   "short_name": "კრიპტო კოლექტივი X",
   "description": "A sleek crypto dashboard for market stats, top gainers, and token prices. Georgian quotes for motivation.",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0e27",
