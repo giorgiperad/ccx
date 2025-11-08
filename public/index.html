@@ -1454,5 +1454,56 @@
     fetchCryptoData(false);
     setInterval(() => fetchCryptoData(true), 90000);
 </script>
+
+<script>
+  // Auto-update PWA when new version is available
+  if ('serviceWorker' in navigator) {
+    let refreshing = false;
+
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      // Track updates
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New version ready
+            showUpdateToast();
+          }
+        });
+      });
+
+      // Auto-reload when new SW takes over
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+    });
+
+    function showUpdateToast() {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        background: #8b5cf6; color: white; padding: 12px 24px; border-radius: 12px;
+        font-size: 14px; z-index: 10000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        animation: fadeInUp 0.5s ease;
+      `;
+      toast.innerHTML = `
+        ახალი ვერსია! <span style="margin-left:8px; cursor:pointer; text-decoration:underline;" onclick="updateNow()">განახლება</span>
+      `;
+      document.body.appendChild(toast);
+
+      window.updateNow = () => {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage('skipWaiting');
+        }
+      };
+
+      setTimeout(() => toast.remove(), 10000);
+    }
+  }
+</script>
+    
 </body>
 </html>
