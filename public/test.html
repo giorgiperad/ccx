@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO COLLECTIVE X</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8b5cf6">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes shimmerEffect {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+        }
+
+        @keyframes priceFlash {
+            0%, 100% { background-color: rgba(139, 92, 246, 0.1); }
+            50% { background-color: rgba(139, 92, 246, 0.3); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #050505;
+            color: #ffffff;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #fff, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s infinite;
+            z-index: 1;
+        }
+
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #1a1a1a;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
+            animation: float 3s ease-in-out infinite;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        }
+
+        .logo-icon img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .live-text {
+            font-size: 12px;
+            color: #10b981;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .time-display {
+            font-size: 14px;
+            color: #888;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .last-update {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            padding: 12px;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-link {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            font-size: 48px;
+            text-decoration: none;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.8));
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .calendar-link:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 60px;
+        }
+
+        .quote-block {
+            background: #0d0d0d;
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 32px;
+            border: 2px solid #1a1a1a;
+            backdrop-filter: blur(20px);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 10px 40px rgba(139, 92, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .quote-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .quote-block:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 60px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: #8b5cf6;
+        }
+
+        .quote-block:hover::before {
+            left: 100%;
+        }
+
+        .quote-block:active {
+            transform: translateY(-2px);
+        }
+
+        .quote-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.8));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #e2e8f0;
+            font-style: italic;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: #a78bfa;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: #0d0d0d;
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(40px);
+            border: 2px solid #1a1a1a;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent);
+            border-radius: 50%;
+            transition: all 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 60px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #8b5cf6;
+        }
+
+        .stat-card:hover::before {
+            top: -25%;
+            right: -25%;
+            width: 150px;
+            height: 150px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.6));
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .top-gainer, .xaut-block {
+            border-radius: 28px;
+            padding: 28px;
+            backdrop-filter: blur(40px);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-gainer {
+            background: #0d0d0d;
+            border: 2px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .top-gainer::after {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 32px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .xaut-block {
+            background: #0d0d0d;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .xaut-block.negative {
+            border: 2px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .top-gainer:hover, .xaut-block:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .gainer-label {
+            font-size: 13px;
+            color: #6ee7b7;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(110, 231, 183, 0.8);
+        }
+
+        .gainer-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .gainer-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(52, 211, 153, 0.6);
+            box-shadow: 
+                0 0 30px rgba(52, 211, 153, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+        }
+
+        .gainer-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 40px rgba(52, 211, 153, 0.8);
+        }
+
+        .gainer-info {
+            flex: 1;
+        }
+
+        .gainer-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #f0fdfa;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .gainer-price {
+            font-size: 20px;
+            color: #6ee7b7;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(110, 231, 183, 0.6);
+        }
+
+        .gainer-gauge {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .gauge-bar {
+            flex: 1;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669, #10b981);
+            background-size: 200% auto;
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+            animation: shimmer 2s linear infinite;
+        }
+
+        .gauge-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #6ee7b7;
+            text-shadow: 0 0 20px rgba(110, 231, 183, 0.8);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 56px 1fr 100px 90px;
+            gap: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+            border-radius: 20px;
+            background: #0d0d0d;
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            backdrop-filter: blur(40px);
+        }
+
+        .table-header-text {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s;
+        }
+
+        .table-header-text:hover {
+            color: #8b5cf6;
+            transform: translateY(-1px);
+        }
+
+        .sort-arrow {
+            display: inline-block;
+            margin-left: 6px;
+            opacity: 0.4;
+            font-size: 10px;
+            transition: all 0.3s;
+        }
+
+        .sort-arrow.active {
+            opacity: 1;
+            color: #8b5cf6;
+            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.8));
+        }
+
+        .token-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .token-card {
+            background: #0d0d0d;
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(40px);
+            border: 2px solid #1a1a1a;
+            display: grid;
+            grid-template-columns: 48px 1fr 100px 90px;
+            gap: 12px;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+            transition: left 0.6s;
+        }
+
+        .token-card:hover {
+            transform: translateY(-4px);
+            border-color: #8b5cf6;
+            box-shadow: 
+                0 12px 40px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .token-card:hover::before {
+            left: 100%;
+        }
+
+        .token-card:active {
+            transform: translateY(-2px);
+        }
+
+        .token-card.flash {
+            animation: priceFlash 0.5s ease-out;
+        }
+
+        .token-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+            transition: all 0.4s;
+        }
+
+        .token-card:hover .token-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+            border-color: #8b5cf6;
+        }
+
+        .token-info {
+            min-width: 0;
+        }
+
+        .token-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #f1f5f9;
+        }
+
+        .token-symbol {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .token-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #c7d2fe;
+            text-align: right;
+        }
+
+        .token-change-wrapper {
+            text-align: right;
+        }
+
+        .token-change {
+            font-size: 14px;
+            font-weight: 800;
+            padding: 8px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            min-width: 75px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .positive {
+            color: #6ee7b7;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .negative {
+            color: #fca5a5;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .token-card:hover .token-change {
+            transform: scale(1.05);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #1a1a1a;
+            border-top: 4px solid #8b5cf6;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error, .partial-error {
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(40px);
+            font-weight: 600;
+        }
+
+        .error {
+            background: #0d0d0d;
+            border: 2px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
+        }
+
+        .partial-error {
+            background: #0d0d0d;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            border-radius: 12px;
+            height: 24px;
+            margin: 8px 0;
+            animation: shimmer 2s infinite;
+        }
+
+        .skeleton-stat {
+            background: #0d0d0d;
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(40px);
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .skeleton-token {
+            background: #0d0d0d;
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(40px);
+            border: 2px solid #1a1a1a;
+            display: grid;
+            grid-template-columns: 48px 1fr 100px 90px;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            height: 68px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-icon img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .logo-title {
+                font-size: 18px;
+            }
+
+            .logo-subtitle {
+                font-size: 9px;
+            }
+
+            .nav-right {
+                gap: 16px;
+            }
+
+            .live-indicator {
+                padding: 6px 12px;
+            }
+
+            .live-text {
+                font-size: 10px;
+            }
+
+            .time-display {
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 24px 16px;
+            }
+            
+            .market-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .stat-icon {
+                width: 24px;
+                height: 24px;
+                margin-bottom: 18px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .gainer-name {
+                font-size: 20px;
+            }
+
+            .gainer-price {
+                font-size: 16px;
+            }
+
+            .gauge-value {
+                font-size: 18px;
+                min-width: 70px;
+            }
+
+            .table-header,
+            .token-card {
+                grid-template-columns: 40px 1fr 80px 75px;
+                gap: 8px;
+                padding: 14px;
+            }
+
+            .token-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .token-name {
+                font-size: 14px;
+            }
+
+            .token-symbol {
+                font-size: 11px;
+            }
+
+            .token-price {
+                font-size: 14px;
+            }
+
+            .token-change {
+                font-size: 12px;
+                padding: 6px 8px;
+                min-width: 65px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <img src="https://via.placeholder.com/36/8b5cf6/ffffff?text=C" alt="Logo" id="logoImg">
+            </div>
+            <div class="logo-text">
+                <div class="logo-title">CRYPTO COLLECTIVE X</div>
+                <div class="logo-subtitle">Real-time Dashboard</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span class="live-text">Live</span>
+            </div>
+            <div class="time-display" id="currentTime">00:00:00</div>
+        </div>
+    </nav>
+
+    <!-- Calendar Link -->
+    <a href="calendar.html" class="calendar-link">📅</a>
+
+    <div class="container">
+        <div class="last-update" id="lastUpdate">იტვირთება...</div>
+
+        <div class="quote-block" id="quoteBlock" onclick="rotateQuote()">
+            <div class="quote-icon">💭</div>
+            <div class="quote-text" id="quoteText"></div>
+            <div class="quote-author" id="quoteAuthor"></div>
+        </div>
+
+        <div id="marketStats" class="market-stats">
+            <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
+            <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
+        </div>
+        
+        <div class="featured-grid">
+            <div id="topGainer"></div>
+            <div id="xautBlock"></div>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <div>მონაცემების განახლება...</div>
+        </div>
+        <div id="error"></div>
+        <div id="partialError" class="partial-error" style="display: none;"></div>
+        
+        <div class="table-header">
+            <div></div>
+            <div class="table-header-text" style="text-align: left" onclick="sortBy('name')">
+                აქტივი <span class="sort-arrow" id="sortName"></span>
+            </div>
+            <div class="table-header-text" style="text-align: right" onclick="sortBy('price')">
+                ფასი <span class="sort-arrow" id="sortPrice"></span>
+            </div>
+            <div class="table-header-text" style="text-align: right" onclick="sortBy('change')">
+                24h <span class="sort-arrow active" id="sortChange">▼</span>
+            </div>
+        </div>
+        
+        <div id="tokenGrid" class="token-grid">
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+            <div class="skeleton-token"></div>
+        </div>
+    </div>
+
+    <script>
+    // Update current time
+    function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        const timeEl = document.getElementById('currentTime');
+        if (timeEl) {
+            timeEl.textContent = timeString;
+        }
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                    setInterval(() => {
+                        registration.update();
+                    }, 60000);
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+
+    // Create sparkles
+    function createSparkles() {
+        for (let i = 0; i < 20; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(sparkle);
+        }
+    }
+    createSparkles();
+
+    const quotes = [
+        { text: "პრაქტიკა არის გამოცდილება, რომელსაც მივყავართ სრულყოფილებამდე." },
+    ];
+
+    let currentQuoteIndex = Math.floor(Math.random() * quotes.length);
+
+    function displayQuote() {
+        const quote = quotes[currentQuoteIndex];
+        document.getElementById('quoteText').textContent = quote.text;
+        document.getElementById('quoteAuthor').textContent = '';
+    }
+
+    function rotateQuote() {
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+        displayQuote();
+    }
+
+    // Use in-memory cache instead of localStorage
+    let memoryCache = {
+        data: null,
+        timestamp: null
+    };
+    const CACHE_EXPIRY = 5 * 60 * 1000;
+    const FETCH_TIMEOUT = 10000;
+
+    function getCachedData() {
+        if (!memoryCache.data || !memoryCache.timestamp) return null;
+        if (Date.now() - memoryCache.timestamp > CACHE_EXPIRY) {
+            memoryCache = { data: null, timestamp: null };
+            return null;
+        }
+        return memoryCache.data;
+    }
+
+    function setCachedData(data) {
+        memoryCache = { data, timestamp: Date.now() };
+    }
+
+    const tokens = [
+        'bitcoin', 'ethereum', 'solana', 'cardano', 'ripple', 'polkadot',
+        'chainlink', 'cosmos', 'stellar', 'celo', 'osmosis',
+        'sophiaverse', 'nunet', 'hypercycle',
+        'chia', 'kava', 'decentraland', 'alien-worlds', 'gamium',
+        'zksync', 'starknet', 'arbitrum', 'optimism', 'linea', 'berachain',
+        'dforce-token', 'band-protocol', 'notcoin', 'flare', 'songbird',
+        'coin98', 'chainge', 'masa', 'foxy', 'paribus', 'katana-inu', 'plume', 'xai',
+        'status', 'tether-gold'
+    ];
+
+    let cryptoData = [];
+    let globalData = null;
+    let fearGreedData = null;
+    let goldPrice = null;
+    let sortColumn = 'change';
+    let sortDirection = 'desc';
+    let isInitialLoad = true;
+
+    async function fetchWithTimeout(url, options = {}, timeout = FETCH_TIMEOUT) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { ...options, signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                throw new Error('Request timed out');
+            }
+            throw error;
+        }
+    }
+
+    async function fetchWithRetry(originalUrl, options = {}, maxRetries = 3) {
+        const proxyUrl = `/api/crypto?url=${encodeURIComponent(originalUrl)}`;
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await fetchWithTimeout(proxyUrl, options);
+                return response;
+            } catch (error) {
+                console.warn(`Proxy fetch attempt ${attempt + 1}/${maxRetries + 1} failed for ${originalUrl}: ${error.message}`);
+                if (attempt === maxRetries) throw error;
+                const delay = 1000 * Math.pow(2, attempt);
+                console.log(`Retrying in ${delay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
+
+    async function fetchCryptoData(isBackground = false) {
+        const errorEl = document.getElementById('error');
+        const partialEl = document.getElementById('partialError');
+        errorEl.innerHTML = '';
+        partialEl.style.display = 'none';
+        const loadingEl = document.getElementById('loading');
+        if (!isBackground && isInitialLoad) {
+            loadingEl.style.display = 'block';
+        }
+
+        try {
+            const idsParam = tokens.join(',');
+            const [mainResponse, globalResponse, fgResponse] = await Promise.allSettled([
+                fetchWithRetry(
+                    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${idsParam}&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h`
+                ),
+                fetchWithRetry('https://api.coingecko.com/api/v3/global').catch(() => null),
+                fetchWithRetry('https://api.alternative.me/fng/').catch(() => null)
+            ]);
+
+            if (mainResponse.status === 'fulfilled') {
+                const newData = await mainResponse.value.json();
+                cryptoData = [...newData];
+                setCachedData(cryptoData);
+                console.log('New data fetched:', cryptoData.length, 'tokens');
+                
+                const oldestUpdate = Math.min(...cryptoData.map(t => t.last_updated ? new Date(t.last_updated).getTime() : Date.now()));
+                console.log('CoinGecko data age:', Math.floor((Date.now() - oldestUpdate) / 60000), 'minutes old');
+            } else {
+                throw mainResponse.reason;
+            }
+
+            if (globalResponse.status === 'fulfilled' && globalResponse.value) {
+                const globalJson = await globalResponse.value.json();
+                globalData = globalJson.data;
+            } else {
+                globalData = null;
+            }
+
+            if (fgResponse.status === 'fulfilled' && fgResponse.value) {
+                const fgJson = await fgResponse.value.json();
+                fearGreedData = fgJson.data[0];
+            } else {
+                fearGreedData = null;
+            }
+
+            renderDashboard();
+            document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()}`;
+        } catch (error) {
+            console.error('Main fetch error:', error);
+            const cachedData = getCachedData();
+            if (cachedData && cachedData.length > 0) {
+                console.log('Using cached data');
+                cryptoData = cachedData;
+                renderDashboard();
+                document.getElementById('lastUpdate').textContent = `ბოლოს განახლდა: ${new Date().toLocaleTimeString()} (cache-დან)`;
+                const ageMins = Math.floor((Date.now() - memoryCache.timestamp) / 60000);
+                partialEl.innerHTML = `⚠️ Cache-დან მონაცემები (${ageMins} წთ. ძველი). ხელახლა ცდა...`;
+                partialEl.style.display = 'block';
+                
+                setTimeout(() => fetchCryptoData(true), 30000);
+            } else {
+                errorEl.innerHTML = `
+                    <div class="error">
+                        ⚠️ შეცდომა მონაცემების ჩატვირთვისას. გთხოვთ გადატვირთოთ გვერდი. (დეტალები: ${error.message})
+                    </div>
+                `;
+                document.getElementById('lastUpdate').textContent = `შეცდომა: ${new Date().toLocaleTimeString()}`;
+            }
+        } finally {
+            loadingEl.style.display = 'none';
+            if (isInitialLoad) {
+                isInitialLoad = false;
+            }
+        }
+    }
+
+    function formatPrice(price) {
+        if (price >= 1000) return `${price.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+        if (price >= 1) return `${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (price >= 0.01) return `${price.toFixed(4)}`;
+        return `${price.toFixed(6)}`;
+    }
+
+    function formatMarketCap(value) {
+        if (value >= 1e12) return `${(value / 1e12).toFixed(2)}T`;
+        if (value >= 1e9) return `${(value / 1e9).toFixed(2)}B`;
+        if (value >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
+        return `${value.toFixed(0)}`;
+    }
+
+    function renderDashboard() {
+        console.log('Rendering dashboard with', cryptoData.length, 'tokens');
+        
+        let statsHTML = '';
+        
+        if (globalData) {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">BTC დომინაცია</div>
+                    <div class="stat-value">${globalData.market_cap_percentage.btc.toFixed(1)}%</div>
+                </div>
+            `;
+        } else {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">BTC დომინაცია</div>
+                    <div class="stat-value">--</div>
+                </div>
+            `;
+        }
+
+        if (fearGreedData) {
+            const value = parseInt(fearGreedData.value);
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">შიში & სიხარბე</div>
+                    <div class="stat-value">${value}</div>
+                </div>
+            `;
+        } else {
+            statsHTML += `
+                <div class="stat-card">
+                    <div class="stat-label">შიში & სიხარბე</div>
+                    <div class="stat-value">--</div>
+                </div>
+            `;
+        }
+
+        document.getElementById('marketStats').innerHTML = statsHTML;
+
+        const sortedByChange = [...cryptoData].sort((a, b) => 
+            (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
+        );
+        const topGainer = sortedByChange[0];
+
+        if (topGainer) {
+            const changePercent = topGainer.price_change_percentage_24h || 0;
+            const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
+            
+            document.getElementById('topGainer').innerHTML = `
+                <div class="top-gainer">
+                    <div class="gainer-label">🏆 Top Gainer (24h)</div>
+                    <div class="gainer-content">
+                        <img src="${topGainer.image}" alt="${topGainer.name}" class="gainer-icon">
+                        <div class="gainer-info">
+                            <div class="gainer-name">${topGainer.name}</div>
+                            <div class="gainer-price">${formatPrice(topGainer.current_price)}</div>
+                        </div>
+                    </div>
+                    <div class="gainer-gauge">
+                        <div class="gauge-bar">
+                            <div class="gauge-fill" style="width: ${gaugeWidth}%"></div>
+                        </div>
+                        <div class="gauge-value">+${changePercent.toFixed(1)}%</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const goldToken = cryptoData.find(token => token.id === 'tether-gold');
+        if (goldToken) {
+            const changePercent = goldToken.price_change_percentage_24h || 0;
+            const isNegative = changePercent < 0;
+            const gaugeWidth = Math.min(Math.abs(changePercent) * 2, 100);
+            const sign = isNegative ? '-' : '+';
+            const labelColor = isNegative ? '#fca5a5' : '#fbbf24';
+            const nameColor = isNegative ? '#fee2e2' : '#fef3c7';
+            const priceColor = labelColor;
+            const valueColor = isNegative ? '#ef4444' : '#f59e0b';
+            const gaugeFillColor = isNegative ? 'linear-gradient(90deg, #ef4444, #dc2626, #ef4444)' : 'linear-gradient(90deg, #f59e0b, #d97706, #f59e0b)';
+            const labelShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+            const priceShadow = isNegative ? 'rgba(248, 113, 113, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+            const valueShadow = isNegative ? 'rgba(248, 113, 113, 0.6)' : 'rgba(255, 215, 0, 0.6)';
+            const iconBorder = isNegative ? 'rgba(248, 113, 113, 0.5)' : 'rgba(255, 215, 0, 0.5)';
+            const iconShadow = isNegative ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 215, 0, 0.4)';
+            const blockClass = isNegative ? 'xaut-block negative' : 'xaut-block';
+
+            document.getElementById('xautBlock').innerHTML = `
+                <div class="${blockClass}">
+                    <div class="gainer-label" style="color: ${labelColor}; text-shadow: 0 0 10px ${labelShadow};">🪙 ოქრო 24ს</div>
+                    <div class="gainer-content">
+                        <img src="${goldToken.image}" alt="Tether Gold" class="gainer-icon" style="border: 3px solid ${iconBorder}; box-shadow: 0 0 20px ${iconShadow};">
+                        <div class="gainer-info">
+                            <div class="gainer-name" style="color: ${nameColor}; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);">${goldToken.name}</div>
+                            <div class="gainer-price" style="color: ${priceColor}; text-shadow: 0 0 10px ${priceShadow};">${formatPrice(goldToken.current_price)}</div>
+                        </div>
+                    </div>
+                    <div class="gainer-gauge">
+                        <div class="gauge-bar">
+                            <div class="gauge-fill" style="width: ${gaugeWidth}%; background: ${gaugeFillColor}; background-size: 200% auto; box-shadow: 0 0 15px ${isNegative ? 'rgba(239, 68, 68, 0.6)' : 'rgba(255, 215, 0, 0.6)'}"></div>
+                        </div>
+                        <div class="gauge-value" style="color: ${valueColor}; text-shadow: 0 0 15px ${valueShadow};">${sign}${Math.abs(changePercent).toFixed(1)}%</div>
+                    </div>
+                </div>
+            `;
+            goldPrice = goldToken.current_price;
+        }
+
+        cryptoData.sort((a, b) => {
+            let aVal, bVal;
+            
+            if (sortColumn === 'name') {
+                aVal = a.name.toLowerCase();
+                bVal = b.name.toLowerCase();
+            } else if (sortColumn === 'price') {
+                aVal = a.current_price || 0;
+                bVal = b.current_price || 0;
+            } else if (sortColumn === 'change') {
+                aVal = a.price_change_percentage_24h || 0;
+                bVal = b.price_change_percentage_24h || 0;
+            }
+
+            if (sortDirection === 'asc') {
+                return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+            } else {
+                return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+            }
+        });
+
+        renderTokenList();
+    }
+
+    function sortBy(column) {
+        if (sortColumn === column) {
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortColumn = column;
+            sortDirection = column === 'name' ? 'asc' : 'desc';
+        }
+
+        cryptoData.sort((a, b) => {
+            let aVal, bVal;
+            
+            if (column === 'name') {
+                aVal = a.name.toLowerCase();
+                bVal = b.name.toLowerCase();
+            } else if (column === 'price') {
+                aVal = a.current_price || 0;
+                bVal = b.current_price || 0;
+            } else if (column === 'change') {
+                aVal = a.price_change_percentage_24h || 0;
+                bVal = b.price_change_percentage_24h || 0;
+            }
+
+            if (sortDirection === 'asc') {
+                return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+            } else {
+                return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+            }
+        });
+
+        renderTokenList();
+    }
+
+    function renderTokenList() {
+        const sortNameEl = document.getElementById('sortName');
+        const sortPriceEl = document.getElementById('sortPrice');
+        const sortChangeEl = document.getElementById('sortChange');
+        
+        if (sortNameEl) sortNameEl.className = 'sort-arrow';
+        if (sortPriceEl) sortPriceEl.className = 'sort-arrow';
+        if (sortChangeEl) sortChangeEl.className = 'sort-arrow';
+        
+        const activeArrow = document.getElementById('sort' + sortColumn.charAt(0).toUpperCase() + sortColumn.slice(1));
+        if (activeArrow) {
+            activeArrow.className = 'sort-arrow active';
+            activeArrow.textContent = sortDirection === 'asc' ? '▲' : '▼';
+        }
+
+        const tokenHTML = cryptoData.map(token => {
+            const change = token.price_change_percentage_24h || 0;
+            const changeClass = change >= 0 ? 'positive' : 'negative';
+            const changeSymbol = change >= 0 ? '▲' : '▼';
+            
+            return `
+                <div class="token-card">
+                    <img src="${token.image}" alt="${token.name}" class="token-icon">
+                    <div class="token-info">
+                        <div class="token-name">${token.name}</div>
+                        <div class="token-symbol">${token.symbol}</div>
+                    </div>
+                    <div class="token-price">${formatPrice(token.current_price)}</div>
+                    <div class="token-change-wrapper">
+                        <div class="token-change ${changeClass}">
+                            ${changeSymbol} ${Math.abs(change).toFixed(1)}%
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('tokenGrid').innerHTML = tokenHTML || '<div class="loading">მონაცემები მალე ჩაიტვირთება...</div>';
+    }
+
+    displayQuote();
+    const cachedData = getCachedData();
+    if (cachedData && cachedData.length > 0) {
+        cryptoData = cachedData;
+        renderDashboard();
+    }
+    fetchCryptoData(false);
+    setInterval(() => fetchCryptoData(true), 90000);
+</script>
+</body>
+</html>
