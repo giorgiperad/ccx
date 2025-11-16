@@ -533,6 +533,7 @@
             border-right: 12px solid transparent;
         }
 
+        /* Fear zone: 0-50 (left half, 0-90deg) - Green slices */
         .slice-colors .st.slice-item:nth-child(1) {
             border-bottom-color: #00FF88;
             left: -5px;
@@ -540,31 +541,65 @@
 
         .slice-colors .st.slice-item:nth-child(2) {
             border-bottom-color: #00FF88;
-            transform: rotate(36deg);
+            transform: rotate(22.5deg);
             transform-origin: right;
             top: 12px;
             left: -30px;
         }
 
         .slice-colors .st.slice-item:nth-child(3) {
-            border-bottom-color: #F59E0B;
-            transform: rotate(72deg);
+            border-bottom-color: #00FF88;
+            transform: rotate(45deg);
+            transform-origin: right;
+            top: 12px;
+            left: -30px;
+        }
+
+        .slice-colors .st.slice-item:nth-child(4) {
+            border-bottom-color: #00FF88;
+            transform: rotate(67.5deg);
             transform-origin: right;
             top: -50px;
             left: 25px;
         }
 
-        .slice-colors .st.slice-item:nth-child(4) {
-            border-bottom-color: #FF4757;
-            transform: rotate(108deg);
+        /* Neutral zone: 50-75 (middle, 90-135deg) - Yellow slices */
+        .slice-colors .st.slice-item:nth-child(5) {
+            border-bottom-color: #F59E0B;
+            transform: rotate(90deg);
+            transform-origin: right;
+            top: -50px;
+            left: 25px;
+        }
+
+        .slice-colors .st.slice-item:nth-child(6) {
+            border-bottom-color: #F59E0B;
+            transform: rotate(112.5deg);
             transform-origin: right;
             right: -10px;
             bottom: -28px;
         }
 
-        .slice-colors .st.slice-item:nth-child(5) {
+        /* Greed zone: 75-100 (right quarter, 135-180deg) - Red slices */
+        .slice-colors .st.slice-item:nth-child(7) {
             border-bottom-color: #FF4757;
-            transform: rotate(144deg);
+            transform: rotate(135deg);
+            transform-origin: right;
+            right: -10px;
+            bottom: -28px;
+        }
+
+        .slice-colors .st.slice-item:nth-child(8) {
+            border-bottom-color: #FF4757;
+            transform: rotate(157.5deg);
+            transform-origin: right;
+            right: -10px;
+            bottom: -50px;
+        }
+
+        .slice-colors .st.slice-item:nth-child(9) {
+            border-bottom-color: #FF4757;
+            transform: rotate(180deg);
             transform-origin: right;
             right: -10px;
             bottom: -50px;
@@ -1133,6 +1168,10 @@
                 <div class="fear-greed-gauge-container">
                     <div class="gauge">
                         <div class="slice-colors">
+                            <div class="st slice-item"></div>
+                            <div class="st slice-item"></div>
+                            <div class="st slice-item"></div>
+                            <div class="st slice-item"></div>
                             <div class="st slice-item"></div>
                             <div class="st slice-item"></div>
                             <div class="st slice-item"></div>
