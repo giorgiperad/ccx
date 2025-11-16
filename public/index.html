@@ -459,13 +459,10 @@
             font-size: 0.75em;
             opacity: 0.6;
             margin: 1.1em 0 0.3em 0;
-            color: rgba(255, 255, 255, 0.6);
         }
 
         .gauge-center .number {
             font-size: 1.2em;
-            color: #fff;
-            font-weight: bold;
         }
 
         .needle {
@@ -482,7 +479,6 @@
             transform-origin: 100% 4px;
             box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.38);
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
         }
 
         .slice-colors .st {
@@ -495,16 +491,14 @@
             border-right: 12px solid transparent;
         }
 
-        /* Orange segment (left) */
         .slice-colors .st.slice-item:nth-child(1) {
             border-bottom-color: #EB8916;
             left: -5px;
         }
 
-        /* Green segment (center - largest) */
         .slice-colors .st.slice-item:nth-child(2) {
             border-bottom-color: #15C63C;
-            transform: rotate(36deg);
+            transform: rotate(145deg);
             transform-origin: right;
             top: 12px;
             left: -30px;
@@ -512,24 +506,23 @@
 
         .slice-colors .st.slice-item:nth-child(3) {
             border-bottom-color: #15C63C;
-            transform: rotate(72deg);
+            transform: rotate(225deg);
             transform-origin: right;
             top: -50px;
             left: 25px;
         }
 
         .slice-colors .st.slice-item:nth-child(4) {
-            border-bottom-color: #15C63C;
-            transform: rotate(108deg);
+            border-bottom-color: #D74141;
+            transform: rotate(35deg);
             transform-origin: right;
             right: -10px;
             bottom: -28px;
         }
 
-        /* Red segment (right) */
         .slice-colors .st.slice-item:nth-child(5) {
             border-bottom-color: #D74141;
-            transform: rotate(144deg);
+            transform: rotate(28deg);
             transform-origin: right;
             right: -10px;
             bottom: -50px;
