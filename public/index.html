@@ -1465,29 +1465,16 @@
             `;
         }
 
-        // Preserve gauge section before updating innerHTML
+        // Update market stats
         const marketStatsEl = document.getElementById('marketStats');
-        const existingGaugeSection = document.getElementById('fearGreedSection');
-        let gaugeSectionClone = null;
-        
-        if (existingGaugeSection) {
-            gaugeSectionClone = existingGaugeSection.cloneNode(true);
-        }
-        
-        // Update market stats (this will remove the gauge section)
         marketStatsEl.innerHTML = statsHTML;
-        
-        // Re-append gauge section if it existed
-        if (gaugeSectionClone) {
-            marketStatsEl.appendChild(gaugeSectionClone);
-        }
 
         // Update fear & greed gauge AFTER setting innerHTML
         if (fearGreedData) {
             const value = parseInt(fearGreedData.value);
             const classification = fearGreedData.value_classification;
             
-            // Re-query elements after innerHTML update (the cloned element is now in the DOM)
+            // Re-query elements after innerHTML update
             const gaugeSection = document.getElementById('fearGreedSection');
             const gaugeValueEl = document.getElementById('gaugeValue');
             const gaugeClassificationEl = document.getElementById('gaugeClassification');
@@ -1501,18 +1488,6 @@
                 // Needle starts at 0deg (pointing left), rotates to 180deg (pointing right)
                 // 0 value = 0deg, 100 value = 180deg
                 const angle = (value / 100) * 180; // 0-100 maps to 0-180 degrees
-                
-                // Set color based on value
-                let colorClass = '';
-                if (value <= 25) {
-                    colorClass = 'fear';
-                } else if (value <= 50) {
-                    colorClass = 'fear';
-                } else if (value <= 75) {
-                    colorClass = 'neutral';
-                } else {
-                    colorClass = 'greed';
-                }
                 
                 // Update needle rotation (always black, no color change)
                 gaugePointer.style.transform = `rotate(${angle}deg)`;
@@ -1531,6 +1506,13 @@
                     "Extreme Greed": "უკიდურესი სიხარბე"
                 };
                 gaugeClassificationEl.textContent = translations[classification] || classification;
+            } else {
+                console.warn('Gauge elements not found:', {
+                    gaugeSection: !!gaugeSection,
+                    gaugeValueEl: !!gaugeValueEl,
+                    gaugeClassificationEl: !!gaugeClassificationEl,
+                    gaugePointer: !!gaugePointer
+                });
             }
         }
 
