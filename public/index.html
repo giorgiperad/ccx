@@ -406,137 +406,93 @@
             filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.6));
         }
 
-        .fear-greed-gauge-container {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 0;
+        .fear-greed-stat-card {
+            transition: all 0.5s ease;
         }
 
-        .gauge {
-            font-family: Arial, Helvetica, sans-serif;
-            background: transparent;
-            box-shadow: none;
-            width: 200px;
-            height: 100px;
-            border-radius: 100px 100px 0 0;
-            position: relative;
-            overflow: hidden;
-            -webkit-transform-style: flat;
-            -webkit-transform: translateZ(0px);
+        .fear-greed-stat-card.fear {
+            background: rgba(21, 198, 60, 0.15);
+            border-color: rgba(21, 198, 60, 0.4);
         }
 
-        .gauge.min-scaled {
-            transform: scale(0.5);
+        .fear-greed-stat-card.fear:hover {
+            border-color: rgba(21, 198, 60, 0.6);
+            box-shadow: 0 20px 60px rgba(21, 198, 60, 0.3);
         }
 
-        .gauge-center {
-            content: '';
-            color: #fff;
-            width: 60%;
-            height: 60%;
-            background: #15222E;
-            border-radius: 100px 100px 0 0;
-            position: absolute;
-            box-shadow: 0 -13px 15px -10px rgba(0, 0, 0, 0.28);
-            right: 21%;
-            bottom: 0;
-            color: #fff;
+        .fear-greed-stat-card.neutral {
+            background: rgba(235, 137, 22, 0.15);
+            border-color: rgba(235, 137, 22, 0.4);
+        }
+
+        .fear-greed-stat-card.neutral:hover {
+            border-color: rgba(235, 137, 22, 0.6);
+            box-shadow: 0 20px 60px rgba(235, 137, 22, 0.3);
+        }
+
+        .fear-greed-stat-card.greed {
+            background: rgba(215, 65, 65, 0.15);
+            border-color: rgba(215, 65, 65, 0.4);
+        }
+
+        .fear-greed-stat-card.greed:hover {
+            border-color: rgba(215, 65, 65, 0.6);
+            box-shadow: 0 20px 60px rgba(215, 65, 65, 0.3);
+        }
+
+        .fear-greed-content {
             text-align: center;
-            z-index: 10;
+            padding: 20px;
         }
 
-        .gauge-center .label,
-        .gauge-center .number {
-            display: block;
-            width: 100%;
-            text-align: center;
-            border: 0 !important;
+        .fear-greed-label {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        .gauge-center .label {
-            font-size: 0.75em;
-            opacity: 0.6;
-            margin: 1.1em 0 0.3em 0;
+        .fear-greed-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 8px;
         }
 
-        .gauge-center .number {
-            font-size: 1.2em;
+        .fear-greed-stat-card.fear .fear-greed-value {
+            color: #15C63C;
+            text-shadow: 0 0 20px rgba(21, 198, 60, 0.6);
         }
 
-        .needle {
-            width: 78px;
-            height: 7px;
-            background: #15222E;
-            border-bottom-left-radius: 100%;
-            border-bottom-right-radius: 5px;
-            border-top-left-radius: 100%;
-            border-top-right-radius: 5px;
-            position: absolute;
-            bottom: 4px;
-            left: 20px;
-            transform-origin: 100% 4px;
-            box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.38);
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 5;
+        .fear-greed-stat-card.neutral .fear-greed-value {
+            color: #EB8916;
+            text-shadow: 0 0 20px rgba(235, 137, 22, 0.6);
         }
 
-        .slice-colors {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            z-index: 1;
+        .fear-greed-stat-card.greed .fear-greed-value {
+            color: #D74141;
+            text-shadow: 0 0 20px rgba(215, 65, 65, 0.6);
         }
 
-        .slice-colors .st {
-            position: absolute;
-            bottom: 0;
-            width: 60px;
-            height: 0;
-            border-bottom: 80px solid #000;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
+        .fear-greed-classification {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .slice-colors .st.slice-item:nth-child(1) {
-            border-bottom-color: #EB8916;
-            left: -5px;
+        .fear-greed-stat-card.fear .fear-greed-classification {
+            color: #15C63C;
         }
 
-        .slice-colors .st.slice-item:nth-child(2) {
-            border-bottom-color: #15C63C;
-            transform: rotate(145deg);
-            transform-origin: right;
-            top: 12px;
-            left: -30px;
+        .fear-greed-stat-card.neutral .fear-greed-classification {
+            color: #EB8916;
         }
 
-        .slice-colors .st.slice-item:nth-child(3) {
-            border-bottom-color: #15C63C;
-            transform: rotate(225deg);
-            transform-origin: right;
-            top: -50px;
-            left: 25px;
-        }
-
-        .slice-colors .st.slice-item:nth-child(4) {
-            border-bottom-color: #D74141;
-            transform: rotate(35deg);
-            transform-origin: right;
-            right: -10px;
-            bottom: -28px;
-        }
-
-        .slice-colors .st.slice-item:nth-child(5) {
-            border-bottom-color: #D74141;
-            transform: rotate(28deg);
-            transform-origin: right;
-            right: -10px;
-            bottom: -50px;
+        .fear-greed-stat-card.greed .fear-greed-classification {
+            color: #D74141;
         }
 
         .featured-grid {
@@ -995,26 +951,16 @@
                 grid-column: 1 / -1;
             }
 
-            .fear-greed-gauge-container {
-                padding: 5px 0;
+            .fear-greed-content {
+                padding: 16px;
             }
 
-            .gauge {
-                width: 160px;
-                height: 80px;
+            .fear-greed-value {
+                font-size: 2rem;
             }
 
-            .gauge-center .label {
-                font-size: 0.55rem;
-            }
-
-            .gauge-center .number {
-                font-size: 1.1rem;
-            }
-
-            .needle {
-                width: 62px;
-                height: 6px;
+            .fear-greed-classification {
+                font-size: 0.8rem;
             }
 
             .featured-grid {
@@ -1099,21 +1045,10 @@
         <div id="marketStats" class="market-stats">
             <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
             <div id="fearGreedSection" class="fear-greed-stat-card" style="display: none;">
-                <div class="fear-greed-gauge-container">
-                    <div class="gauge">
-                        <div class="slice-colors">
-                            <div class="st slice-item"></div>
-                            <div class="st slice-item"></div>
-                            <div class="st slice-item"></div>
-                            <div class="st slice-item"></div>
-                            <div class="st slice-item"></div>
-                        </div>
-                        <div id="gaugePointer" class="needle"></div>
-                        <div class="gauge-center">
-                            <div class="label" id="gaugeClassification">--</div>
-                            <div class="number" id="gaugeValue">--</div>
-                        </div>
-                    </div>
+                <div class="fear-greed-content">
+                    <div class="fear-greed-label">Crypto Fear & Greed Index</div>
+                    <div class="fear-greed-value" id="gaugeValue">--</div>
+                    <div class="fear-greed-classification" id="gaugeClassification">--</div>
                 </div>
             </div>
         </div>
@@ -1487,7 +1422,7 @@
             marketStatsEl.innerHTML = statsHTML;
         }
 
-        // Update fear & greed gauge
+        // Update fear & greed section with color based on value
         if (fearGreedData) {
             const value = parseInt(fearGreedData.value);
             const classification = fearGreedData.value_classification;
@@ -1495,24 +1430,27 @@
             const gaugeSection = document.getElementById('fearGreedSection');
             const gaugeValueEl = document.getElementById('gaugeValue');
             const gaugeClassificationEl = document.getElementById('gaugeClassification');
-            const gaugePointer = document.getElementById('gaugePointer');
             
-            if (gaugeSection && gaugeValueEl && gaugeClassificationEl && gaugePointer) {
+            if (gaugeSection && gaugeValueEl && gaugeClassificationEl) {
                 gaugeSection.style.display = 'block';
                 
-                // Calculate angle for pointer
-                // The gauge is a semi-circle: 0 (left) to 100 (right) maps to 180 degrees
-                // Needle starts at 0deg (pointing left), rotates to 180deg (pointing right)
-                // 0 value = 0deg, 100 value = 180deg
-                const angle = (value / 100) * 180; // 0-100 maps to 0-180 degrees
+                // Determine color class based on value
+                let colorClass = '';
+                if (value <= 25) {
+                    colorClass = 'fear'; // Green for extreme fear/fear
+                } else if (value <= 50) {
+                    colorClass = 'fear'; // Green for fear
+                } else if (value <= 75) {
+                    colorClass = 'neutral'; // Orange for neutral
+                } else {
+                    colorClass = 'greed'; // Red for greed/extreme greed
+                }
                 
-                // Update needle rotation (always black, no color change)
-                gaugePointer.style.transform = `rotate(${angle}deg)`;
-                gaugePointer.className = 'needle';
+                // Update color class
+                gaugeSection.className = `fear-greed-stat-card ${colorClass}`;
                 
-                // Update center value (always white, no color change)
+                // Update value and classification
                 gaugeValueEl.textContent = value;
-                gaugeValueEl.className = 'number';
                 
                 // Translate classification
                 const translations = {
