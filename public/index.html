@@ -1546,11 +1546,29 @@
             `;
         }
 
+        // Preserve gauge section before updating innerHTML
+        const marketStatsEl = document.getElementById('marketStats');
+        const existingGaugeSection = document.getElementById('fearGreedSection');
+        let gaugeSectionClone = null;
+        
+        if (existingGaugeSection) {
+            gaugeSectionClone = existingGaugeSection.cloneNode(true);
+        }
+        
+        // Update market stats (this will remove the gauge section)
+        marketStatsEl.innerHTML = statsHTML;
+        
+        // Re-append gauge section if it existed
+        if (gaugeSectionClone) {
+            marketStatsEl.appendChild(gaugeSectionClone);
+        }
+
+        // Update fear & greed gauge AFTER setting innerHTML
         if (fearGreedData) {
             const value = parseInt(fearGreedData.value);
             const classification = fearGreedData.value_classification;
             
-            // Update fear & greed gauge
+            // Re-query elements after innerHTML update (the cloned element is now in the DOM)
             const gaugeSection = document.getElementById('fearGreedSection');
             const gaugeValueEl = document.getElementById('gaugeValue');
             const gaugeClassificationEl = document.getElementById('gaugeClassification');
@@ -1600,8 +1618,6 @@
                 gaugeClassificationEl.textContent = translations[classification] || classification;
             }
         }
-
-        document.getElementById('marketStats').innerHTML = statsHTML;
 
         const sortedByChange = [...cryptoData].sort((a, b) => 
             (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0)
