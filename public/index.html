@@ -1465,30 +1465,14 @@
             `;
         }
 
-        // Update market stats - preserve gauge section
-        const marketStatsEl = document.getElementById('marketStats');
-        const existingGaugeSection = document.getElementById('fearGreedSection');
-        let gaugeSectionClone = null;
-        
-        // Clone gauge section before removing it
-        if (existingGaugeSection) {
-            gaugeSectionClone = existingGaugeSection.cloneNode(true);
-        }
-        
-        // Update market stats (this removes the gauge section)
-        marketStatsEl.innerHTML = statsHTML;
-        
-        // Re-append gauge section if it existed (always append, even without data)
-        if (gaugeSectionClone) {
-            marketStatsEl.appendChild(gaugeSectionClone);
-        }
+        // Update market stats
+        document.getElementById('marketStats').innerHTML = statsHTML;
 
-        // Update fear & greed gauge AFTER setting innerHTML
+        // Update fear & greed gauge
         if (fearGreedData) {
             const value = parseInt(fearGreedData.value);
             const classification = fearGreedData.value_classification;
             
-            // Re-query elements after innerHTML update
             const gaugeSection = document.getElementById('fearGreedSection');
             const gaugeValueEl = document.getElementById('gaugeValue');
             const gaugeClassificationEl = document.getElementById('gaugeClassification');
@@ -1520,14 +1504,6 @@
                     "Extreme Greed": "უკიდურესი სიხარბე"
                 };
                 gaugeClassificationEl.textContent = translations[classification] || classification;
-            } else {
-                console.warn('Gauge elements not found:', {
-                    gaugeSection: !!gaugeSection,
-                    gaugeValueEl: !!gaugeValueEl,
-                    gaugeClassificationEl: !!gaugeClassificationEl,
-                    gaugePointer: !!gaugePointer,
-                    fearGreedData: !!fearGreedData
-                });
             }
         }
 
