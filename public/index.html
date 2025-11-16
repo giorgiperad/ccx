@@ -299,6 +299,47 @@
             margin-bottom: 32px;
         }
 
+        .fear-greed-stat-card {
+            background: #0d0d0d;
+            border-radius: 24px;
+            padding: 16px;
+            backdrop-filter: blur(40px);
+            border: 2px solid #1a1a1a;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: visible;
+        }
+
+        .fear-greed-stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent);
+            border-radius: 50%;
+            transition: all 0.4s;
+        }
+
+        .fear-greed-stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 20px 60px rgba(139, 92, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #8b5cf6;
+        }
+
+        .fear-greed-stat-card:hover::before {
+            top: -25%;
+            right: -25%;
+            width: 150px;
+            height: 150px;
+        }
+
         .stat-card {
             background: #0d0d0d;
             border-radius: 24px;
@@ -365,35 +406,10 @@
             filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.6));
         }
 
-        .fear-greed-section {
-            background: #0d0d0d;
-            border-radius: 28px;
-            padding: 32px;
-            margin-bottom: 32px;
-            backdrop-filter: blur(40px);
-            border: 2px solid #1a1a1a;
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .fear-greed-title {
-            font-size: 14px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
         .fear-greed-gauge-container {
             position: relative;
             width: 100%;
-            max-width: 400px;
-            height: 220px;
+            height: 180px;
             margin: 0 auto;
         }
 
@@ -467,13 +483,13 @@
         }
 
         .gauge-value {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 800;
             font-family: 'Inter', sans-serif;
             color: #00FF88;
             line-height: 1;
-            margin-bottom: 8px;
-            text-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+            margin-bottom: 4px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
             transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
@@ -488,12 +504,12 @@
         }
 
         .gauge-classification {
-            font-size: 1rem;
+            font-size: 0.75rem;
             color: #A0A0A0;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
         }
 
         .gauge-labels {
@@ -507,7 +523,7 @@
 
         .gauge-label {
             position: absolute;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #888;
             font-weight: 600;
             text-transform: uppercase;
@@ -997,9 +1013,12 @@
                 font-size: 10px;
             }
 
+            .fear-greed-stat-card {
+                grid-column: 1 / -1;
+            }
+
             .fear-greed-gauge-container {
-                max-width: 100%;
-                height: 180px;
+                height: 160px;
             }
 
             .gauge-value {
@@ -1115,21 +1134,18 @@
 
         <div id="marketStats" class="market-stats">
             <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
-            <div class="skeleton-stat"><div class="skeleton" style="width: 60%; height: 30px; margin: 10px auto;"></div></div>
-        </div>
-
-        <div id="fearGreedSection" class="fear-greed-section" style="display: none;">
-            <div class="fear-greed-title">Crypto Fear & Greed Index</div>
-            <div class="fear-greed-gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 400 200">
+            <div id="fearGreedSection" class="fear-greed-stat-card" style="display: none;">
+                <div class="fear-greed-gauge-container">
+                    <svg class="gauge-svg" viewBox="0 0 400 200">
                     <!-- Gauge arcs - semi-circle from left (0) to right (100) -->
                     <!-- Center of circle is at (200, 200), radius 150 -->
-                    <!-- Fear: 0-50 (left half, 0-90 degrees) -->
+                    <!-- Full semi-circle arc from left to right -->
+                    <!-- Fear: 0-50 (left half) -->
                     <path class="gauge-arc gauge-arc-fear" d="M 50 150 A 150 150 0 0 1 200 50" />
-                    <!-- Neutral: 50-75 (middle, 90-135 degrees) -->
-                    <path class="gauge-arc gauge-arc-neutral" d="M 200 50 A 150 150 0 0 1 306 100" />
-                    <!-- Greed: 75-100 (right, 135-180 degrees) -->
-                    <path class="gauge-arc gauge-arc-greed" d="M 306 100 A 150 150 0 0 1 350 150" />
+                    <!-- Neutral: 50-75 (middle quarter) -->
+                    <path class="gauge-arc gauge-arc-neutral" d="M 200 50 A 150 150 0 0 1 275 100" />
+                    <!-- Greed: 75-100 (right quarter) -->
+                    <path class="gauge-arc gauge-arc-greed" d="M 275 100 A 150 150 0 0 1 350 150" />
                     
                     <!-- Tick marks -->
                     <g class="gauge-tick-fear">
@@ -1152,9 +1168,9 @@
                         <line x1="348" y1="115" x2="353" y2="120" class="gauge-tick" />
                     </g>
                     
-                    <!-- Pointer (will be positioned dynamically) - triangle pointing from center outward -->
-                    <polygon id="gaugePointer" class="gauge-pointer" points="200,200 195,170 205,170" />
-                </svg>
+                        <!-- Pointer (will be positioned dynamically) - triangle pointing from center outward -->
+                        <polygon id="gaugePointer" class="gauge-pointer" points="200,200 195,170 205,170" />
+                    </svg>
                 
                 <div class="gauge-labels">
                     <div class="gauge-label extreme-fear">Extreme Fear</div>
@@ -1167,6 +1183,7 @@
                 <div class="gauge-center">
                     <div id="gaugeValue" class="gauge-value">--</div>
                     <div id="gaugeClassification" class="gauge-classification">--</div>
+                </div>
                 </div>
             </div>
         </div>
@@ -1548,7 +1565,6 @@
                 // - 0 value = left side = 0 degrees in rotated space
                 // - 100 value = right side = 180 degrees in rotated space
                 // Pointer starts at bottom center (pointing up), needs to rotate around center
-                // Since SVG is rotated -90deg, we need to account for that
                 const angle = (value / 100) * 180; // 0-100 maps to 0-180 degrees
                 
                 gaugePointer.style.transform = `rotate(${angle}deg)`;
@@ -1583,20 +1599,6 @@
                 };
                 gaugeClassificationEl.textContent = translations[classification] || classification;
             }
-            
-            statsHTML += `
-                <div class="stat-card">
-                    <div class="stat-label">შიში & სიხარბე</div>
-                    <div class="stat-value">${value}</div>
-                </div>
-            `;
-        } else {
-            statsHTML += `
-                <div class="stat-card">
-                    <div class="stat-label">შიში & სიხარბე</div>
-                    <div class="stat-value">--</div>
-                </div>
-            `;
         }
 
         document.getElementById('marketStats').innerHTML = statsHTML;
