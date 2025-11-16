@@ -1465,9 +1465,23 @@
             `;
         }
 
-        // Update market stats
+        // Update market stats - preserve gauge section
         const marketStatsEl = document.getElementById('marketStats');
+        const existingGaugeSection = document.getElementById('fearGreedSection');
+        let gaugeSectionClone = null;
+        
+        // Clone gauge section before removing it
+        if (existingGaugeSection) {
+            gaugeSectionClone = existingGaugeSection.cloneNode(true);
+        }
+        
+        // Update market stats (this removes the gauge section)
         marketStatsEl.innerHTML = statsHTML;
+        
+        // Re-append gauge section if it existed (always append, even without data)
+        if (gaugeSectionClone) {
+            marketStatsEl.appendChild(gaugeSectionClone);
+        }
 
         // Update fear & greed gauge AFTER setting innerHTML
         if (fearGreedData) {
@@ -1511,7 +1525,8 @@
                     gaugeSection: !!gaugeSection,
                     gaugeValueEl: !!gaugeValueEl,
                     gaugeClassificationEl: !!gaugeClassificationEl,
-                    gaugePointer: !!gaugePointer
+                    gaugePointer: !!gaugePointer,
+                    fearGreedData: !!fearGreedData
                 });
             }
         }
