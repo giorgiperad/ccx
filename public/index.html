@@ -1465,8 +1465,16 @@
             `;
         }
 
-        // Update market stats
-        document.getElementById('marketStats').innerHTML = statsHTML;
+        // Update market stats - update first child only to preserve gauge
+        const marketStatsEl = document.getElementById('marketStats');
+        const firstStatCard = marketStatsEl.querySelector('.stat-card, .skeleton-stat');
+        
+        if (firstStatCard) {
+            firstStatCard.outerHTML = statsHTML;
+        } else {
+            // If no existing card, just set innerHTML (gauge will be preserved from HTML)
+            marketStatsEl.innerHTML = statsHTML;
+        }
 
         // Update fear & greed gauge
         if (fearGreedData) {
