@@ -459,22 +459,13 @@
             font-size: 0.75em;
             opacity: 0.6;
             margin: 1.1em 0 0.3em 0;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .gauge-center .number {
             font-size: 1.2em;
-        }
-
-        .gauge-center .number.fear {
-            color: #15C63C;
-        }
-
-        .gauge-center .number.neutral {
-            color: #EB8916;
-        }
-
-        .gauge-center .number.greed {
-            color: #D74141;
+            color: #fff;
+            font-weight: bold;
         }
 
         .needle {
@@ -491,18 +482,7 @@
             transform-origin: 100% 4px;
             box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.38);
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .needle.fear {
-            background: #15C63C;
-        }
-
-        .needle.neutral {
-            background: #EB8916;
-        }
-
-        .needle.greed {
-            background: #D74141;
+            z-index: 10;
         }
 
         .slice-colors .st {
@@ -515,14 +495,16 @@
             border-right: 12px solid transparent;
         }
 
+        /* Orange segment (left) */
         .slice-colors .st.slice-item:nth-child(1) {
             border-bottom-color: #EB8916;
             left: -5px;
         }
 
+        /* Green segment (center - largest) */
         .slice-colors .st.slice-item:nth-child(2) {
             border-bottom-color: #15C63C;
-            transform: rotate(145deg);
+            transform: rotate(36deg);
             transform-origin: right;
             top: 12px;
             left: -30px;
@@ -530,23 +512,24 @@
 
         .slice-colors .st.slice-item:nth-child(3) {
             border-bottom-color: #15C63C;
-            transform: rotate(225deg);
+            transform: rotate(72deg);
             transform-origin: right;
             top: -50px;
             left: 25px;
         }
 
         .slice-colors .st.slice-item:nth-child(4) {
-            border-bottom-color: #D74141;
-            transform: rotate(35deg);
+            border-bottom-color: #15C63C;
+            transform: rotate(108deg);
             transform-origin: right;
             right: -10px;
             bottom: -28px;
         }
 
+        /* Red segment (right) */
         .slice-colors .st.slice-item:nth-child(5) {
             border-bottom-color: #D74141;
-            transform: rotate(28deg);
+            transform: rotate(144deg);
             transform-origin: right;
             right: -10px;
             bottom: -50px;
@@ -1538,13 +1521,13 @@
                     colorClass = 'greed';
                 }
                 
-                // Update needle rotation and color
+                // Update needle rotation (always black, no color change)
                 gaugePointer.style.transform = `rotate(${angle}deg)`;
-                gaugePointer.className = `needle ${colorClass}`;
+                gaugePointer.className = 'needle';
                 
-                // Update center value and classification
+                // Update center value (always white, no color change)
                 gaugeValueEl.textContent = value;
-                gaugeValueEl.className = `number ${colorClass}`;
+                gaugeValueEl.className = 'number';
                 
                 // Translate classification
                 const translations = {
